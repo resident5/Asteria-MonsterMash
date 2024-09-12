@@ -2718,7 +2718,6 @@ MonoBehaviour:
   cullingMask:
     serializedVersion: 2
     m_Bits: 65
-  mainCamera: {fileID: 0}
 --- !u!1001 &5771568960534589514
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2730,6 +2729,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 5771568960076546697, guid: cd0414dbac046d44e82a65a7182e7fad, type: 3}
+      propertyPath: playerCreator
+      value: 
+      objectReference: {fileID: 11400000, guid: 0c4fcdbb6a4e611479f63974d05c88f5, type: 2}
     - target: {fileID: 5771568960076546699, guid: cd0414dbac046d44e82a65a7182e7fad, type: 3}
       propertyPath: m_RootOrder
       value: 3

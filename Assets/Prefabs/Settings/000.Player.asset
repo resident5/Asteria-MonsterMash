@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 0
   level: 1
-  unitName: TestPlayer
-  description: This is YOU!
+  unitName: Lyon
+  description: Lyon is a Orc Champion
   maxHealth: 100
   maxMana: 100
   maxLust: 100

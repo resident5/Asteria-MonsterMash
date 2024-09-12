@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     public CameraManager cameraManager;
+    public BattleManager battleManager;
 
     public enum GameState
     {
@@ -20,6 +21,7 @@ public class GameManager : MonoBehaviour
     public GameState state;
 
     public Scene overWorldScene;
+    public Scene battleScene;
 
     private void Awake()
     {
@@ -39,7 +41,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        state = GameState.OVERWORLD;
+        ChangeState(GameState.OVERWORLD);
         StartCoroutine(PreloadBattleScene("Battle"));
     }
 
@@ -47,40 +49,16 @@ public class GameManager : MonoBehaviour
     {
         state = newState;
 
+        //Immediately do start function for changingstates
         switch (state)
         {
             case GameState.OVERWORLD:
+                //GameState
                 break;
             case GameState.BATTLE:
-                Debug.Log("Load Battle");
+                battleManager.InitializeBattle();
                 cameraManager.ActivateBattleCamera();
-                //Scene battleScene = SceneManager.GetSceneByName("Battle");
-
-                //if (battleScene.IsValid())
-                //{
-                //    GameObject[] objs = battleScene.GetRootGameObjects();
-
-                //    foreach (var item in objs)
-                //    {
-                //        CinemachineVirtualCamera battleCam = item.GetComponent<CinemachineVirtualCamera>();
-
-                //        if (battleCam != null)
-                //        {
-
-                //        }
-                //        item.SetActive(true);
-                //    }
-                //}
-
-                //if (overWorldScene.IsValid())
-                //{
-                //    GameObject[] objs = overWorldScene.GetRootGameObjects();
-                //    foreach (var item in objs)
-                //    {
-                //        item.SetActive(true);
-                //    }
-                //}
-
+                cameraManager.SwapToBattleCam();
                 break;
             case GameState.MENU:
                 break;
@@ -101,17 +79,17 @@ public class GameManager : MonoBehaviour
             cameraManager.SwapToBattleCam();
         }
 
-        switch (state)
-        {
-            case GameState.OVERWORLD:
-                break;
-            case GameState.BATTLE:
-                break;
-            case GameState.MENU:
-                break;
-            default:
-                break;
-        }
+        //switch (state)
+        //{
+        //    case GameState.OVERWORLD:
+        //        break;
+        //    case GameState.BATTLE:
+        //        break;
+        //    case GameState.MENU:
+        //        break;
+        //    default:
+        //        break;
+        //}
     }
 
     public IEnumerator PreloadBattleScene(string sceneName)
@@ -132,16 +110,24 @@ public class GameManager : MonoBehaviour
 
         if (operation.isDone)
         {
-            Scene battleScene = SceneManager.GetSceneByName("Battle");
+            battleScene = SceneManager.GetSceneByName("Battle");
 
             if (battleScene.IsValid())
             {
                 GameObject[] objs = battleScene.GetRootGameObjects();
-
                 foreach (var item in objs)
                 {
+                    if (battleManager == null)
+                    {
+                        battleManager = item.GetComponent<BattleManager>();
+                    }
+
                     CinemachineVirtualCamera battleCam = item.GetComponent<CinemachineVirtualCamera>();
-                    cameraManager.SetBattleCamera(battleCam);
+
+                    if (battleCam != null)
+                    {
+                        cameraManager.SetBattleCamera(battleCam);
+                    }
                 }
 
             }

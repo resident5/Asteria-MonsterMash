@@ -24,7 +24,8 @@ public class EnemyMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Movement();
+        if (GameManager.Instance.state == GameManager.GameState.OVERWORLD)
+            Movement();
     }
 
     void Movement()

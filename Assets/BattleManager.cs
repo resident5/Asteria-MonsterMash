@@ -39,13 +39,12 @@ public class BattleManager : MonoBehaviour
     BattleUnit enemyUnit;
 
     public BattleHUDController HUDcontroller;
-    
+
     private void Awake()
     {
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -53,13 +52,14 @@ public class BattleManager : MonoBehaviour
         }
 
         eventSystem = EventSystem.current;
-
+        HUDcontroller.transform.parent.gameObject.SetActive(false);
     }
 
-    private void Start()
+    public void InitializeBattle()
     {
-        //activeUnit = unitList.playerList[0];
         state = BattleState.START;
+        HUDcontroller.transform.parent.gameObject.SetActive(true);
+
 
         StartCoroutine(BattleSetup());
     }
@@ -110,6 +110,11 @@ public class BattleManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         state = BattleState.ENEMYTURN;
+    }
+
+    public void ChangeBattleState(BattleState newState)
+    {
+        state = newState;
     }
 
     //Make an IEnumerator to handle the turns

@@ -23,7 +23,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        PlayerInput();
+        if (GameManager.Instance.state == GameManager.GameState.OVERWORLD)
+            PlayerInput();
     }
 
     void PlayerInput()
