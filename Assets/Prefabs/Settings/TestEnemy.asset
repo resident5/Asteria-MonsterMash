@@ -16,9 +16,14 @@ MonoBehaviour:
   level: 1
   unitName: Test Enemy
   description: This is a test Enemy
-  maxHealth: 100
-  maxMana: 100
-  maxLust: 100
+  stats:
+    health: 100
+    maxHealth: 100
+    strength: 5
+    magic: 5
+    speed: 5
+    mana: 100
+    lust: 0
   isEnemy: 1
   spriteImage: {fileID: 0}
   battleMoves:

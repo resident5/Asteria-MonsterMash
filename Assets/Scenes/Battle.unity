@@ -190,7 +190,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh25536
+  m_Name: pb_Mesh34278
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -616,12 +616,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eventSystem: {fileID: 0}
   unitList: {fileID: 792064347}
-  targets: []
-  state: 0
-  phase: 0
+  state: 4
   playerPrefab: {fileID: 6597310811573800255, guid: 703b8cbd6405a7943837394c11a921d9, type: 3}
   enemyPrefab: {fileID: 7034162257670391839, guid: 868f45e971bf0e3409df2f2fe64e2b56, type: 3}
+  battleInfo: {fileID: 0}
   HUDcontroller: {fileID: 359882723}
+  turnOrder: []
+  currentUnitTurn: {fileID: 0}
+  battleRate: 1
 --- !u!1 &359882721
 GameObject:
   m_ObjectHideFlags: 0
@@ -676,7 +678,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2627adaa80ded4a4bacb5b026f14305f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actionButton: {fileID: 6100685388294830857, guid: a7e7de6e04d1cd94d9ba728635e4d7c1, type: 3}
+  actionButtonPrefab: {fileID: 6100685388294830857, guid: a7e7de6e04d1cd94d9ba728635e4d7c1, type: 3}
   firstMenu: {fileID: 773676684}
   secondMenu: {fileID: 2050699333}
   actionHolder: {fileID: 33912528}
@@ -2567,7 +2569,6 @@ GameObject:
   - component: {fileID: 1231737146}
   - component: {fileID: 1231737145}
   - component: {fileID: 1231737144}
-  - component: {fileID: 1231737143}
   m_Layer: 7
   m_Name: Floor
   m_TagString: Untagged
@@ -2575,20 +2576,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!64 &1231737143
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1231737142}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 126560114}
 --- !u!33 &1231737144
 MeshFilter:
   m_ObjectHideFlags: 10

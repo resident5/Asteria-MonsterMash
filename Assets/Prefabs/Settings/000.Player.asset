@@ -16,14 +16,16 @@ MonoBehaviour:
   level: 1
   unitName: Lyon
   description: Lyon is a Orc Champion
-  maxHealth: 100
-  maxMana: 100
-  maxLust: 100
+  stats:
+    health: 100
+    maxHealth: 100
+    strength: 10
+    magic: 10
+    speed: 15
+    mana: 100
+    lust: 0
   isEnemy: 0
   spriteImage: {fileID: 0}
   battleMoves:
   - {fileID: 11400000, guid: 5eff99dea1f04c140b1e7658d758ea6c, type: 2}
-  - {fileID: 11400000, guid: 5eff99dea1f04c140b1e7658d758ea6c, type: 2}
-  - {fileID: 11400000, guid: 5eff99dea1f04c140b1e7658d758ea6c, type: 2}
-  - {fileID: 11400000, guid: 5eff99dea1f04c140b1e7658d758ea6c, type: 2}
-  - {fileID: 11400000, guid: 5eff99dea1f04c140b1e7658d758ea6c, type: 2}
+  - {fileID: 11400000, guid: 1be8f0ac882aec743b76f844e2d52a6f, type: 2}
