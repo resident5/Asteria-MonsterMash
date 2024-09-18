@@ -9,13 +9,6 @@ public class UnitActionButton : MonoBehaviour
     private BattleManager battleManager;
     public UnitAction unitAction;
 
-    public enum Category
-    {
-        FIGHT,
-        SUMMON
-    }
-
-
     private void Awake()
     {
         battleManager = BattleManager.Instance;

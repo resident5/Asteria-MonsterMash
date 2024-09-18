@@ -16,7 +16,6 @@ public class PlayerMovement : MonoBehaviour
 
     public UnitCreatorScriptableObject playerCreator;
 
-    public GameManager gameManager => GameManager.Instance;
 
     public LayerMask walkable;
 
@@ -25,11 +24,6 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
-    }
-
-    private void Start()
-    {
-
     }
 
     void Update()
@@ -69,18 +63,5 @@ public class PlayerMovement : MonoBehaviour
             }
             transform.localEulerAngles = rot;
         }
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag == "Enemy")
-        {
-            gameManager.InitiateBattle(collision.gameObject);
-        }
-    }
-
-    private void CheckFloor()
-    {
-
     }
 }

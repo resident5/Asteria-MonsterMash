@@ -16,6 +16,7 @@ public class UnitCreatorScriptableObject : ScriptableObject
     //public int maxHealth;
     //public int maxMana;
     //public int maxLust;
+    public bool isCapturable;
 
     public bool isEnemy;
 

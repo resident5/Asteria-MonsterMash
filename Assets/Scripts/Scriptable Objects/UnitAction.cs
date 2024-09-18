@@ -12,8 +12,16 @@ public class UnitAction : ScriptableObject
     public ElementType elementType;
     public TargetTypes targetTypes;
     public ValueType valueType;
+    public MenuType menuType;
 
-    public int value;
+    public int baseValue;
+
+
+    public enum MenuType
+    {
+        FIGHT,
+        OTHER
+    }
 
     /// <summary>
     /// Type of Damage for weakness checks 
@@ -22,7 +30,8 @@ public class UnitAction : ScriptableObject
     {
         DAMAGE,
         HEAL,
-        SPLASH
+        SPLASH,
+        CUSTOM
     }
 
     /// <summary>
@@ -61,7 +70,7 @@ public class UnitAction : ScriptableObject
         MANA
     }
 
-
+    public CustomBattleAction customAction;
     public string animationName;
     public Vector3 offset;
 }

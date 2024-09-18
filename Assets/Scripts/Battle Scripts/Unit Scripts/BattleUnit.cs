@@ -54,12 +54,12 @@ public class BattleUnit : MonoBehaviour, ITurn
         }
     }
 
-    public void ApplyEffect(UnitAction unitAction)
+    public void ApplyEffect(BattleUnit attacker, UnitAction action)
     {
-        switch (unitAction.effectType)
+        switch (action.effectType)
         {
             case UnitAction.EffectType.DAMAGE:
-                myStats.Health -= unitAction.value;
+                myStats.Health -= action.baseValue;
 
                 if (myStats.Health <= 0)
                 {
@@ -73,10 +73,13 @@ public class BattleUnit : MonoBehaviour, ITurn
                 }
                 break;
             case UnitAction.EffectType.HEAL:
-                myStats.Health += unitAction.value;
+                myStats.Health += action.baseValue;
                 break;
             case UnitAction.EffectType.SPLASH:
                 //Unit takes damage then transfers to other allies
+                break;
+            case UnitAction.EffectType.CUSTOM:
+                action.customAction.Effect(attacker, this, action);
                 break;
             default:
                 break;
@@ -95,9 +98,9 @@ public class BattleUnit : MonoBehaviour, ITurn
         anim.SetBool("IsInteracting", true);
     }
 
-    public void OnTurnStart()
+    public virtual void OnTurnStart()
     {
-        Debug.Log($"Its currently {gameObject.name}'s turn!!");
+        
         foreach (var item in statusEffects)
         {
             if (item != null)
@@ -106,7 +109,7 @@ public class BattleUnit : MonoBehaviour, ITurn
 
     }
 
-    public void OnTurnUpdate()
+    public virtual void OnTurnUpdate()
     {
         foreach (var item in statusEffects)
         {
@@ -115,11 +118,9 @@ public class BattleUnit : MonoBehaviour, ITurn
         }
     }
 
-    public void OnTurnEnd()
+    public virtual void OnTurnEnd()
     {
         actionValue = Mathf.CeilToInt(Mathf.Clamp(MAX_ACTION_VALUE / myStats.Speed, 0, MAX_ACTION_VALUE));
-
-        Debug.Log($"{gameObject.name}'s turn ended they are now at {actionValue}!!");
 
         foreach (var item in statusEffects)
         {

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6597310811573800262}
   - component: {fileID: 6597310811573800256}
   - component: {fileID: 835101454299605900}
-  - component: {fileID: -2069466098683303222}
+  - component: {fileID: 3242698149111560652}
   m_Layer: 7
   m_Name: Player (Battle)
   m_TagString: Player
@@ -117,7 +117,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &-2069466098683303222
+--- !u!114 &3242698149111560652
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -126,7 +126,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6597310811573800255}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e9d8866209b6c2439e5a284be35def8, type: 3}
+  m_Script: {fileID: 11500000, guid: 29cf06e89b928654f839cfacfa1b916b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   unit: {fileID: 11400000, guid: 86c61caff02ce5e4fa7be9b5fabd010d, type: 2}
@@ -141,6 +141,8 @@ MonoBehaviour:
   anim: {fileID: 0}
   isDead: 0
   myBattleMoves: []
+  isTurn: 0
+  actionValue: 0
 --- !u!1 &6597310812388427649
 GameObject:
   m_ObjectHideFlags: 0

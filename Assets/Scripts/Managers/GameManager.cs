@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Cinemachine;
-using Unity.VisualScripting;
 
 public class GameManager : MonoBehaviour
 {
@@ -25,6 +24,7 @@ public class GameManager : MonoBehaviour
     public Scene battleScene;
 
     public GameObject enemyObj;
+    public PlayerData playerData;
 
     private void Awake()
     {
@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine(PreloadBattleScene("Battle"));
     }
 
-    public void ChangeState(GameState newState)
+    public void ChangeState(GameState newState, PlayerData data = null)
     {
         state = newState;
 
@@ -70,7 +70,7 @@ public class GameManager : MonoBehaviour
 
                 break;
             case GameState.BATTLE:
-                battleManager.InitializeBattle();
+                battleManager.InitializeBattle(playerData);
                 cameraManager.ActivateBattleCamera();
                 cameraManager.SwapToBattleCam();
                 break;
@@ -91,6 +91,11 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             cameraManager.SwapToBattleCam();
+        }
+
+        if(Input.GetKeyDown(KeyCode.Tab))
+        {
+
         }
     }
 
@@ -137,9 +142,10 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void InitiateBattle(GameObject eObj)
+    public void InitiateBattle(PlayerData pData, GameObject eObj)
     {
         enemyObj = eObj;
+        playerData = pData;
         ChangeState(GameState.BATTLE);
     }
 

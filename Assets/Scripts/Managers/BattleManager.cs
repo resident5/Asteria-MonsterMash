@@ -32,6 +32,8 @@ public class BattleManager : MonoBehaviour
 
     public BattleUnit currentUnitTurn;
 
+    public PlayerData playerData;
+
     public float battleRate = 1f;
     bool IsAllPlayersDead;
     bool IsAllEnemiesDead;
@@ -51,12 +53,13 @@ public class BattleManager : MonoBehaviour
         HUDcontroller.transform.parent.gameObject.SetActive(false);
     }
 
-    public void InitializeBattle()
+    public void InitializeBattle(PlayerData playData)
     {
         state = BattleState.START;
+        playerData = playData;
         battleInfo = new BattleInfo();
         HUDcontroller.transform.parent.gameObject.SetActive(true);
-
+        
         StartCoroutine(BattleSceneSetup());
     }
 
@@ -142,8 +145,6 @@ public class BattleManager : MonoBehaviour
         battleInfo.ListOfEnemies.Add(enemyUnit);
         enemyUnit.Init();
 
-        HUDcontroller.SetHUD(playerUnit);
-
         yield return null;
         
         state = BattleState.BATTLESTART;
@@ -186,7 +187,7 @@ public class BattleManager : MonoBehaviour
 
     public IEnumerator PlayerAttack(UnitAction battleMove)
     {
-        enemyUnit.ApplyEffect(battleMove);
+        enemyUnit.ApplyEffect(currentUnitTurn, battleMove);
 
         yield return new WaitForSeconds(battleRate);
 
@@ -212,7 +213,7 @@ public class BattleManager : MonoBehaviour
 
         foreach (var target in targetList)
         {
-            target.ApplyEffect(chosenMove);
+            target.ApplyEffect(currentUnitTurn, chosenMove);
         }
 
         currentUnitTurn.OnTurnEnd();
