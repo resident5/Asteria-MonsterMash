@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Cinemachine;
+using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,6 +12,9 @@ public class GameManager : MonoBehaviour
 
     public CameraManager cameraManager;
     public BattleManager battleManager;
+    public InputManager inputManager;
+
+    public Debugger debugger;
 
     public enum GameState
     {
@@ -26,10 +30,17 @@ public class GameManager : MonoBehaviour
     public GameObject enemyObj;
     public PlayerData playerData;
 
+    public HUDController hudController;
+    public bool isPaused = false;
+
     private void Awake()
     {
         overWorldScene = SceneManager.GetActiveScene();
         cameraManager = GetComponentInChildren<CameraManager>();
+        hudController = FindObjectOfType<HUDController>();
+        playerData = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerData>();
+        inputManager = GetComponentInChildren<InputManager>();
+        debugger = GetComponent<Debugger>();
 
         if (Instance == null)
         {
@@ -59,7 +70,7 @@ public class GameManager : MonoBehaviour
                 bool hasWon = battleManager.DeInitializeBattle();
                 cameraManager.DeactivateBattleCamera();
                 cameraManager.SwapToOverWorldCam();
-                                
+
                 if (enemyObj != null)
                     Destroy(enemyObj);
 
@@ -93,11 +104,38 @@ public class GameManager : MonoBehaviour
             cameraManager.SwapToBattleCam();
         }
 
-        if(Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Tab))
         {
+            isPaused = !isPaused;
+            Time.timeScale = isPaused ? 0 : 1;
 
+            hudController.ShowPauseMenu(playerData, isPaused);
         }
+
+        //Cancelled Works for 1st to 2nd panel and vice versa but not 3rd to 2nd panel due to getting the first button not working if its off in the battle.
+        if (inputManager.Cancelled)
+        {
+            if (isPaused)
+            {
+                hudController.HideAllPanels();
+            }
+            else
+            {
+                battleManager.battleHUD.ReturnPanel();
+            }
+        }
+
     }
+
+    private void ReturnToPreviousBattleMenu()
+    {
+
+    }
+
+    //private void ReturnToPreviousMenu()
+    //{
+    //    hudController.HideAllPanels();
+    //}
 
     public IEnumerator PreloadBattleScene(string sceneName)
     {
@@ -154,4 +192,6 @@ public class GameManager : MonoBehaviour
         enemyObj = null;
         ChangeState(GameState.OVERWORLD);
     }
+
+
 }

@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
@@ -11,14 +10,17 @@ public class EnemyMovement : MonoBehaviour
     public float moveSpeedX, moveSpeedZ;
 
     public Transform target;
+    public EnemyData myData;
 
     public float detectionRadius;
     public bool facingRight;
+    public LayerMask playerMask;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
+        myData = GetComponent<EnemyData>();
     }
 
     // Update is called once per frame
@@ -31,17 +33,23 @@ public class EnemyMovement : MonoBehaviour
     void Movement()
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, detectionRadius);
-
+        PlayerMovement player = null;
         foreach (Collider item in colliders)
         {
-            PlayerMovement player = item.GetComponent<PlayerMovement>();
+            player = item.GetComponent<PlayerMovement>();
             if (player != null)
             {
+                myData.ChangeState(EnemyData.EnemyState.CHASING);
                 target = player.transform;
             }
         }
 
-        if (target != null)
+        if (player == null)
+        {
+            myData.ChangeState(EnemyData.EnemyState.IDLE);
+        }
+
+        if (myData.enemyState == EnemyData.EnemyState.CHASING)
         {
             Vector3 dir = target.position - transform.position;
             dir.Normalize();

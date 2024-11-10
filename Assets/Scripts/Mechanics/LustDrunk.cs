@@ -2,23 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LustDrunk : IStatusEffects
+//TODO: Add lust drunk to effect the user's lust
+public class LustDrunk : StatusEffectSO
 {
     public BattleUnit unit;
 
-    public void OnHit()
+    public override void OnHit()
     {
     }
 
-    public void OnTurnEnd()
+    public override void OnTurnEnd()
     {
     }
 
-    public void OnTurnStart()
+    public override void OnTurnStart()
     {
     }
 
-    public void OnTurnUpdate()
+    public override void OnTurnUpdate()
     {
     }
 }

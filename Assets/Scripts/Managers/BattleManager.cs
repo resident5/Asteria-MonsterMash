@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Linq;
-using Unity.VisualScripting.ReorderableList;
+using static UnityEditor.Progress;
 
 public class BattleManager : MonoBehaviour
 {
@@ -18,17 +18,16 @@ public class BattleManager : MonoBehaviour
 
     public BattleState state;
 
+    public GameObject emptySummon;
     public GameObject playerPrefab;
     public GameObject enemyPrefab;
 
-    BattleUnit playerUnit;
+    PlayerUnit playerUnit;
     BattleUnit enemyUnit;
 
     public BattleInfo battleInfo;
 
-    public BattleHUDController HUDcontroller;
-
-    public List<BattleUnit> turnOrder;
+    public BattleHUDController battleHUD;
 
     public BattleUnit currentUnitTurn;
 
@@ -50,7 +49,8 @@ public class BattleManager : MonoBehaviour
         }
 
         eventSystem = EventSystem.current;
-        HUDcontroller.transform.parent.gameObject.SetActive(false);
+        state = BattleState.IDLE;
+        battleHUD.transform.parent.gameObject.SetActive(false);
     }
 
     public void InitializeBattle(PlayerData playData)
@@ -58,8 +58,8 @@ public class BattleManager : MonoBehaviour
         state = BattleState.START;
         playerData = playData;
         battleInfo = new BattleInfo();
-        HUDcontroller.transform.parent.gameObject.SetActive(true);
-        
+        battleHUD.transform.parent.gameObject.SetActive(true);
+
         StartCoroutine(BattleSceneSetup());
     }
 
@@ -67,10 +67,12 @@ public class BattleManager : MonoBehaviour
     {
         state = BattleState.IDLE;
         battleInfo = null;
-        HUDcontroller.transform.parent.gameObject.SetActive(false);
-        HUDcontroller.DisableHUD();
+        battleHUD.transform.parent.gameObject.SetActive(false);
+        Debug.Log("Disable HUD");
+        battleHUD.DisableHUD();
         Destroy(playerUnit.gameObject);
         Destroy(enemyUnit.gameObject);
+        battleHUD.turnOrderSlider.DeInit();
 
         StopAllCoroutines();
 
@@ -102,16 +104,18 @@ public class BattleManager : MonoBehaviour
                 state = BattleState.WON;
                 GameManager.Instance.ChangeState(GameManager.GameState.OVERWORLD);
             }
-            while (currentUnitTurn == null)
-            {
-                CalculateTurnOrder();
-            }
 
-            if (state != BattleState.WON || state != BattleState.LOST)
-            {
-                OnEnemyTurn();
-            }
         }
+
+        if (state == BattleState.BATTLESTART && currentUnitTurn == null)
+        {
+            CalculateTurnOrder();
+        }
+        //else if (state != BattleState.WON || state != BattleState.LOST)
+        //{
+        //    OnEnemyTurn();
+        //}
+
 
     }
 
@@ -134,23 +138,30 @@ public class BattleManager : MonoBehaviour
     IEnumerator BattleSceneSetup()
     {
         GameObject pGo = Instantiate(playerPrefab, unitList.playerSpots.GetChild(0));
-        playerUnit = pGo.GetComponent<BattleUnit>();
-        playerUnit.myStats.Health = playerUnit.myStats.MaxHealth;
-        battleInfo.ListOfAllies.Add(playerUnit);
-        playerUnit.Init();
-
         GameObject eGo = Instantiate(enemyPrefab, unitList.enemySpots.GetChild(0));
+
+        playerUnit = pGo.GetComponent<PlayerUnit>();
         enemyUnit = eGo.GetComponent<BattleUnit>();
+
+        playerUnit.manager = this;
+        //battleHUD.SetHUD(playerUnit);
+        playerUnit.Summons = playerData.battleMons;
+        enemyUnit.manager = this;
+
+        playerUnit.myStats.Health = playerUnit.myStats.MaxHealth;
         enemyUnit.myStats.Health = enemyUnit.myStats.MaxHealth;
+
+        battleInfo.ListOfAllies.Add(playerUnit);
         battleInfo.ListOfEnemies.Add(enemyUnit);
+
+        playerUnit.Init();
         enemyUnit.Init();
 
+        battleHUD.turnOrderSlider.Init(battleInfo.ListOfAllUnits);
+
         yield return null;
-        
+
         state = BattleState.BATTLESTART;
-
-        CalculateTurnOrder();
-
 
         //ChangeBattleState(BattleState.PLAYERTURN);
         //HUDcontroller.SetHUD(enemyUnit);
@@ -158,17 +169,17 @@ public class BattleManager : MonoBehaviour
 
     void CalculateTurnOrder()
     {
-        //List<BattleUnit> list = battleInfo.ListOfAllies.Concat(battleInfo.ListOfEnemies).OrderByDescending(x => x.actionValue).ToList();
         if (currentUnitTurn != null)
             return;
 
-        foreach (var item in battleInfo.TurnOrder)
+        foreach (var unitTurn in battleInfo.ListOfAllUnits)
         {
-            item.DecreaseActionValue(1);
+            unitTurn.DecreaseActionValue(1);
+            //battleHUD.turnOrderSlider.UpdateHUD(1);
 
-            if (item.actionValue <= 0)
+            if (unitTurn.currentActionValue <= 0)
             {
-                currentUnitTurn = item;
+                currentUnitTurn = unitTurn;
                 currentUnitTurn.OnTurnStart();
                 break;
             }
@@ -176,7 +187,42 @@ public class BattleManager : MonoBehaviour
 
     }
 
-    public void OnPlayerTurn(UnitAction battleMove)
+    //Dictionary<BattleUnit, int> GetTurnOrder(List<BattleUnit> turnUnits)
+    //{
+    //    List<BattleUnit> tempList = turnUnits;
+    //    turnOrders = new Dictionary<BattleUnit, int>();
+
+    //    int listCounter = 0;
+    //    int actionVal = 0;
+
+    //    while (listCounter < 10)
+    //    {
+    //        BattleUnit fastestUnit = GetFastestUnit(turnUnits);
+
+    //        Debug.Log($"{fastestUnit.name} has a base of {fastestUnit.baseActionValue} action points and is currently at {fastestUnit.currentActionValue}");
+    //        //Create a list to hold the turn order based on the CURRENTaction value
+
+
+    //        //turnOrders.Add(fastestUnit, fastestUnit.currentActionValue);
+    //        fastestUnit.currentActionValue += fastestUnit.baseActionValue;
+
+    //        listCounter++;
+    //    }
+
+    //    //Get unit's action values
+    //    //If Unit A's value is higher than B put unit B in list
+    //    //Add Unit B's value to itself then check if that value is higher than A if not add B again
+    //    //Repeat until 10 times 
+
+    //    return turnOrders;
+    //}
+
+    public BattleUnit GetFastestUnit(List<BattleUnit> units)
+    {
+        return units.OrderBy(x => x.currentActionValue).First();
+    }
+
+    public void OnPlayerTurn(UnitActionSO battleMove)
     {
         //Change this to any player unit or check if the unit has a player tag
         if (currentUnitTurn != playerUnit)
@@ -185,87 +231,128 @@ public class BattleManager : MonoBehaviour
         StartCoroutine(PlayerAttack(battleMove));
     }
 
-    public IEnumerator PlayerAttack(UnitAction battleMove)
+    public IEnumerator PlayerAttack(UnitActionSO battleMove)
     {
-        enemyUnit.ApplyEffect(currentUnitTurn, battleMove);
+        enemyUnit.ApplyAction(currentUnitTurn, battleMove);
+
+        currentUnitTurn.OnTurnEnd();
 
         yield return new WaitForSeconds(battleRate);
 
-        currentUnitTurn.OnTurnEnd();
+        if (GameManager.Instance.debugger.isDebugging)
+            Debug.Log("Player Turn has ended");
 
         currentUnitTurn = null;
     }
 
-    public void OnEnemyTurn()
+    public bool SummonNewUnit(UnitCreatorSO unit, bool isSummon)
     {
-        if (currentUnitTurn != enemyUnit)
-            return;
-
-        StartCoroutine(EnemyAttack());
-    }
-
-    public IEnumerator EnemyAttack()
-    {
-        yield return null;
-
-        UnitAction chosenMove = GetEnemyUnitAction();
-        BattleUnit[] targetList = GetEnemyTargets(chosenMove);
-
-        foreach (var target in targetList)
+        GameObject sGo;
+        Transform spot = null;
+        if (isSummon)
         {
-            target.ApplyEffect(currentUnitTurn, chosenMove);
+            spot = GetAvailableSpots(unitList.playerSpots);
+            sGo = Instantiate(emptySummon, spot);
+        }
+        else
+        {
+            spot = GetAvailableSpots(unitList.playerSpots);
+            sGo = Instantiate(emptySummon, spot);
         }
 
-        currentUnitTurn.OnTurnEnd();
+        if (spot == null)
+            return false;
 
-        currentUnitTurn = null;
+        sGo.GetComponent<BattleUnit>().Init(unit);
+        return true;
     }
+
+    public Transform GetAvailableSpots(Transform spots)
+    {
+        Transform availableSpot = null;
+        foreach (Transform spot in spots)
+        {
+            if (spot.childCount <= 0)
+            {
+                availableSpot = spot;
+            }
+        }
+
+        return availableSpot;
+    }
+
+    //public void OnEnemyTurn()
+    //{
+    //    if (currentUnitTurn != enemyUnit)
+    //        return;
+
+    //    StartCoroutine(EnemyAttack());
+    //}
+
+    //public IEnumerator EnemyAttack()
+    //{
+    //    yield return new WaitForSeconds(battleRate);
+
+    //    UnitActionSO chosenMove = GetEnemyUnitAction();
+    //    BattleUnit[] targetList = GetEnemyTargets(chosenMove);
+
+    //    foreach (var target in targetList)
+    //    {
+    //        target.ApplyAction(currentUnitTurn, chosenMove);
+    //    }
+
+    //    currentUnitTurn.OnTurnEnd();
+
+    //    Debug.Log("Enemy Turn has ended");
+
+    //    currentUnitTurn = null;
+    //}
 
     //public void ChangeBattleState(BattleState newState)
     //{
     //    state = newState;
     //}
 
-    private UnitAction GetEnemyUnitAction()
-    {
-        List<UnitAction> enemyActionsList = enemyUnit.myBattleMoves;
-        int rand = Random.Range(0, enemyActionsList.Count);
+    //private UnitActionSO GetEnemyUnitAction()
+    //{
+    //    List<UnitActionSO> enemyActionsList = enemyUnit.myBattleMoves;
+    //    int rand = Random.Range(0, enemyActionsList.Count);
 
-        return enemyActionsList[rand];
-    }
+    //    return enemyActionsList[rand];
+    //}
 
-    private BattleUnit[] GetEnemyTargets(UnitAction selectedAction)
-    {
-        int randTarget = 0;
-        List<BattleUnit> targets = new List<BattleUnit>();
+    //public BattleUnit[] GetEnemyTargets(UnitActionSO selectedAction)
+    //{
+    //    int randTarget = 0;
+    //    List<BattleUnit> targets = new List<BattleUnit>();
 
-        switch (selectedAction.targetTypes)
-        {
-            case UnitAction.TargetTypes.RANDOMALLY:
-                randTarget = Random.Range(0, battleInfo.ListOfEnemies.Count);
-                targets.Add(battleInfo.ListOfEnemies[randTarget]);
-                break;
-            case UnitAction.TargetTypes.RANDOMOPPONENT:
-                randTarget = Random.Range(0, battleInfo.ListOfAllies.Count);
-                targets.Add(battleInfo.ListOfAllies[randTarget]);
-                break;
-            case UnitAction.TargetTypes.ALLALLIES:
-                targets.AddRange(battleInfo.ListOfEnemies);
-                //Allow enemy to select multiple allies
-                break;
-            case UnitAction.TargetTypes.ALLENEMIES:
-                targets.AddRange(battleInfo.ListOfAllies);
-                //Allow multiple enemies but not all
-                break;
-            case UnitAction.TargetTypes.ALL:
-                targets.AddRange(battleInfo.ListOfAllies);
-                targets.AddRange(battleInfo.ListOfEnemies);
-                break;
-        }
+    //    switch (selectedAction.targetTypes)
+    //    {
+    //        case UnitActionSO.TargetTypes.RANDOMALLY:
+    //            randTarget = Random.Range(0, battleInfo.ListOfEnemies.Count);
+    //            targets.Add(battleInfo.ListOfEnemies[randTarget]);
+    //            break;
+    //        case UnitActionSO.TargetTypes.RANDOMOPPONENT:
+    //            randTarget = Random.Range(0, battleInfo.ListOfAllies.Count);
+    //            targets.Add(battleInfo.ListOfAllies[randTarget]);
+    //            break;
+    //        case UnitActionSO.TargetTypes.ALLALLIES:
+    //            targets.AddRange(battleInfo.ListOfEnemies);
+    //            //Allow enemy to select multiple allies
+    //            break;
+    //        case UnitActionSO.TargetTypes.ALLENEMIES:
+    //            targets.AddRange(battleInfo.ListOfAllies);
+    //            //Allow multiple enemies but not all
+    //            break;
+    //        case UnitActionSO.TargetTypes.ALL:
+    //            targets.AddRange(battleInfo.ListOfAllies);
+    //            targets.AddRange(battleInfo.ListOfEnemies);
+    //            break;
+    //    }
 
-        return targets.ToArray();
+    //    return targets.ToArray();
 
-    }
+    //}
 
     //Make an IEnumerator to handle the turns
     //Make it so the player can only proceed unless they target an enemy or cancel

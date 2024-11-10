@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56cb39a534c46d949989c07744e288fd, type: 3}
+  m_Name: Grand Fire
+  m_EditorClassIdentifier: 
+  name: Grand Fire
+  description: Rank 2 Fire attack
+  id: 2
+  effectType: 0
+  elementType: 0
+  targetTypes: 1
+  menuType: 0
+  baseValue: 40
+  statusEffectTypes:
+  - {fileID: 11400000, guid: f693ff1231bcc7445ae8f02d818f7f5e, type: 2}
+  customAction: {fileID: 0}
+  animationName: 
+  offset: {x: 0, y: 0, z: 0}

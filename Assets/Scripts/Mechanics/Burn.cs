@@ -3,30 +3,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Burns : IStatusEffects
+[CreateAssetMenu(menuName = "Battle/StatusEffects/Burn", fileName = "Burn Status")]
+public class Burn : StatusEffectSO
 {
-    public BattleUnit unit;
-    public int stack = 0;
     public int damage;
-    public int turnDuration;
 
-    public void OnHit()
+    public override void OnHit()
     {
         stack += 1;
         stack = Mathf.Clamp(stack, 0, 4);
+        Debug.Log("Unit has been burned!!");
     }
 
-    public void OnTurnEnd()
+    public override void OnTurnEnd()
     {
+        activeDuration -= 1;
     }
 
-    public void OnTurnStart()
+    public override void OnTurnStart()
     {
-        unit.myStats.Health -= damage;
+        int totalDamage = damage * stack;
+        unit.TakeDamage(totalDamage);
     }
 
-    public void OnTurnUpdate()
+    public override void OnTurnUpdate()
     {
-        turnDuration -= 1;
     }
 }
