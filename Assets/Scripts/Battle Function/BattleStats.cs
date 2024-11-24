@@ -39,7 +39,7 @@ public class BattleStats
 
         set
         {
-            health = Mathf.Clamp(value, 0, MAX_HP);
+            health = Mathf.Clamp(value, 0, maxHealth);
         }
     }
 
@@ -52,7 +52,6 @@ public class BattleStats
             maxHealth = Mathf.Clamp(value, 0, MAX_HP);
         }
     }
-
 
     public int Strength
     {

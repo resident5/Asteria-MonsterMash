@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using JetBrains.Annotations;
 
-public class CameraManager : MonoBehaviour
+public class CameraManager : Singleton<CameraManager>
 {
     public List<CinemachineVirtualCamera> cameras;
 
@@ -15,9 +16,21 @@ public class CameraManager : MonoBehaviour
 
     CinemachineBrain brain;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        Debug.Log("Setup cameras");
+        GameObject cameraObj = GameObject.FindGameObjectWithTag("MainCamera");
+        currentCamera = startCamera;
+        if (currentCamera == null)
+        {
+            currentCamera = FindObjectOfType<CinemachineVirtualCamera>();
+        }
+    }
+
     private void Start()
     {
-        currentCamera = startCamera;
+        currentCamera.Follow = GameManager.Instance.playerData.transform;
         CameraRefresh();
     }
 
@@ -50,6 +63,13 @@ public class CameraManager : MonoBehaviour
         {
             cameras.Add(battleCam);
         }
+    }
+
+    public void FindNewCameras(CinemachineVirtualCamera newCamera)
+    {
+        if (newCamera != null)
+            currentCamera = newCamera;
+        currentCamera.Follow = GameManager.Instance.playerData.transform;
     }
 
     public void ActivateBattleCamera()

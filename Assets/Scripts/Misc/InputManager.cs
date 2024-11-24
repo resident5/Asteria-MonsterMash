@@ -1,11 +1,7 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class InputManager : MonoBehaviour
+public class InputManager : Singleton<InputManager>
 {
     [Header("Input Action")]
     [SerializeField] private InputActionAsset playerControls;
@@ -18,6 +14,7 @@ public class InputManager : MonoBehaviour
     [SerializeField] private string move = "Movement";
     [SerializeField] private string jump = "Jump";
     [SerializeField] private string attack = "Attack";
+    [SerializeField] private string interact = "Interact";
     [SerializeField] private string pause = "Pause";
 
     [Header("Action Menu Name Reference")]
@@ -25,6 +22,7 @@ public class InputManager : MonoBehaviour
 
     private InputAction moveAction;
     private InputAction jumpAction;
+    private InputAction interaction;
     private InputAction attackAction;
     private InputAction pauseAction;
 
@@ -35,26 +33,29 @@ public class InputManager : MonoBehaviour
     public bool PauseInput { get; private set; }
     public bool Attacked { get; private set; }
     public bool Cancelled { get; private set; }
+    public bool Interacted { get; private set; }
 
-    public static InputManager Instance { get; private set; }
+    //public static InputManager Instance { get; private set; }
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         //Put this on another gameobject besides the Game Manager
-        if(Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        //if(Instance == null)
+        //{
+        //    Instance = this;
+        //    DontDestroyOnLoad(gameObject);
+        //}
+        //else
+        //{
+        //    Destroy(gameObject);
+        //}
 
         moveAction = playerControls.FindActionMap(actionMapName).FindAction(move);
         jumpAction = playerControls.FindActionMap(actionMapName).FindAction(jump);
         attackAction = playerControls.FindActionMap(actionMapName).FindAction(attack);
         pauseAction = playerControls.FindActionMap(actionMapName).FindAction(pause);
+        interaction = playerControls.FindActionMap(actionMapName).FindAction(interact);
 
         cancelAction = playerControls.FindActionMap(actionMenuMapName).FindAction(cancel);
 
@@ -67,16 +68,20 @@ public class InputManager : MonoBehaviour
         jumpAction.Enable();
         attackAction.Enable();
         pauseAction.Enable();
+        interaction.Enable();
+
         cancelAction.Enable();
     }
 
     private void OnDisable()
     {
-        moveAction.Disable();
-        jumpAction.Disable();
-        attackAction.Disable();
-        pauseAction.Disable();
-        cancelAction.Disable();
+        //moveAction.Disable();
+        //jumpAction.Disable();
+        //attackAction.Disable();
+        //pauseAction.Disable();
+        //interaction.Disable();
+
+        //cancelAction.Disable();
     }
 
     void RegisterInputActions()
@@ -88,10 +93,13 @@ public class InputManager : MonoBehaviour
         jumpAction.canceled += context => Jumped = false;
 
         attackAction.performed += context => Attacked = true;
-        attackAction.performed += context => Attacked = false;
+        attackAction.canceled += context => Attacked = false;
 
         pauseAction.performed += context => PauseInput = true;
         pauseAction.canceled += context => PauseInput = false;
+
+        interaction.started += context => Interacted = true;
+        interaction.canceled += context => Interacted = false;
 
         cancelAction.performed += context => Cancelled = true;
         cancelAction.canceled += context => Cancelled = false;

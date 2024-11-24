@@ -1,24 +1,26 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Cinemachine;
-using System;
+using B83.LogicExpressionParser;
+using JetBrains.Annotations;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
     public CameraManager cameraManager;
+    public DialogueSystem dialogueSystem;
     public BattleManager battleManager;
     public InputManager inputManager;
+    public VariableManager variableManager;
 
     public Debugger debugger;
 
     public enum GameState
     {
         OVERWORLD,
+        DIALOGUE,
         BATTLE,
         MENU
     }
@@ -32,11 +34,14 @@ public class GameManager : MonoBehaviour
 
     public HUDController hudController;
     public bool isPaused = false;
+    public bool isInteracting = false;
 
     private void Awake()
     {
         overWorldScene = SceneManager.GetActiveScene();
         cameraManager = GetComponentInChildren<CameraManager>();
+        dialogueSystem = GetComponentInChildren<DialogueSystem>();
+        variableManager = GetComponentInChildren<VariableManager>();
         hudController = FindObjectOfType<HUDController>();
         playerData = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerData>();
         inputManager = GetComponentInChildren<InputManager>();
@@ -74,9 +79,9 @@ public class GameManager : MonoBehaviour
                 if (enemyObj != null)
                     Destroy(enemyObj);
 
-                if (hasWon)
+                if (hasWon == true)
                     Debug.Log("Won the fight");
-                else
+                else if (hasWon == false)
                     Debug.Log("Lost the fight :(");
 
                 break;
@@ -87,6 +92,8 @@ public class GameManager : MonoBehaviour
                 break;
             case GameState.MENU:
                 break;
+            case GameState.DIALOGUE:
+                break;
             default:
                 break;
         }
@@ -94,16 +101,6 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            cameraManager.SwapToOverWorldCam();
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            cameraManager.SwapToBattleCam();
-        }
-
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             isPaused = !isPaused;
@@ -112,9 +109,30 @@ public class GameManager : MonoBehaviour
             hudController.ShowPauseMenu(playerData, isPaused);
         }
 
-        //Cancelled Works for 1st to 2nd panel and vice versa but not 3rd to 2nd panel due to getting the first button not working if its off in the battle.
+        //if (inputManager.Interacted && dialogueSystem.inDialogue == false)
+
+        if(Input.GetKeyDown(KeyCode.E))
+        {
+            if (playerData.focusTarget != null)
+            {
+                playerData.focusTarget.Interact();
+                playerData.focusTarget = null;
+                //isInteracting = true;
+                //return;
+                //state = GameState.DIALOGUE;
+                //dialogueSystem.gameManager = this;
+                //StartCoroutine(dialogueSystem.StartDialogue(playerData.focusTarget.dialogue));
+            }
+
+        }
+        if (inputManager.Interacted && !isInteracting)
+        {
+        }
+
+        //Cancelled Works for 1st to 2nd panel and vice versa but not 3rd to 2nd panel because getting the first button won't work if its off in the battle.
         if (inputManager.Cancelled)
         {
+            isInteracting = false;
             if (isPaused)
             {
                 hudController.HideAllPanels();
@@ -124,7 +142,6 @@ public class GameManager : MonoBehaviour
                 battleManager.battleHUD.ReturnPanel();
             }
         }
-
     }
 
     private void ReturnToPreviousBattleMenu()
@@ -176,8 +193,11 @@ public class GameManager : MonoBehaviour
 
             }
         }
-        Debug.Log("Scene finished loading");
+    }
 
+    public void MovePlayer(Transform newLocation)
+    {
+        playerData.transform.position = newLocation.position;
     }
 
     public void InitiateBattle(PlayerData pData, GameObject eObj)

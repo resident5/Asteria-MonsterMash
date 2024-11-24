@@ -12,6 +12,8 @@ public class BattleUnit : MonoBehaviour, ITurn
 
     public const int MAX_ACTION_VALUE = 100;
 
+    public Data data;
+
     public BattleStats myStats;
     public Animator anim;
 
@@ -32,52 +34,62 @@ public class BattleUnit : MonoBehaviour, ITurn
     public Animator animator;
     SpriteRenderer spriteRenderer;
 
+    HealthBar healthbar;
+
     private void Awake()
     {
         anim = GetComponent<Animator>();
     }
 
-    public void Init()
-    {
-        UnitCreatorSO unitInstance = Instantiate(unit);
-        id = unitInstance.id;
-        unitName = unitInstance.unitName;
-        description = unitInstance.description;
-        myStats = unitInstance.stats;
-        myBattleMoves = unitInstance.battleMoves;
-        statusEffects = new List<StatusEffectSO>();
-        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        if(spriteRenderer.sprite == null && unitInstance.spriteImage != null)
-        {
-            spriteRenderer.sprite = unitInstance.spriteImage;
-        }
+    //public void Init()
+    //{
+    //    UnitCreatorSO unitInstance = Instantiate(unit);
+    //    id = unitInstance.id;
+    //    unitName = unitInstance.unitName;
+    //    description = unitInstance.description;
+    //    myStats = unitInstance.stats;
+    //    myBattleMoves = unitInstance.battleMoves;
+    //    statusEffects = new List<StatusEffectSO>();
+    //    spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+    //    healthbar = GetComponentInChildren<HealthBar>();
 
-        //Load the animator controller from Resources.Load() based on the name of the mon
-        //animator = unitInstance.animator;
-        //Actionvalue is calculated as 100/speed then subracted until it reaches 0
-        baseActionValue = Mathf.CeilToInt(Mathf.Clamp(MAX_ACTION_VALUE / myStats.Speed, 0, MAX_ACTION_VALUE));
-        currentActionValue = baseActionValue;
-        //Debug.Log($"{name}'s action value is {actionValue}");
-    }
+    //    if (spriteRenderer.sprite == null && unitInstance.spriteImage != null)
+    //    {
+    //        spriteRenderer.sprite = unitInstance.spriteImage;
+    //    }
 
-    public void Init(UnitCreatorSO uCO)
+    //    //Load the animator controller from Resources.Load() based on the name of the mon
+    //    //animator = unitInstance.animator;
+    //    //Actionvalue is calculated as 100/speed then subracted until it reaches 0
+
+    //    healthbar.unit = this;
+    //    baseActionValue = Mathf.CeilToInt(Mathf.Clamp(MAX_ACTION_VALUE / myStats.Speed, 0, MAX_ACTION_VALUE));
+    //    currentActionValue = baseActionValue;
+    //    //Debug.Log($"{name}'s action value is {actionValue}");
+    //}
+
+    public void Init(UnitCreatorSO uCO, BattleStats stats = null)
     {
         UnitCreatorSO unitInstance = Instantiate(uCO);
-        id = unitInstance.id;
-        unitName = unitInstance.unitName;
-        description = unitInstance.description;
-        myStats = unitInstance.stats;
-        myBattleMoves = unitInstance.battleMoves;
+        id = unitInstance.data.id;
+        unitName = unitInstance.data.unitName;
+        description = unitInstance.data.description;
+        myStats = stats != null ? stats : unitInstance.data.stats;
+        myBattleMoves = unitInstance.data.battleMoves;
         statusEffects = new List<StatusEffectSO>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        if (spriteRenderer.sprite == null && unitInstance.spriteImage != null)
+        healthbar = GetComponentInChildren<HealthBar>();
+
+        if (spriteRenderer.sprite == null && unitInstance.data.spriteImage != null)
         {
-            spriteRenderer.sprite = unitInstance.spriteImage;
+            spriteRenderer.sprite = unitInstance.data.spriteImage;
         }
 
         //Load the animator controller from Resources.Load() based on the name of the mon
         //animator = unitInstance.animator;
         //Actionvalue is calculated as 100/speed then subracted until it reaches 0
+
+        healthbar.unit = this;
         baseActionValue = Mathf.CeilToInt(Mathf.Clamp(MAX_ACTION_VALUE / myStats.Speed, 0, MAX_ACTION_VALUE));
         currentActionValue = baseActionValue;
     }

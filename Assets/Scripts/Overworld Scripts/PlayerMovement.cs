@@ -1,3 +1,5 @@
+using Codice.Client.BaseCommands.Merge;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,12 +8,11 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header("Player Data")]
     public PlayerData playerData;
-    
+
     public Rigidbody rb;
     public Animator animator;
 
     public float moveSpeedX, moveSpeedZ;
-    public float radius;
 
     public int steps;
 
@@ -21,10 +22,20 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 startPosition;
     public Vector3 previousPosition;
 
-    public UnitCreatorSO playerCreator;
+    public bool canMove = true;
+
     public LayerMask walkable;
     GameManager GameManager => GameManager.Instance;
     public InputManager InputManager => InputManager.Instance;
+
+
+    [Header("Debug Values")]
+    public float radius;
+    public Vector3 debugTargetPosition;
+    public float debugOffSet;
+
+    [SerializeField]
+    private Collider[] colliders;
 
     private void Awake()
     {
@@ -43,21 +54,47 @@ public class PlayerMovement : MonoBehaviour
 
     void PlayerInput()
     {
-        Vector3 moveInputValue = new Vector3(InputManager.MoveInput.x, 0, InputManager.MoveInput.y);
+        Vector3 moveDir = new Vector3(InputManager.MoveInput.x, 0, InputManager.MoveInput.y);
         //float x = Input.GetAxisRaw("Horizontal");
         //float z = Input.GetAxisRaw("Vertical");
 
         Vector3 targetDir = Vector3.zero;
-        targetDir.x = moveInputValue.x;
-        targetDir.z = moveInputValue.z;
+        targetDir.x = moveDir.x * moveSpeedX * Time.deltaTime;
+        targetDir.z = moveDir.z * moveSpeedZ * Time.deltaTime;
+        animator.SetFloat("moveX", moveDir.x);
+        animator.SetFloat("moveZ", moveDir.z);
 
-        rb.velocity = new Vector3(targetDir.x * moveSpeedX, rb.velocity.y, targetDir.z * moveSpeedZ);
-        animator.SetFloat("moveX", targetDir.x);
-        animator.SetFloat("moveZ", targetDir.z);
-        
-        Step();
+        Vector3 targetPosition = transform.position + targetDir;
+        MoveToPosition(targetPosition);
 
-        Flip(targetDir.x);
+        //rb.velocity = new Vector3(targetDir.x * moveSpeedX, rb.velocity.y, targetDir.z * moveSpeedZ);
+
+        //Step();
+
+        Flip(moveDir.x);
+
+    }
+
+    private void MoveToPosition(Vector3 targetPos)
+    {
+        Vector3 targetFloorPos = new Vector3(targetPos.x, targetPos.y + debugOffSet, targetPos.z);
+        debugTargetPosition = targetFloorPos;
+        colliders = Physics.OverlapSphere(targetFloorPos, radius, walkable);
+        bool isValid = false;
+
+        foreach (var item in colliders)
+        {
+            TWalkable walkable = item.GetComponent<TWalkable>();
+            if (walkable != null)
+            {
+                isValid = true;
+            }
+        }
+
+        if (isValid)
+        {
+            transform.position = targetPos;
+        }
     }
 
     void Flip(float moveDir)
@@ -84,5 +121,10 @@ public class PlayerMovement : MonoBehaviour
         }
 
         return steps;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(debugTargetPosition, radius);
     }
 }

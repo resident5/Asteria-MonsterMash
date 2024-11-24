@@ -10,7 +10,7 @@ using UnityEngine.UI;
 //Primary List is for Fight, Summon, Item, Flee options
 //Options List is the box that populates the options after clicking Fight, Summon and Item
 //Secondary List is for 
-public class BattleHUDController : MonoBehaviour
+public class BattleHUDController : Singleton<BattleHUDController>
 {
     public GameObject actionButtonPrefab;
     public GameObject monButtonPrefab;

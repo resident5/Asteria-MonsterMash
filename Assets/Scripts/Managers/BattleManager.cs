@@ -22,8 +22,8 @@ public class BattleManager : MonoBehaviour
     public GameObject playerPrefab;
     public GameObject enemyPrefab;
 
-    PlayerUnit playerUnit;
-    BattleUnit enemyUnit;
+    public PlayerUnit playerBattleUnit;
+    public BattleUnit enemyUnit;
 
     public BattleInfo battleInfo;
 
@@ -70,7 +70,8 @@ public class BattleManager : MonoBehaviour
         battleHUD.transform.parent.gameObject.SetActive(false);
         Debug.Log("Disable HUD");
         battleHUD.DisableHUD();
-        Destroy(playerUnit.gameObject);
+        playerData.data.stats = playerBattleUnit.myStats;
+        Destroy(playerBattleUnit.gameObject);
         Destroy(enemyUnit.gameObject);
         battleHUD.turnOrderSlider.DeInit();
 
@@ -78,8 +79,9 @@ public class BattleManager : MonoBehaviour
 
         if (state == BattleState.LOST)
             return false;
-
+           
         return true;
+
     }
 
     private void Update()
@@ -111,11 +113,6 @@ public class BattleManager : MonoBehaviour
         {
             CalculateTurnOrder();
         }
-        //else if (state != BattleState.WON || state != BattleState.LOST)
-        //{
-        //    OnEnemyTurn();
-        //}
-
 
     }
 
@@ -140,22 +137,22 @@ public class BattleManager : MonoBehaviour
         GameObject pGo = Instantiate(playerPrefab, unitList.playerSpots.GetChild(0));
         GameObject eGo = Instantiate(enemyPrefab, unitList.enemySpots.GetChild(0));
 
-        playerUnit = pGo.GetComponent<PlayerUnit>();
+        playerBattleUnit = pGo.GetComponent<PlayerUnit>();
         enemyUnit = eGo.GetComponent<BattleUnit>();
 
-        playerUnit.manager = this;
-        //battleHUD.SetHUD(playerUnit);
-        playerUnit.Summons = playerData.battleMons;
+        playerBattleUnit.manager = this;
+        playerBattleUnit.unit.data.stats = playerData.playerCreator.data.stats;
+        playerBattleUnit.Summons = playerData.battleMons;
         enemyUnit.manager = this;
 
-        playerUnit.myStats.Health = playerUnit.myStats.MaxHealth;
-        enemyUnit.myStats.Health = enemyUnit.myStats.MaxHealth;
+        //playerUnit.myStats.Health = playerUnit.myStats.Health;
+        //enemyUnit.myStats.Health = enemyUnit.myStats.MaxHealth;
 
-        battleInfo.ListOfAllies.Add(playerUnit);
+        battleInfo.ListOfAllies.Add(playerBattleUnit);
         battleInfo.ListOfEnemies.Add(enemyUnit);
 
-        playerUnit.Init();
-        enemyUnit.Init();
+        playerBattleUnit.Init(playerData.playerCreator, playerData.data.stats);
+        enemyUnit.Init(enemyUnit.unit);
 
         battleHUD.turnOrderSlider.Init(battleInfo.ListOfAllUnits);
 
@@ -225,7 +222,7 @@ public class BattleManager : MonoBehaviour
     public void OnPlayerTurn(UnitActionSO battleMove)
     {
         //Change this to any player unit or check if the unit has a player tag
-        if (currentUnitTurn != playerUnit)
+        if (currentUnitTurn != playerBattleUnit)
             return;
 
         StartCoroutine(PlayerAttack(battleMove));

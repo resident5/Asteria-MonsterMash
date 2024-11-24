@@ -37,13 +37,13 @@ public class MonSummon : MonoBehaviour
 
     public void SetStatsBars(UnitCreatorSO unit)
     {
-        monNameText.text = unit.unitName;
+        monNameText.text = unit.data.unitName;
 
-        healthSlider.maxValue = unit.stats.MaxHealth;
-        healthSlider.value = unit.stats.Health;
+        healthSlider.maxValue = unit.data.stats.MaxHealth;
+        healthSlider.value = unit.data.stats.Health;
 
         lustSlider.maxValue = 100;
-        lustSlider.value = unit.stats.Lust;
+        lustSlider.value = unit.data.stats.Lust;
 
         fillImage.color = gradient.Evaluate(1f);
     }
