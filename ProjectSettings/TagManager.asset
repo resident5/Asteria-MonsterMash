@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - NPC
+  - Teleporter
   layers:
   - Default
   - TransparentFX
@@ -45,4 +46,7 @@ TagManager:
     locked: 0
   - name: Units
     uniqueID: 1120232429
+    locked: 0
+  - name: Background
+    uniqueID: 1714664633
     locked: 0

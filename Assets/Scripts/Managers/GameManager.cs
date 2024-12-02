@@ -29,20 +29,24 @@ public class GameManager : MonoBehaviour
     public Scene overWorldScene;
     public Scene battleScene;
 
-    public GameObject enemyObj;
+    public EnemyData enemyData;
     public PlayerData playerData;
 
     public HUDController hudController;
     public bool isPaused = false;
     public bool isInteracting = false;
 
+    public Teleporter[] teleportSpots;
+
     private void Awake()
     {
+        LeanTween.reset();
         overWorldScene = SceneManager.GetActiveScene();
         cameraManager = GetComponentInChildren<CameraManager>();
         dialogueSystem = GetComponentInChildren<DialogueSystem>();
         variableManager = GetComponentInChildren<VariableManager>();
         hudController = FindObjectOfType<HUDController>();
+        teleportSpots = FindObjectsOfType<Teleporter>();
         playerData = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerData>();
         inputManager = GetComponentInChildren<InputManager>();
         debugger = GetComponent<Debugger>();
@@ -76,8 +80,11 @@ public class GameManager : MonoBehaviour
                 cameraManager.DeactivateBattleCamera();
                 cameraManager.SwapToOverWorldCam();
 
-                if (enemyObj != null)
-                    Destroy(enemyObj);
+                if (enemyData != null)
+                {
+                    Destroy(enemyData.gameObject);
+                    enemyData = null;
+                }
 
                 if (hasWon == true)
                     Debug.Log("Won the fight");
@@ -86,7 +93,7 @@ public class GameManager : MonoBehaviour
 
                 break;
             case GameState.BATTLE:
-                battleManager.InitializeBattle(playerData);
+                battleManager.InitializeBattle(playerData, enemyData);
                 cameraManager.ActivateBattleCamera();
                 cameraManager.SwapToBattleCam();
                 break;
@@ -113,15 +120,11 @@ public class GameManager : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.E))
         {
+            Debug.Log("E WAS PRESSED");
             if (playerData.focusTarget != null)
             {
                 playerData.focusTarget.Interact();
                 playerData.focusTarget = null;
-                //isInteracting = true;
-                //return;
-                //state = GameState.DIALOGUE;
-                //dialogueSystem.gameManager = this;
-                //StartCoroutine(dialogueSystem.StartDialogue(playerData.focusTarget.dialogue));
             }
 
         }
@@ -200,16 +203,15 @@ public class GameManager : MonoBehaviour
         playerData.transform.position = newLocation.position;
     }
 
-    public void InitiateBattle(PlayerData pData, GameObject eObj)
+    public void InitiateBattle(PlayerData pData, EnemyData eData)
     {
-        enemyObj = eObj;
+        enemyData = eData;
         playerData = pData;
         ChangeState(GameState.BATTLE);
     }
 
     public void DeInitiateBattle()
     {
-        enemyObj = null;
         ChangeState(GameState.OVERWORLD);
     }
 

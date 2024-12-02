@@ -1,9 +1,7 @@
-using Codice.CM.WorkspaceServer.DataStore.Merge;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//TODO: Make a base Data script that both playerData and enemyData can inherit from
 public class PlayerData : Singleton<PlayerData>
 {
     public List<UnitCreatorSO> battleMons;
@@ -24,16 +22,16 @@ public class PlayerData : Singleton<PlayerData>
 
     public void InitializeStats()
     {
-        data.id = playerCreator.data.id;
-        data.level = playerCreator.data.level;
-        data.unitName = playerCreator.data.unitName;
-        data.description = playerCreator.data.description;
-        data.stats = playerCreator.data.stats;
-        data.isCapturable = playerCreator.data.isCapturable;
-        data.isEnemy = playerCreator.data.isEnemy;
-        data.spriteImage = playerCreator.data.spriteImage;
-        data.animator = playerCreator.data.animator;
-        data.battleMoves = playerCreator.data.battleMoves;
+        data = playerCreator.data;
+        //data.id = playerCreator.data.id;
+        //data.level = playerCreator.data.level;
+        //data.unitName = playerCreator.data.unitName;
+        //data.description = playerCreator.data.description;
+        //data.stats = playerCreator.data.stats;
+        //data.cannotBeCaptured = playerCreator.data.cannotBeCaptured;
+        //data.spriteImage = playerCreator.data.spriteImage;
+        //data.animator = playerCreator.data.animator;
+        //data.battleMoves = playerCreator.data.battleMoves;
     }
 
     private void Update()
@@ -43,24 +41,35 @@ public class PlayerData : Singleton<PlayerData>
 
     public void CheckNPC()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, detectionRadius);
         bool foundtarget = false;
 
-        foreach (Collider collider in colliders)
+        if (focusTarget == null)
         {
-            Interactable nData = collider.GetComponent<Interactable>();
-            if (nData != null)
+            Collider[] colliders = Physics.OverlapSphere(transform.position, detectionRadius);
+
+            foreach (Collider collider in colliders)
             {
-                if (focusTarget != nData)
+                Interactable nData = collider.GetComponent<Interactable>();
+                if (nData != null)
                 {
-                    focusTarget = nData;
-                    foundtarget = true;
+                    if (focusTarget != nData)
+                    {
+                        focusTarget = nData;
+                        foundtarget = true;
+                    }
                 }
-                break;
+            }
+
+        }
+        else
+        {
+            if (focusTarget != null)
+            {
+                Debug.Log("Current Target = " + focusTarget);
             }
         }
 
-        if(!foundtarget && focusTarget != null)
+        if (!foundtarget && focusTarget != null)
         {
             focusTarget = null;
         }
@@ -76,7 +85,7 @@ public class PlayerData : Singleton<PlayerData>
 
             if (eData.enemyState == EnemyData.EnemyState.CHASING)
             {
-                gameManager.InitiateBattle(this, collision.gameObject);
+                gameManager.InitiateBattle(this, eData);
             }
         }
     }

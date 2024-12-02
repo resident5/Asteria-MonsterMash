@@ -17,9 +17,15 @@ public class EnemyData : MonoBehaviour
     public EnemyState enemyState;
     public BattleUnit[] enemyUnit;
 
+    [Header("Unit Info")]
+    public UnitCreatorSO unitInfo;
+    //public SpriteRenderer spriteRenderer;
+
     void Start()
     {
         enemyState = EnemyState.IDLE;
+        //spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        //spriteRenderer.sprite = unitInfo.data.spriteImage;
     }
 
     public void ChangeState(EnemyState newState)

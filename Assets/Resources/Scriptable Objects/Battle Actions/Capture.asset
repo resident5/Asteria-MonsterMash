@@ -16,7 +16,7 @@ MonoBehaviour:
   description: Capture the monster. Easier at lower health
   id: 0
   effectType: 5
-  elementType: 0
+  elementType: 5
   targetTypes: 0
   menuType: 1
   baseValue: 0

@@ -87,7 +87,7 @@ public class EnemyUnit : BattleUnit
 
     private UnitActionSO GetRandomAction()
     {
-        List<UnitActionSO> enemyActionsList = myBattleMoves;
+        List<UnitActionSO> enemyActionsList = data.battleMoves;
         int rand = Random.Range(0, enemyActionsList.Count);
 
         return enemyActionsList[rand];

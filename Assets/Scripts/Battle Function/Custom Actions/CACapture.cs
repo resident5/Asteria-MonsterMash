@@ -12,6 +12,7 @@ public class CACapture : CustomBattleAction
     {
         PlayerUnit playerUnit = attacker.GetComponent<PlayerUnit>();
         bool success = Random.Range(0, 100) <= baseChance;
+        Debug.Log("Capture");
 
         if (success)
         {

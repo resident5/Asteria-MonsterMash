@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Linq;
-using static UnityEditor.Progress;
 
+//TODO: Set Enemies' idle animation to include graphix local position*
+//TODO: Setup Daespec's animations
+//TODO: Set up merchant
 public class BattleManager : MonoBehaviour
 {
     private static BattleManager instance;
@@ -32,10 +34,12 @@ public class BattleManager : MonoBehaviour
     public BattleUnit currentUnitTurn;
 
     public PlayerData playerData;
+    public EnemyData enemyData;
 
     public float battleRate = 1f;
     bool IsAllPlayersDead;
     bool IsAllEnemiesDead;
+    bool IsPlayerSubmitting;
 
     private void Awake()
     {
@@ -53,10 +57,11 @@ public class BattleManager : MonoBehaviour
         battleHUD.transform.parent.gameObject.SetActive(false);
     }
 
-    public void InitializeBattle(PlayerData playData)
+    public void InitializeBattle(PlayerData playData, EnemyData eData)
     {
         state = BattleState.START;
         playerData = playData;
+        enemyData = eData;
         battleInfo = new BattleInfo();
         battleHUD.transform.parent.gameObject.SetActive(true);
 
@@ -70,7 +75,7 @@ public class BattleManager : MonoBehaviour
         battleHUD.transform.parent.gameObject.SetActive(false);
         Debug.Log("Disable HUD");
         battleHUD.DisableHUD();
-        playerData.data.stats = playerBattleUnit.myStats;
+        playerData.data.stats = playerBattleUnit.data.stats;
         Destroy(playerBattleUnit.gameObject);
         Destroy(enemyUnit.gameObject);
         battleHUD.turnOrderSlider.DeInit();
@@ -95,18 +100,28 @@ public class BattleManager : MonoBehaviour
 
             IsAllPlayersDead = AllUnitsDead(battleInfo.ListOfAllies);
             IsAllEnemiesDead = AllUnitsDead(battleInfo.ListOfEnemies);
+            IsPlayerSubmitting = PlayerSubmitted(playerBattleUnit);
+
+            if (IsPlayerSubmitting)
+            {
+                state = BattleState.LOST;
+                //Play submit dialogue
+                GameManager.Instance.ChangeState(GameManager.GameState.OVERWORLD);
+            }
 
             if (IsAllPlayersDead)
             {
                 state = BattleState.LOST;
+                //Play Dialogue for lost scene
                 GameManager.Instance.ChangeState(GameManager.GameState.OVERWORLD);
             }
             if (IsAllEnemiesDead)
             {
                 state = BattleState.WON;
+                //Play dislogue for win scene
                 GameManager.Instance.ChangeState(GameManager.GameState.OVERWORLD);
             }
-
+            
         }
 
         if (state == BattleState.BATTLESTART && currentUnitTurn == null)
@@ -116,43 +131,54 @@ public class BattleManager : MonoBehaviour
 
     }
 
-    public bool AllUnitsDead(List<BattleUnit> listOfUnits)
+    bool AllUnitsDead(List<BattleUnit> listOfUnits)
     {
         if (listOfUnits != null)
         {
             foreach (var unit in listOfUnits)
             {
-                if (!unit.isDead)
+                if (unit.isDead)
                 {
-                    return false;
+                    return true;
+                }
+
+                if(unit.isLusty)
+                {
+                    return true;
                 }
             }
         }
 
-        return true;
+        return false;
     }
 
+    public bool PlayerSubmitted(PlayerUnit player)
+    {
+        return player.isLusty;
+    }
+
+    //TODO: Change Battle Scene setup to instantiate the player and the enemies then set their stats from the Overworld Player/Enemy DATA script
+    //TODO: Remove the unit scriptableobject reference and have it be fed from the playerinfo/enemyinfo scripts
     IEnumerator BattleSceneSetup()
     {
         GameObject pGo = Instantiate(playerPrefab, unitList.playerSpots.GetChild(0));
-        GameObject eGo = Instantiate(enemyPrefab, unitList.enemySpots.GetChild(0));
-
         playerBattleUnit = pGo.GetComponent<PlayerUnit>();
-        enemyUnit = eGo.GetComponent<BattleUnit>();
 
         playerBattleUnit.manager = this;
         playerBattleUnit.unit.data.stats = playerData.playerCreator.data.stats;
         playerBattleUnit.Summons = playerData.battleMons;
-        enemyUnit.manager = this;
 
-        //playerUnit.myStats.Health = playerUnit.myStats.Health;
-        //enemyUnit.myStats.Health = enemyUnit.myStats.MaxHealth;
+        playerBattleUnit.Init(playerData.playerCreator, playerData.data.stats);
+
+        GameObject eGo = Instantiate(enemyPrefab, unitList.enemySpots.GetChild(0));
+        enemyUnit = eGo.GetComponent<BattleUnit>();
+        enemyUnit.animator.runtimeAnimatorController = enemyData.unitInfo.data.animatorController;
+
+        enemyUnit.manager = this;
+        enemyUnit.Init(enemyData.unitInfo);
 
         battleInfo.ListOfAllies.Add(playerBattleUnit);
         battleInfo.ListOfEnemies.Add(enemyUnit);
-
-        playerBattleUnit.Init(playerData.playerCreator, playerData.data.stats);
-        enemyUnit.Init(enemyUnit.unit);
 
         battleHUD.turnOrderSlider.Init(battleInfo.ListOfAllUnits);
 
@@ -242,6 +268,7 @@ public class BattleManager : MonoBehaviour
         currentUnitTurn = null;
     }
 
+    //TODO: After summoning, you should insert the current unit's turn into the list.
     public bool SummonNewUnit(UnitCreatorSO unit, bool isSummon)
     {
         GameObject sGo;
@@ -261,6 +288,10 @@ public class BattleManager : MonoBehaviour
             return false;
 
         sGo.GetComponent<BattleUnit>().Init(unit);
+
+        currentUnitTurn.OnTurnEnd();
+
+        currentUnitTurn = null;
         return true;
     }
 

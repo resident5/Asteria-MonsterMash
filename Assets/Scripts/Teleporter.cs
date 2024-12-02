@@ -1,16 +1,10 @@
 using Cinemachine;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Windows.WebCam;
-using static GameManager;
 
-public class Teleporter : MonoBehaviour, Interactable
+public class Teleporter : MonoBehaviour
 {
-    [SerializeField]
-    Scene nextScene;
-
     public string nextSceneName;
     public enum SceneMarker
     {
@@ -18,50 +12,91 @@ public class Teleporter : MonoBehaviour, Interactable
     }
 
     //This teleporter's marker
-    public SceneMarker marker;
+    public SceneMarker teleportID;
 
     public Transform teleportTransform;
 
     //The marker for the next scene where the player will be transported
-    public SceneMarker targetMarker;
+    public SceneMarker targetTeleportID;
 
     public IEnumerator TransitionScenes()
     {
         AsyncOperation operation = SceneManager.LoadSceneAsync(nextSceneName, LoadSceneMode.Additive);
 
-        while (!operation.isDone)
+        if (operation != null)
         {
-            float progress = Mathf.Clamp01(operation.progress / .9f);
-
-            if (operation.progress >= 0.9f)
+            while (!operation.isDone)
             {
-            }
+                float progress = Mathf.Clamp01(operation.progress / .9f);
 
-            yield return null;
-        }
-        //Find out how to set cinemachine camera on new scene
-        StartCoroutine(SceneController.Instance.UnloadScenesExceptBattle());
+                HUDController.Instance.fadeCanvas.alpha = progress;
 
-        if (operation.isDone)
-        {
-            nextScene = SceneManager.GetSceneByName(nextSceneName);
-            if (nextScene.IsValid())
-            {
-                Teleporter[] teleporterSpots = FindObjectsOfType<Teleporter>();
-                CinemachineVirtualCamera cam = GetNewCinemachineCameraInScene();
-                foreach (var spot in teleporterSpots)
+                if (operation.progress >= 0.9f)
                 {
-                    if (targetMarker == spot.marker)
+                }
+
+                yield return null;
+            }
+            //Find out how to set cinemachine camera on new scene
+
+
+            if (operation.isDone)
+            {
+                Scene nextScene = SceneManager.GetSceneByName(nextSceneName);
+                if (nextScene.IsValid())
+                {
+                    Transform teleporterParentTransform = GetRootTeleporterObject(nextScene, transform.parent.name);
+                    Teleporter teleporter = GetNextTeleport(teleporterParentTransform);
+
+                    CinemachineVirtualCamera cam = GetNewCinemachineCameraInScene(nextScene);
+
+                    if (teleporter != null)
                     {
-                        GameManager.Instance.MovePlayer(spot.teleportTransform);
+                        GameManager.Instance.MovePlayer(teleporter.teleportTransform);
                         CameraManager.Instance.FindNewCameras(cam);
                     }
                 }
+                yield return null;
+                HUDController.Instance.FadeOut();
+
+                StartCoroutine(SceneController.Instance.UnloadScenesExceptBattle());
             }
         }
+
     }
 
-    public CinemachineVirtualCamera GetNewCinemachineCameraInScene()
+    public Transform GetRootTeleporterObject(Scene loadedScene, string objectName)
+    {
+        GameObject[] sceneRootObjects = loadedScene.GetRootGameObjects();
+        foreach (var obj in sceneRootObjects)
+        {
+            if (obj.name.Contains("ENVIRONMENT"))
+            {
+                foreach (Transform child in obj.transform)
+                {
+                    if(child.name == objectName)
+                        return child;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public Teleporter GetNextTeleport(Transform teleporterParent)
+    {
+        foreach (Transform child in teleporterParent)
+        {
+            Teleporter tele = child.GetComponent<Teleporter>();
+            if (targetTeleportID == tele.teleportID)
+            {
+                return tele;
+            }
+        }
+        return null;
+    }
+
+    public CinemachineVirtualCamera GetNewCinemachineCameraInScene(Scene nextScene)
     {
         GameObject[] rootObjectsInNewScene = nextScene.GetRootGameObjects();
         foreach (var item in rootObjectsInNewScene)
@@ -72,6 +107,12 @@ public class Teleporter : MonoBehaviour, Interactable
         }
 
         return null;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+            Interact();
     }
 
     public void Interact()

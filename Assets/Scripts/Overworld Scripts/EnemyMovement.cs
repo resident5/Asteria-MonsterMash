@@ -10,7 +10,7 @@ public class EnemyMovement : MonoBehaviour
     public float moveSpeedX, moveSpeedZ;
 
     public Transform target;
-    public EnemyData myData;
+    public EnemyData eData;
 
     public float detectionRadius;
     public bool facingRight;
@@ -20,7 +20,7 @@ public class EnemyMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
-        myData = GetComponent<EnemyData>();
+        eData = GetComponent<EnemyData>();
     }
 
     // Update is called once per frame
@@ -39,17 +39,17 @@ public class EnemyMovement : MonoBehaviour
             player = item.GetComponent<PlayerMovement>();
             if (player != null)
             {
-                myData.ChangeState(EnemyData.EnemyState.CHASING);
+                eData.ChangeState(EnemyData.EnemyState.CHASING);
                 target = player.transform;
             }
         }
 
         if (player == null)
         {
-            myData.ChangeState(EnemyData.EnemyState.IDLE);
+            eData.ChangeState(EnemyData.EnemyState.IDLE);
         }
 
-        if (myData.enemyState == EnemyData.EnemyState.CHASING)
+        if (eData.enemyState == EnemyData.EnemyState.CHASING)
         {
             Vector3 dir = target.position - transform.position;
             dir.Normalize();

@@ -8,6 +8,7 @@ public class HUDController : Singleton<HUDController>
 {
     public GameObject mainMenu;
     public Animator anim;
+    public CanvasGroup fadeCanvas;
 
     [Header("Summons")]
     public GameObject UIMonDataPrefab;
@@ -31,6 +32,8 @@ public class HUDController : Singleton<HUDController>
     public BattleUnit selectedUnit;
     public Item selectedItem;
 
+    [Header("Misc")]
+    public Popup popup;
 
 
     private void Start()
@@ -73,13 +76,15 @@ public class HUDController : Singleton<HUDController>
             {
                 //Setup mon stats in menu
                 GameObject obj = Instantiate(UIMonDataPrefab, teamHolder);
+                Button btn = obj.GetComponent<Button>();
                 UIMonStats monStats = obj.GetComponent<UIMonStats>();
+
                 monStats.SetStatsBars(mon);
             }
         }
         else
         {
-            foreach(Transform teamObj in teamHolder)
+            foreach (Transform teamObj in teamHolder)
             {
                 Destroy(teamObj.gameObject);
             }
@@ -88,7 +93,7 @@ public class HUDController : Singleton<HUDController>
 
     public void HideAllPanels()
     {
-        foreach(var panel in firstPanels)
+        foreach (var panel in firstPanels)
         {
             panel.SetActive(false);
         }
@@ -102,5 +107,28 @@ public class HUDController : Singleton<HUDController>
     public void SelectItem(Item item)
     {
         selectedItem = item;
+    }
+
+    public void DisplayPopupInfo(Sprite sprite, string info)
+    {
+        if (sprite != null)
+        {
+            popup.ShowPopupImage(sprite, info);
+        }
+        else
+        {
+            popup.ShowPopup(sprite, info);
+        }
+    }
+
+    public void FadeIn()
+    {
+        LeanTween.alphaCanvas(fadeCanvas, 1, 1.2f);
+    }
+
+    public void FadeOut()
+    {
+        Debug.Log("Fade Out");
+        LeanTween.alphaCanvas(fadeCanvas, 0, 1.2f);
     }
 }

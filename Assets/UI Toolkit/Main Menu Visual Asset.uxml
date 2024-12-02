@@ -1,0 +1,12 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/MainMenuStyle.uss?fileID=7433441132597879392&amp;guid=56490f747e9479a4dab34fa85423de28&amp;type=3#MainMenuStyle" />
+    <ui:VisualElement name="Container" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/ThirdParty/Kenney%20Assets/Foliage%20Pack/Spritesheet/foliagePack_default.png?fileID=21300000&amp;guid=582bc9ca3d1cc8f41a281f363f15c2ec&amp;type=3#foliagePack_default&quot;);">
+        <ui:Label tabindex="-1" text="Spirit Tamer" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Header" class="header" />
+        <ui:VisualElement name="VisualElement" style="flex-grow: 1; position: absolute; right: 0; bottom: 0;">
+            <ui:Button text="Story Mode" parse-escape-sequences="true" display-tooltip-when-elided="true" name="StoryButton" class="button" />
+            <ui:Button text="Sandbox" parse-escape-sequences="true" display-tooltip-when-elided="true" name="SandboxButton" class="button" />
+            <ui:Button text="Settings" parse-escape-sequences="true" display-tooltip-when-elided="true" name="SettingsButton" class="button" />
+            <ui:Button text="Exit" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Exit" class="button" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

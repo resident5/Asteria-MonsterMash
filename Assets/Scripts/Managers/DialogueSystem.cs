@@ -53,7 +53,7 @@ public class DialogueSystem : MonoBehaviour
     {
         dialogueQueue.Clear();
         inDialogue = true;
-        dialogueUI.dialogueCanvasGroup.alpha = 1f;
+        dialogueUI.ActivateDialogueHolder(true);
         //Debug.Log(isNSFWon);
 
         PopulateDialogueList(chosenEvent);
@@ -71,8 +71,16 @@ public class DialogueSystem : MonoBehaviour
                 //Debug.Log("ENTRY" + entry.Key);
                 switch (key)
                 {
+                    case "lName":
+                        dialogueUI.ChangeDialogueBox(false, true);
+                        break;
+                    case "rName":
+                        dialogueUI.ChangeDialogueBox(false, false);
+                        break;
+                    case "Name":
+                        dialogueUI.ChangeDialogueBox(true);
+                        break;
                     case "dialogue":
-                        dialogueUI.ChangeDialogueBox(false);
                         dialogueUI.ChangeText((string)value);
                         yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space) && dialogueUI.SkipOrContinue());
                         break;
@@ -82,8 +90,7 @@ public class DialogueSystem : MonoBehaviour
                         yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space) && dialogueUI.SkipOrContinue());
                         break;
                     case "image":
-                        break;
-                    case "name":
+                        //Intended for showing a popup of a message or image
                         break;
                     case "choice":
                         dialogueUI.dialogueChoiceHolder.CreateChoices((JObject)value);
@@ -92,17 +99,19 @@ public class DialogueSystem : MonoBehaviour
                         EndDialogue();
                         break;
                     case "displayOn":
-                        var displaySprite = Resources.Load<Sprite>((string)value);
-                        if (displaySprite == null)
+                        string text = (string)value;
+                        var spriteLocation = Resources.Load<Sprite>("Dialogues/Sprites/" + text);
+                        if (spriteLocation == null)
                         {
-                            displaySprite = Resources.Load<Sprite>("Dialogues/Sprites/Fade");
+                            //Should be image missing screen
+                            spriteLocation = Resources.Load<Sprite>("Dialogues/Sprites/Fade");
                         }
-                        StartCoroutine(dialogueUI.DisplayImage(displaySprite));
+                        StartCoroutine(dialogueUI.DisplayImage(spriteLocation));
                         break;
                     case "displayOff":
                         dialogueUI.DisplayOff();
                         break;
-                    case "condition":
+                    case "condition": 
                         //Check Condition first then player event or skip event
                         LogicExpression exp = parser.Parse((string)value);
 
@@ -110,6 +119,8 @@ public class DialogueSystem : MonoBehaviour
 
                         Debug.Log("IS NSFW ON? " + exp.GetResult() + " And the booolean? " + isNSFWon);
                         break;
+                    case "variable":
+
                     case "jump":
                         //Jump to this event next
                         break;
@@ -124,8 +135,8 @@ public class DialogueSystem : MonoBehaviour
             else
             {
                 inDialogue = false;
-                dialogueUI.dialogueCanvasGroup.alpha = 0f;
                 gameManager.state = GameManager.GameState.OVERWORLD;
+                dialogueUI.ActivateDialogueHolder(false);
                 //End Events
             }
 

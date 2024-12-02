@@ -1,13 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
-using static UnityEditor.Progress;
-using UnityEngine.UI;
-using static System.Net.Mime.MediaTypeNames;
-using static UnityEngine.EventSystems.EventTrigger;
 using Newtonsoft.Json.Linq;
-using System;
 
 public class DialogueChoiceHolder : MonoBehaviour
 {

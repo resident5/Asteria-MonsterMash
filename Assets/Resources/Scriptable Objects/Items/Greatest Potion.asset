@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85528acc83a20f14ba241d9143e8c948, type: 3}
   m_Name: Greatest Potion
   m_EditorClassIdentifier: 
-  name: Greatest Potion {value}
-  spriteIcon: {fileID: 0}
+  name: Greatest Potion
+  spriteIcon: {fileID: -673259673, guid: 045ea4d66de692d45aa88522b09f65d1, type: 3}
   description: Heals you for {value}
   canBeThrown: 1
   playerData: {fileID: 0}

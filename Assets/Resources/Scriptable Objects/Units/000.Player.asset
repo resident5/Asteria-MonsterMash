@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1abf79dbdb40744db7a79f01ce17b4a, type: 3}
+  m_Name: 000.Player
+  m_EditorClassIdentifier: 
+  data:
+    id: 0
+    level: 1
+    unitName: Lythok
+    description: Lythok is a Orc Champion
+    stats:
+      health: 100
+      maxHealth: 100
+      strength: 5
+      magic: 5
+      speed: 7
+      mana: 100
+      lust: 5
+    cannotBeCaptured: 1
+    spriteImage: {fileID: 0}
+    animatorController: {fileID: 9100000, guid: c16091e285ea76e42ade28a097d0b117, type: 2}
+    battleMoves:
+    - {fileID: 11400000, guid: 5eff99dea1f04c140b1e7658d758ea6c, type: 2}
+    - {fileID: 11400000, guid: 1be8f0ac882aec743b76f844e2d52a6f, type: 2}
+    - {fileID: 11400000, guid: 4fa4e0a8b12ee3f4caf80bc3f292a6d1, type: 2}

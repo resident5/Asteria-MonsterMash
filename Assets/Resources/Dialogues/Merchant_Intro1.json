@@ -1,0 +1,53 @@
+
+{
+	"diag": [
+		{
+			"lName": "Orc",
+			"dialogue": "Hmm I think I'm lost..."
+		},
+		{
+			"lName": "Orc",
+			"dialogue": "Can you tell me which way to go?"
+		},
+		{
+			"rName": "Merchant",
+			"dialogue": "Tch. Do I look like a guide to you, Orc boy?"
+		},
+		{
+			"lName": "Orc",
+			"dialogue": "Yes"
+		},
+		{
+			"rName": "Merchant",
+			"dialogue": "...Despite the fact that I'm more likely to be a traitor than a guide to you"
+		},
+		{
+			"lName": "Orc",
+			"dialogue": "Can you shut up and tell me where I'm at?"
+		},
+		{
+			"rName": "Merchant",
+			"dialogue": "..."
+		},
+		{
+			"rName": "Merchant",
+			"dialogue": "Tch. You are in front of me in a forest. Happy now?"
+		},
+		{
+			"lName": "Orc",
+			"dialogue": "..."
+		},
+		{
+			"lName": "Orc",
+			"dialogue": "Can you just give me directions to the nearest city? You clearly don't want a long conversation"
+		},
+		{
+			"rName": "Merchant",
+			"dialogue": "Ok..."
+		},
+		{
+			"lName": "Orc",
+			"dialogue": "No... Not really"
+		},
+	]
+}

@@ -20,13 +20,18 @@ public class MonSummon : MonoBehaviour
 
     public void OnEnable()
     {
-        btn.onClick.AddListener(()=>
+        btn.onClick.AddListener(() =>
         {
             bool success = BattleManager.Instance.SummonNewUnit(monUnit, true);
+
             if (!success)
             {
+                Debug.Log("Cannot summon");
                 //Send a message that the player has no room to summon. 
             }
+
+            BattleHUDController.Instance.summonHolder.gameObject.SetActive(false);
+
         });
     }
 

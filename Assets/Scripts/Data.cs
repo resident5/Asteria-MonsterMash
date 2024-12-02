@@ -13,12 +13,11 @@ public class Data
     public string description;
 
     public BattleStats stats;
-    public bool isCapturable;
-
-    public bool isEnemy;
+    public bool cannotBeCaptured;
 
     public Sprite spriteImage;
-    public Animator animator;
+
+    public RuntimeAnimatorController animatorController;
     public List<UnitActionSO> battleMoves;
 
     public void ModifyHealth()

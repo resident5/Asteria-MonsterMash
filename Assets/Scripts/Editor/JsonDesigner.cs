@@ -3,12 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System.IO;
-using System;
-using Unity.Plastic.Newtonsoft.Json;
 using Unity.Plastic.Newtonsoft.Json.Linq;
-using UnityEditor.IMGUI.Controls;
-using UnityEngine.UIElements;
-using UnityEngine.TestTools;
 
 public class JsonDesigner : EditorWindow
 {

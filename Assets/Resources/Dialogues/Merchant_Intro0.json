@@ -1,0 +1,184 @@
+{
+    "diag": [
+        {
+            "lName": "Orc",
+            "dialogue": "Hey, uh. Can you point me to the nearest city...?"
+        },
+        {
+            "rName": "Merchant",
+            "dialogue": "You must be new here... This is the Crossroads of Asteria"
+        },
+        {
+            "rName": "Merchant",
+            "dialogue": "In simpler terms, you are in this closed off space because I am here."
+        },
+        {
+            "lName": "Orc",
+            "dialogue": "I'm not sure I understand"
+        },
+        {
+            "rName": "Merchant",
+            "dialogue": "Ugh. It is so difficult to explain to new Champions."
+        },
+        {
+            "rName": "Merchant",
+            "dialogue": "Asteria itself determines where Champions go. We Asteria-born are permitted to go where we please."
+        },
+        {
+            "lName": "Orc",
+            "dialogue": "That sounds very inconvient can I come with you to the next city then?"
+        },
+        {
+            "rName": "Merchant",
+            "dialogue": "Hmm a brand new Champion all to myself? The offer is tempting but I have business here."
+        },
+        {
+            "rName": "Merchant",
+            "dialogue": "You're free to explore the area but not before I give you a little parting gift"
+        },
+        {
+            "lName": "Orc",
+            "dialogue": "!"
+        },
+        {
+            "rName": "Merchant",
+            "dialogue": "I'll give you a special piercing that will let my fellow merchants know you are at least interesting."
+        },
+        {
+            "rName": "Merchant",
+            "dialogue": "And depending on how much you entertain us you may yet earn more... gifts"
+        },
+        {
+            "lName": "Orc",
+            "dialogue": "Gifts like what?"
+        },
+        {
+            "rName": "Merchant",
+            "dialogue": "For now? Nothing, we are at the Crossroads and the rest of the area is not drawn for us yet."
+        },
+        {
+            "rName": "Merchant",
+            "dialogue": "But enough talk, remove your clothe-"
+        },
+        {
+            "rName": "Merchant",
+            "dialogue": "Ah you are naked already. Tempting but I'll keep to what I promised for now"
+        },
+        {
+            "narration": "With surprising agility, the snake merchant quickly slithers up to your naked form and lowers himself to meet your eye level"
+        },
+        {
+            "narration": "Before you can react however, he begins licking your nipple very suddenly."
+        },
+        {
+            "lName": "Orc",
+            "dialogue": "HUH!?"
+        },
+        {
+            "displayOn": "MM_CGs_MerchantRing",
+            "rName": "Merchant",
+            "dialogue": "Relax~ No need to tense up boy. Although I'll admit its cute."
+        },
+        {
+            "lName": "Orc",
+            "dialogue": "AH what are you doing?"
+        },
+        {
+            "rName": "Merchant",
+            "dialogue": "Preparing you for a nipple piercing of course. It is the most visible of piercings."
+        },
+        {
+            "lName": "Orc",
+            "dialogue": "So, is a face piercing!"
+        },
+        {
+            "rName": "Merchant",
+            "dialogue": "You have enough as it is and you want more?"
+        },
+        {
+            "lName": "Orc",
+            "dialogue": "I'm fine with more face piercings!"
+        },
+        {
+            "rName": "Merchant",
+            "dialogue": "Be thankful of my gift boy. Getting one is more difficult than you think."
+        },
+        {
+            "rName": "Merchant",
+            "dialogue": "An Orc Champion is one of many interesting things I'm sure we'll learn about you"
+        },
+        {
+            "lName": "Orc",
+            "dialogue": "F-Fine then."
+        },
+        {
+            "rName": "Merchant",
+            "dialogue": "For an Orc you are so adorable and much more lenient. I can't wait to see how Asteria corrupts you"
+        },
+        {
+            "lName": "Orc",
+            "dialogue": "For an Orc? How are Orc's usua-"
+        },
+        {
+            "narration": "In the slight moment of your distraction, the snake merchant clamps down on you nipple and you feel a sharp pain that makes you wince"
+        },
+        {
+            "displayOff": "",
+            "narration": "Quickly you back off from the Merchant."
+        },
+        {
+            "rName": "Merchant",
+            "dialogue": "It is done boy."
+        },
+        {
+            "lName": "Orc",
+            "dialogue": "Wha-"
+        },
+        {
+            "narration": "As you look down you notice you have a small ornament hanging from your nipple"
+        },
+        {
+            "rName": "Merchant",
+            "dialogue": "You have many piercings but you are surprised like its your first one?"
+        },
+        {
+            "lName": "Orc",
+            "dialogue": "I was expecting a clip-on piercing not a snake stapler!"
+        },
+        {
+            "rName": "Merchant",
+            "dialogue": "..."
+        },
+        {
+            "rName": "Merchant",
+            "dialogue": "Keep in touch boy. I'll be here for a while."
+        },
+        {
+            "rName": "Merchant",
+            "dialogue": "Also a friendly advice. I've been getting an uneasy sense near the bushes nearby"
+        },
+        {
+            "rName": "Merchant",
+            "dialogue": "Since I've planned to invest in you take great caution near them. I would hate to have to look for you"
+        },
+		{
+            "lName": "Orc",
+            "dialogue": "Invest? I thought this was a gift?"
+        },
+		{
+            "narration": "Quickly as you've said that a smile spreads across the merchant's face"
+        },
+		{
+            "rName": "Merchant",
+            "dialogue": "It is. But its more of a reminder to all my other merchant brothers. That I found you first."
+        },
+		{
+            "lName": "Orc",
+            "dialogue": "Ugh..."
+        },
+		{
+            "rName": "Merchant",
+            "dialogue": "Happy Exploring!"
+        }
+    ]
+}

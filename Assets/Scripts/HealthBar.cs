@@ -13,7 +13,7 @@ public class HealthBar : MonoBehaviour
     {
         if (unit != null)
         {
-            float amount = (float)unit.myStats.Health / unit.myStats.MaxHealth;
+            float amount = (float)unit.data.stats.Health / unit.data.stats.MaxHealth;
             fill.fillAmount = amount;
             //Debug.Log("My unit health = " + amount);
         }

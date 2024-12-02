@@ -1,11 +1,11 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Linq;
 
 // TODO: Implement stats parameters from the attacker to modify values of the attack ie a swift attack does more damage based on speed 
 
-public class BattleUnit : MonoBehaviour, ITurn
+public class BattleUnit : MonoBehaviour
 {
     public UnitCreatorSO unit;
     public BattleManager manager;
@@ -13,32 +13,29 @@ public class BattleUnit : MonoBehaviour, ITurn
     public const int MAX_ACTION_VALUE = 100;
 
     public Data data;
+    public Animator animator;
 
-    public BattleStats myStats;
-    public Animator anim;
+    //public string unitName;
+    //public string description;
+    //public int id;
 
-    public string unitName;
-    public string description;
-    public int id;
-
-    public bool isDead = false;
-
-    private List<StatusEffectSO> statusEffects;
-    public List<UnitActionSO> myBattleMoves;
+    public List<StatusEffectSO> statusEffects;
+    //public List<UnitActionSO> myBattleMoves;
 
     public bool isTurn;
     public int baseActionValue = 100;
     public int currentActionValue = 100;
 
-    public AudioClip audioClip;
-    public Animator animator;
-    SpriteRenderer spriteRenderer;
+    public bool isDead = false;
+    public bool isLusty = false;
 
-    HealthBar healthbar;
+    public AudioClip audioClip;
+
+    public HealthBar healthbar;
 
     private void Awake()
     {
-        anim = GetComponent<Animator>();
+        animator = GetComponent<Animator>();
     }
 
     //public void Init()
@@ -47,7 +44,7 @@ public class BattleUnit : MonoBehaviour, ITurn
     //    id = unitInstance.id;
     //    unitName = unitInstance.unitName;
     //    description = unitInstance.description;
-    //    myStats = unitInstance.stats;
+    //    data.stats = unitInstance.stats;
     //    myBattleMoves = unitInstance.battleMoves;
     //    statusEffects = new List<StatusEffectSO>();
     //    spriteRenderer = GetComponentInChildren<SpriteRenderer>();
@@ -63,7 +60,7 @@ public class BattleUnit : MonoBehaviour, ITurn
     //    //Actionvalue is calculated as 100/speed then subracted until it reaches 0
 
     //    healthbar.unit = this;
-    //    baseActionValue = Mathf.CeilToInt(Mathf.Clamp(MAX_ACTION_VALUE / myStats.Speed, 0, MAX_ACTION_VALUE));
+    //    baseActionValue = Mathf.CeilToInt(Mathf.Clamp(MAX_ACTION_VALUE / data.stats.Speed, 0, MAX_ACTION_VALUE));
     //    currentActionValue = baseActionValue;
     //    //Debug.Log($"{name}'s action value is {actionValue}");
     //}
@@ -71,28 +68,20 @@ public class BattleUnit : MonoBehaviour, ITurn
     public void Init(UnitCreatorSO uCO, BattleStats stats = null)
     {
         UnitCreatorSO unitInstance = Instantiate(uCO);
-        id = unitInstance.data.id;
-        unitName = unitInstance.data.unitName;
-        description = unitInstance.data.description;
-        myStats = stats != null ? stats : unitInstance.data.stats;
-        myBattleMoves = unitInstance.data.battleMoves;
+        unit = unitInstance;
+        data = unitInstance.data;
         statusEffects = new List<StatusEffectSO>();
-        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         healthbar = GetComponentInChildren<HealthBar>();
 
-        if (spriteRenderer.sprite == null && unitInstance.data.spriteImage != null)
-        {
-            spriteRenderer.sprite = unitInstance.data.spriteImage;
-        }
-
         //Load the animator controller from Resources.Load() based on the name of the mon
-        //animator = unitInstance.animator;
+        animator.runtimeAnimatorController = unitInstance.data.animatorController;
         //Actionvalue is calculated as 100/speed then subracted until it reaches 0
 
         healthbar.unit = this;
-        baseActionValue = Mathf.CeilToInt(Mathf.Clamp(MAX_ACTION_VALUE / myStats.Speed, 0, MAX_ACTION_VALUE));
+        baseActionValue = Mathf.CeilToInt(Mathf.Clamp(MAX_ACTION_VALUE / data.stats.Speed, 0, MAX_ACTION_VALUE));
         currentActionValue = baseActionValue;
     }
+
 
     private void Update()
     {
@@ -109,16 +98,18 @@ public class BattleUnit : MonoBehaviour, ITurn
     /// <param name="action"></param>
     public void ApplyAction(BattleUnit attacker, UnitActionSO action)
     {
-        //Debug.Log($"{unitName} has {myStats.Health}\n{attacker.unitName} casts {action.name} on {unit.unitName} for {action.baseValue} points");
+        Debug.Log($"Do {action.name}");
+
+        //Debug.Log($"{unitName} has {data.stats.Health}\n{attacker.unitName} casts {action.name} on {unit.unitName} for {action.baseValue} points");
         switch (action.effectType)
         {
             case UnitActionSO.EffectTypes.DAMAGE:
                 //Put a method for calculating if attack landed or it missed
-                TakeDamage(action.baseValue);
+                TakeDamage(action.baseValue, action);
                 ApplyDebuff(attacker, action);
                 break;
             case UnitActionSO.EffectTypes.HEAL:
-                myStats.Health += action.baseValue;
+                data.stats.Health += action.baseValue;
                 break;
             case UnitActionSO.EffectTypes.SPLASH:
                 //Unit takes damage then transfers to other allies
@@ -129,7 +120,7 @@ public class BattleUnit : MonoBehaviour, ITurn
             default:
                 break;
         }
-        Debug.Log($"{unitName} has {myStats.Health} left");
+        Debug.Log($"{data.unitName} has {data.stats.Health} left");
 
     }
 
@@ -144,6 +135,7 @@ public class BattleUnit : MonoBehaviour, ITurn
                 {
                     StatusEffectSO statusObj = Instantiate(status);
                     statusObj.activeDuration = statusObj.maxDuration;
+                    statusObj.sourceUnit = attackingUnit;
                     statusObj.unit = this;
                     if (GameManager.Instance.debugger.isDebugging)
                         Debug.Log("Status unit name " + statusObj.unit.name);
@@ -167,18 +159,41 @@ public class BattleUnit : MonoBehaviour, ITurn
         }
     }
 
-    public void TakeDamage(int damage)
+    //Modify totalDamage by typeadvantage, by amblifierType
+    public void TakeDamage(int damage, UnitActionSO action = null)
     {
-        myStats.Health -= damage;
-        if (myStats.Health <= 0)
+        int totalDamage = damage;
+        
+        //totalDamage += AmplifiedDamage(damage);
+        //OnAttackHit(damage);
+        
+        if (action.elementType != UnitActionSO.ElementTypes.LUST)
         {
-            PlayAnimation("Death");
-            isDead = true;
+            data.stats.Health -= totalDamage;
+            if (data.stats.Health <= 0)
+            {
+                PlayAnimation("Death");
+                isDead = true;
+            }
+            else
+            {
+                Debug.Log("Trigger " + data.unitName + "_Hit");
+                PlayAnimation(data.unitName + "_Hit");
+            }
         }
         else
         {
-            //Debug.Log("HIT");
-            PlayAnimation("Hit");
+            data.stats.Lust += totalDamage;
+            //Should probably use MAX LUST instead
+            if (data.stats.Lust >= 100)
+            {
+                //Play Loss animation
+                isLusty = true;
+            }
+            else
+            {
+                //Player Lust Animation
+            }
         }
     }
 
@@ -189,8 +204,8 @@ public class BattleUnit : MonoBehaviour, ITurn
 
     public void PlayAnimation(string animName)
     {
-        anim.Play(animName);
-        anim.SetBool("IsInteracting", true);
+        animator.Play(animName);
+        animator.SetBool("IsInteracting", true);
     }
 
     public virtual void OnTurnStart()
@@ -216,13 +231,21 @@ public class BattleUnit : MonoBehaviour, ITurn
     {
         if (GameManager.Instance.debugger.isDebugging)
             Debug.Log("My Turn Ended");
-        currentActionValue = Mathf.CeilToInt(Mathf.Clamp(MAX_ACTION_VALUE / myStats.Speed, 0, MAX_ACTION_VALUE));
+        currentActionValue = Mathf.CeilToInt(Mathf.Clamp(MAX_ACTION_VALUE / data.stats.Speed, 0, MAX_ACTION_VALUE));
 
 
         foreach (var status in statusEffects)
         {
             if (status != null)
                 status.OnTurnEnd();
+        }
+    }
+
+    public virtual void OnHit(int damage)
+    {
+        foreach (var status in statusEffects)
+        {
+            status.OnHit(damage); 
         }
     }
 

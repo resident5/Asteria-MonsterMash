@@ -7,16 +7,25 @@ public abstract class StatusEffectSO : ScriptableObject
 {
     public int activeDuration;
     public int maxDuration;
+    public BattleUnit sourceUnit;
     public BattleUnit unit;
 
     public bool isStackable;
     public int stack = 0;
 
     public GameObject visualEffect;
+    public enum StatusType
+    {
+        DOT,
+        AMPLIFIER
+    }
 
-    public abstract void OnHit();
+    public StatusType type;
+
+    public UnitActionSO.ElementTypes elementType;
+
+    public abstract void OnHit(int damage);
     public abstract void OnTurnStart();
     public abstract void OnTurnUpdate();
-
     public abstract void OnTurnEnd();
 }

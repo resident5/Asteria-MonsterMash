@@ -12,8 +12,8 @@ public class DialogueUI : MonoBehaviour
     public DialogueBox narration;
     public DialogueBox right;
 
-    public CanvasGroup dialogueCanvasGroup;
     public DialogueChoiceHolder dialogueChoiceHolder;
+    public GameObject dialogueHolder;
 
     private DialogueBox activeBox;
 
@@ -28,15 +28,13 @@ public class DialogueUI : MonoBehaviour
 
     private void Awake()
     {
-        dialogueCanvasGroup.alpha = 0;
-
+        dialogueHolder.SetActive(false);
         isTyping = false;
     }
 
     private void Start()
     {
         activeBox = narration;
-
     }
 
     public void ChangeText(string text)
@@ -108,22 +106,34 @@ public class DialogueUI : MonoBehaviour
         }
     }
 
-    public void ChangeDialogueBox(bool isNarrator)
+    //Find a way to keep track of all the characters/sprites/icons without having to foldersearch for them
+    //Probably gonna need scriptable objects...
+
+    public void ChangeDialogueBox(bool isNarrator, bool isLeft = true, string VNSpriteName = null)
     {
-        activeBox.gameObject.SetActive(false);
+        activeBox.SetBox(false);
+        Sprite vnSprite = GetSpriteFromName(VNSpriteName);
 
         if (isNarrator)
         {
             activeBox = narration;
         }
-        else
+        else if (isLeft)
         {
             activeBox = left;
-            //Find a way to keep track of all the characters/sprites/icons without having to foldersearch for them
-            //Probably gonna need scriptable objects...
+            //activeBox.VNImage.sprite = Sprite;
+        }
+        else
+        {
+            activeBox = right;
         }
 
-        activeBox.gameObject.SetActive(true);
+        activeBox.SetBox(true, vnSprite);
+    }
+
+    public Sprite GetSpriteFromName(string spriteName)
+    {
+        return Resources.Load<Sprite>(spriteName);
     }
 
     public IEnumerator DisplayImage(Sprite sprite)
@@ -163,5 +173,13 @@ public class DialogueUI : MonoBehaviour
         fadeImage.CrossFadeAlpha(1.0f, fadeDuration, false);
     }
 
+    public void ActivateDialogueHolder(bool on)
+    {
+        dialogueHolder.SetActive(on);
+    }
 
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }

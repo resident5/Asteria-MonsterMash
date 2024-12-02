@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-
 public class Chest : MonoBehaviour, Interactable
 {
     public List<Item> possibleListOfItems;
@@ -22,7 +21,11 @@ public class Chest : MonoBehaviour, Interactable
 
         InventoryManager.Instance.AddItem(randomItem, randomItemAmount);
         //Display Message System
-        Debug.Log($"Player got {randomItemAmount} {randomItem.name}{(randomItemAmount > 1 ? "s" : "")}");
+        string openChestInfo = $"Acquired {randomItemAmount} {randomItem.name}{(randomItemAmount > 1 ? "s" : "")}";
+        
+        HUDController.Instance.DisplayPopupInfo(randomItem.spriteIcon, openChestInfo);
+        Debug.Log("OPENED CHEST");
+        
         isOpened = true;
     }
 

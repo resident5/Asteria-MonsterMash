@@ -1,4 +1,0 @@
-{
-	"name": "MainAssembly",
-	"references": ["Unity.TextMeshPro", "Cinemachine", "Unity.InputSystem", "GDX"]
-}

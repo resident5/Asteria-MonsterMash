@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1abf79dbdb40744db7a79f01ce17b4a, type: 3}
+  m_Name: 002.LustGhost
+  m_EditorClassIdentifier: 
+  data:
+    id: 2
+    level: 1
+    unitName: LustGhost
+    description: No name yet
+    stats:
+      health: 50
+      maxHealth: 50
+      strength: 3
+      magic: 8
+      speed: 4
+      mana: 100
+      lust: 20
+    cannotBeCaptured: 0
+    spriteImage: {fileID: 21300000, guid: 5f1887339331fd34d828c809ce074fbd, type: 3}
+    animatorController: {fileID: 9100000, guid: 369e4d5854ef28a40904be637009c267, type: 2}
+    battleMoves:
+    - {fileID: 11400000, guid: 5eff99dea1f04c140b1e7658d758ea6c, type: 2}

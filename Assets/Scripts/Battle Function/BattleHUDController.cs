@@ -33,6 +33,7 @@ public class BattleHUDController : Singleton<BattleHUDController>
 
     public List<GameObject> fightButtonList;
     public List<GameObject> otherButtonList;
+    public List<GameObject> summonButtonList;
 
     public Button primaryFirstButton;
 
@@ -51,7 +52,7 @@ public class BattleHUDController : Singleton<BattleHUDController>
     {
         primaryFirstButton.Select();
         //Loop the current playable characters' battle moves and instantiate them
-        foreach (var action in currentPlayerTurn.myBattleMoves)
+        foreach (var action in currentPlayerTurn.data.battleMoves)
         {
             GameObject obj = null;
             switch (action.menuType)
@@ -76,7 +77,8 @@ public class BattleHUDController : Singleton<BattleHUDController>
             GameObject obj = Instantiate(monButtonPrefab, summonHolder);
             MonSummon mSummon = obj.GetComponent<MonSummon>();
             mSummon.monUnit = summon;
-            obj.GetComponentInChildren<TMP_Text>().text = mSummon.monUnit.name;
+            obj.GetComponentInChildren<TMP_Text>().text = mSummon.monUnit.data.unitName;
+            summonButtonList.Add(obj);
         }
         Init();
     }
@@ -94,19 +96,24 @@ public class BattleHUDController : Singleton<BattleHUDController>
     public void ClearHUD()
     {
         Debug.Log("ClearHUD");
-        foreach (var move in otherButtonList)
+        foreach (var objBtn in otherButtonList)
         {
-            Destroy(move.gameObject);
+            Destroy(objBtn.gameObject);
         }
 
-        foreach (var move in fightButtonList)
+        foreach (var objBtn in fightButtonList)
         {
-            Destroy(move.gameObject);
+            Destroy(objBtn.gameObject);
+        }
+
+        foreach (var objBtn in summonButtonList)
+        {
+            Destroy(objBtn.gameObject);
         }
 
         otherButtonList.Clear();
         fightButtonList.Clear();
-
+        summonButtonList.Clear();
     }
 
     public void EnableHUD()

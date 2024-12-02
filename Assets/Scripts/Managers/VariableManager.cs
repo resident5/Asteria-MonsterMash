@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using B83.LogicExpressionParser;
@@ -36,6 +35,6 @@ public class VariableManager : MonoBehaviour
 
     private void Start()
     {
-        NewVariable("npcTalk", 1);
+        NewVariable("merchantTalk", 0);
     }
 }
