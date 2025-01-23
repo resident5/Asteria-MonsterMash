@@ -19,7 +19,7 @@ MonoBehaviour:
   elementType: 0
   targetTypes: 1
   menuType: 0
-  baseValue: 40
+  baseValue: 20
   statusEffectTypes:
   - {fileID: 11400000, guid: f693ff1231bcc7445ae8f02d818f7f5e, type: 2}
   customAction: {fileID: 0}

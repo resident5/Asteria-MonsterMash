@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using GDX.Collections.Generic;
 
 
 [CreateAssetMenu(fileName = "BattleMove", menuName = "Battle/Create new battle move")]

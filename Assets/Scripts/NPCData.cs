@@ -3,22 +3,33 @@ using System.Collections.Generic;
 using System.Xml.Linq;
 using UnityEngine;
 
-public class NPCData : MonoBehaviour, Interactable
+public class NPCData : Interactable
 {
     public Sprite dialogueImage;
     public string dialogue;
-    GameManager gManager;
+    DialogueSystem dialogueSystem;
+
+    public Transform worldCanvas;
+
+    public Emote emote;
 
     private void Start()
     {
-        gManager = GameManager.Instance;
+        dialogueSystem = DialogueSystem.Instance;
+        SetupEmote();
     }
-    //TODO: Might want to make this cleaner to do I don't think you should go through 4 classes to set a sprite imo
-    public void Interact()
+
+    public void SetupEmote()
     {
-        gManager.state = GameManager.GameState.DIALOGUE;
-        gManager.dialogueSystem.gameManager = gManager;
-        gManager.dialogueSystem.dialogueUI.right.VNImage.sprite = dialogueImage;
-        StartCoroutine(gManager.dialogueSystem.StartDialogue(dialogue));
+        //worldCanvas = GameObject.Find("World Canvas");
+        emote.transform.SetParent(worldCanvas.transform); 
+    }
+
+    public override void Interact()
+    {
+        //gManager.state = GameManager.GameState.DIALOGUE;
+        //gManager.dialogueSystem.gameManager = gManager;
+        //gManager.dialogueSystem.dialogueUI.right.VNImage.sprite = dialogueImage;
+        dialogueSystem.StartConversation(dialogue);
     }
 }

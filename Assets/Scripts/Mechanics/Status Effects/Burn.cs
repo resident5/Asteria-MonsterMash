@@ -12,7 +12,7 @@ public class Burn : StatusEffectSO
     {
         stack += 1;
         stack = Mathf.Clamp(stack, 0, 4);
-        Debug.Log("Unit has been burned!!");
+        Debug.Log($"Unit has been burned by {sourceAction} from {sourceUnit.name}");
     }
 
     public override void OnTurnEnd()
@@ -23,7 +23,8 @@ public class Burn : StatusEffectSO
     public override void OnTurnStart()
     {
         int totalDamage = damage * stack;
-        unit.TakeDamage(totalDamage);
+        Debug.Log($"{unit.name} just took burn damage");
+        unit.TakeDamage(totalDamage, sourceAction);
     }
 
     public override void OnTurnUpdate()

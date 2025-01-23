@@ -73,16 +73,16 @@ public class InputManager : Singleton<InputManager>
         cancelAction.Enable();
     }
 
-    private void OnDisable()
-    {
-        //moveAction.Disable();
-        //jumpAction.Disable();
-        //attackAction.Disable();
-        //pauseAction.Disable();
-        //interaction.Disable();
+    //private void OnDisable()
+    //{
+    //    moveAction.Disable();
+    //    jumpAction.Disable();
+    //    attackAction.Disable();
+    //    pauseAction.Disable();
+    //    interaction.Disable();
 
-        //cancelAction.Disable();
-    }
+    //    cancelAction.Disable();
+    //}
 
     void RegisterInputActions()
     {
@@ -98,10 +98,24 @@ public class InputManager : Singleton<InputManager>
         pauseAction.performed += context => PauseInput = true;
         pauseAction.canceled += context => PauseInput = false;
 
-        interaction.started += context => Interacted = true;
-        interaction.canceled += context => Interacted = false;
+        //interaction.started += context => Interacted = true;
+        //interaction.canceled += context => Interacted = false;
 
-        cancelAction.performed += context => Cancelled = true;
-        cancelAction.canceled += context => Cancelled = false;
+        //cancelAction.started += context => Cancelled = true;
+        //cancelAction.canceled += context => Cancelled = false;
+    }
+
+    private void Update()
+    {
+        if (interaction.WasCompletedThisFrame())
+            Interacted = true;
+        else
+            Interacted = false;
+
+        if(cancelAction.WasCompletedThisFrame())
+            Cancelled = true;
+        else
+            Cancelled = false;
+        
     }
 }

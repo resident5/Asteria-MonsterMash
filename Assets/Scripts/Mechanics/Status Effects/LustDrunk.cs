@@ -13,7 +13,7 @@ public class LustDrunk : StatusEffectSO
     public override void OnHit(int lustDamage)
     {
         int extraDamage = lustDamage * (percentageIncrease/100);
-        unit.TakeDamage(extraDamage);
+        unit.TakeDamage(extraDamage, sourceAction);
         Debug.Log("Unit is Lust Drunk!!");
     }
 

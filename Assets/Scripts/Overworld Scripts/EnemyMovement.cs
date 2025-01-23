@@ -9,12 +9,12 @@ public class EnemyMovement : MonoBehaviour
 
     public float moveSpeedX, moveSpeedZ;
 
-    public Transform target;
     public EnemyData eData;
 
     public float detectionRadius;
     public bool facingRight;
-    public LayerMask playerMask;
+
+    public PlayerMovement player;
 
     private void Awake()
     {
@@ -26,54 +26,37 @@ public class EnemyMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameManager.Instance.state == GameManager.GameState.OVERWORLD)
-            Movement();
+        //DetectPlayer();
     }
 
-    void Movement()
-    {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, detectionRadius);
-        PlayerMovement player = null;
-        foreach (Collider item in colliders)
-        {
-            player = item.GetComponent<PlayerMovement>();
-            if (player != null)
-            {
-                eData.ChangeState(EnemyData.EnemyState.CHASING);
-                target = player.transform;
-            }
-        }
+    //void DetectPlayer()
+    //{
+    //    Collider[] colliders = Physics.OverlapSphere(transform.position, detectionRadius);
+    //    PlayerMovement player = null;
 
-        if (player == null)
-        {
-            eData.ChangeState(EnemyData.EnemyState.IDLE);
-        }
+    //    foreach (Collider item in colliders)
+    //    {
+    //        player = item.GetComponent<PlayerMovement>();
+    //        if (player != null && GameManager.Instance.state == GameManager.GameState.OVERWORLD)
+    //        {
+    //            eData.StateMachine.ChangeState(eData.ChasingState);
+    //        }
+    //        else
+    //        {
+    //            eData.StateMachine.ChangeState(eData.IdleState);
+    //        }
+    //    }
 
-        if (eData.enemyState == EnemyData.EnemyState.CHASING)
-        {
-            Vector3 dir = target.position - transform.position;
-            dir.Normalize();
+    //    //if (eData.enemyState == EnemyData.EnemyState.CHASING)
+    //    //{
+    //    //    Vector3 dir = target.position - transform.position;
+    //    //    dir.Normalize();
 
-            rb.velocity = dir * moveSpeedX;
-            Flip(dir.x);
-        }
+    //    //    rb.velocity = dir * moveSpeedX;
+    //    //    Flip(dir.x);
+    //    //}
 
-    }
-
-    void Flip(float xDirection)
-    {
-        if (xDirection > 0 && !facingRight || xDirection < 0 && facingRight)
-        {
-            facingRight = !facingRight;
-            Vector3 rot = Vector3.zero;
-            if (!facingRight)
-            {
-                rot.y = 180;
-            }
-
-            transform.localEulerAngles = rot;
-        }
-    }
+    //}
 
     private void OnDrawGizmos()
     {

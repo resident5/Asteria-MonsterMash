@@ -43,7 +43,7 @@ public class DialogueChoice : MonoBehaviour
     {
         StopAllCoroutines();
         Debug.Log("Call next dialogue");
-        StartCoroutine(DialogueSystem.Instance.StartDialogue(dialogue));
+        DialogueSystem.Instance.StartConversation(dialogue);
     }
 
     public void ActivateChoice()

@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
@@ -24,6 +25,8 @@ public class BattleHUDController : Singleton<BattleHUDController>
     public TMP_Text manaText;
     public TMP_Text lustText;
 
+    [Header("Menu Manager")]
+    public Stack<Menu> battleMenuStack = new Stack<Menu>();
 
     [Header("Button Holders")]
     [Space]
@@ -44,6 +47,46 @@ public class BattleHUDController : Singleton<BattleHUDController>
     public GameObject[] panelsList;
     public Button previousButtonPressed;
 
+    public void ShowMenu(Menu newMenu)
+    {
+        if (battleMenuStack.Count > 0)
+            battleMenuStack.Peek().SetActive(false);
+
+
+        newMenu.SetActive(true);
+        
+
+        if (newMenu.firstButton != null)
+        {
+            newMenu.firstButton.Select();
+        }
+        else
+        {
+            if (newMenu.holder.transform.childCount > 0)
+            {
+                newMenu.firstButton = newMenu.holder.transform.GetChild(0).GetComponent<Button>();
+                newMenu.firstButton.Select();
+            }
+        }
+
+        battleMenuStack.Push(newMenu);
+    }
+
+    public void HideMenu()
+    {
+        if (battleMenuStack.Count > 0)
+        {
+            var topMenu = battleMenuStack.Pop();
+            topMenu.gameObject.SetActive(false);
+
+            if (battleMenuStack.Count > 0)
+            {
+                battleMenuStack.Peek().gameObject.SetActive(true);
+            }
+        }
+    }
+
+
     /// <summary>
     /// Setup the HUD for the player's actions
     /// </summary>
@@ -51,36 +94,57 @@ public class BattleHUDController : Singleton<BattleHUDController>
     public void SetHUD(PlayerUnit currentPlayerTurn)
     {
         primaryFirstButton.Select();
-        //Loop the current playable characters' battle moves and instantiate them
+        //Populate battle moves section
         foreach (var action in currentPlayerTurn.data.battleMoves)
         {
-            GameObject obj = null;
-            switch (action.menuType)
-            {
-                case UnitActionSO.MenuType.FIGHT:
-                    obj = Instantiate(actionButtonPrefab, fightHolder);
-                    fightButtonList.Add(obj);
-                    break;
-                case UnitActionSO.MenuType.OTHER:
-                    obj = Instantiate(actionButtonPrefab, otherHolder);
-                    otherButtonList.Add(obj);
-                    break;
-            }
-            UnitActionButton uAction = obj.GetComponent<UnitActionButton>();
-            uAction.unitAction = action;
-            obj.GetComponentInChildren<TMP_Text>().text = uAction.unitAction.name;
+            SetupMoves(action);
         }
 
-        //Loop through the current player's summons (if any) and populate the summon list ui with them
+        //Populate summons list
         foreach (var summon in currentPlayerTurn.Summons)
         {
-            GameObject obj = Instantiate(monButtonPrefab, summonHolder);
-            MonSummon mSummon = obj.GetComponent<MonSummon>();
-            mSummon.monUnit = summon;
-            obj.GetComponentInChildren<TMP_Text>().text = mSummon.monUnit.data.unitName;
-            summonButtonList.Add(obj);
+            SetupSummons(summon);
         }
         Init();
+    }
+
+    void SetupMoves(UnitActionSO unitActions)
+    {
+        GameObject obj = null;
+        switch (unitActions.menuType)
+        {
+            case UnitActionSO.MenuType.FIGHT:
+                obj = Instantiate(actionButtonPrefab, fightHolder);
+                var fightMenuHolder = fightHolder.GetComponent<Menu>();
+                if (fightMenuHolder != null && fightMenuHolder.firstButton == null)
+                {
+                    fightMenuHolder.firstButton = obj.GetComponent<Button>();
+                }
+                fightButtonList.Add(obj);
+                break;
+            case UnitActionSO.MenuType.OTHER:
+                obj = Instantiate(actionButtonPrefab, otherHolder);
+                var otherMenuHolder = otherHolder.GetComponent<Menu>();
+                if (otherMenuHolder != null && otherMenuHolder.firstButton == null)
+                {
+                    otherMenuHolder.firstButton = obj.GetComponent<Button>();
+                }
+                otherButtonList.Add(obj);
+                break;
+        }
+        UnitActionButton uAction = obj.GetComponent<UnitActionButton>();
+        uAction.unitAction = unitActions;
+        obj.GetComponentInChildren<TMP_Text>().text = uAction.unitAction.name;
+
+    }
+    
+    void SetupSummons(UnitCreatorSO summon)
+    {
+        GameObject obj = Instantiate(monButtonPrefab, summonHolder);
+        MonSummon mSummon = obj.GetComponent<MonSummon>();
+        mSummon.monUnit = summon;
+        obj.GetComponentInChildren<TMP_Text>().text = mSummon.monUnit.data.unitName;
+        summonButtonList.Add(obj);
     }
 
     public void UpdateHUD()
@@ -95,7 +159,6 @@ public class BattleHUDController : Singleton<BattleHUDController>
     /// </summary>
     public void ClearHUD()
     {
-        Debug.Log("ClearHUD");
         foreach (var objBtn in otherButtonList)
         {
             Destroy(objBtn.gameObject);
@@ -142,110 +205,70 @@ public class BattleHUDController : Singleton<BattleHUDController>
         }
     }
 
-    public void GetFirstFightButton(Button btn)
-    {
-        previousButtonPressed = btn;
-        secondaryFirstButton = fightHolder.GetChild(0).GetComponent<Button>();
-        secondaryFirstButton.Select();
-        SetNavigation(fightButtonList);
-    }
+    //public void NextPanel(GameObject panel)
+    //{
+    //    //Turn on this panel
+    //    //Turn on this panel's parent
+    //    //Turn off everything in this panel's parent's children EXCEPT this
 
-    public void GetFirstOtherButton(Button btn)
-    {
-        previousButtonPressed = btn;
-        secondaryFirstButton = otherHolder.GetChild(0).GetComponent<Button>();
-        secondaryFirstButton.Select();
-        SetNavigation(otherButtonList);
-    }
+    //    Transform parent = panel.transform.parent;
 
-    public void ReturnPanel()
-    {
-        Debug.Log($"previousButtonPressed = {previousButtonPressed.name}");
-        //Change to introduce page script for handling selecting the first button
-        if (panelsList[0].activeSelf)
-            return;
+    //    parent.gameObject.SetActive(true);
+    //    panel.SetActive(true);
 
-        for (int i = 1; i < panelsList.Length; i++)
-        {
-            if (panelsList[i].gameObject.activeSelf)
-            {
-                //Turn off the current panel list
-                //Turn on the previous panel list
-                //Get the first button available in the panel list and set to that be selected
-                panelsList[i].SetActive(false);
-                panelsList[i - 1].SetActive(true);
-                if (previousButtonPressed != null)
-                    previousButtonPressed.Select();
-                else
-                    panelsList[i - 1].transform.GetChild(0).GetComponent<Button>().Select();
-            }
-        }
-    }
+    //    foreach (Transform item in parent)
+    //    {
+    //        if (item.gameObject != panel)
+    //        {
+    //            item.gameObject.SetActive(false);
+    //        }
+    //    }
 
-    public void NextPanel(GameObject panel)
-    {
-        //Turn on this panel
-        //Turn on this panel's parent
-        //Turn off everything in this panel's parent's children EXCEPT this
+    //    foreach (Transform item in parent.parent)
+    //    {
+    //        if (item.gameObject != parent.gameObject)
+    //        {
+    //            item.gameObject.SetActive(false);
+    //        }
+    //    }
+    //}
 
-        Transform parent = panel.transform.parent;
+    //private void SetNavigation(List<GameObject> moveList)
+    //{
+    //    for (int i = 0; i < moveList.Count; i++)
+    //    {
+    //        Button btn = moveList[i].GetComponent<Button>();
+    //        Navigation nav = btn.navigation;
+    //        nav.mode = Navigation.Mode.Explicit;
 
-        parent.gameObject.SetActive(true);
-        panel.SetActive(true);
+    //        //If i is at the last element, set the select down to be the first element... else set select down to the next element
+    //        nav.selectOnDown = i == moveList.Count - 1 ? moveList[0].GetComponent<Button>() : moveList[i + 1].GetComponent<Button>();
 
-        foreach (Transform item in parent)
-        {
-            if (item.gameObject != panel)
-            {
-                item.gameObject.SetActive(false);
-            }
-        }
+    //        //If i is at the first element, set the select up to be the last element... else set the select up to the previous element.
+    //        nav.selectOnUp = i == 0 ? moveList[moveList.Count - 1].GetComponent<Button>() : moveList[i - 1].GetComponent<Button>();
 
-        foreach (Transform item in parent.parent)
-        {
-            if (item.gameObject != parent.gameObject)
-            {
-                item.gameObject.SetActive(false);
-            }
-        }
-    }
-
-    private void SetNavigation(List<GameObject> moveList)
-    {
-        for (int i = 0; i < moveList.Count; i++)
-        {
-            Button btn = moveList[i].GetComponent<Button>();
-            Navigation nav = btn.navigation;
-            nav.mode = Navigation.Mode.Explicit;
-
-            //If i is at the last element, set the select down to be the first element... else set select down to the next element
-            nav.selectOnDown = i == moveList.Count - 1 ? moveList[0].GetComponent<Button>() : moveList[i + 1].GetComponent<Button>();
-
-            //If i is at the first element, set the select up to be the last element... else set the select up to the previous element.
-            nav.selectOnUp = i == 0 ? moveList[moveList.Count - 1].GetComponent<Button>() : moveList[i - 1].GetComponent<Button>();
-
-            btn.navigation = nav;
-        }
+    //        btn.navigation = nav;
+    //    }
 
 
-        //Button firstButton = moveList[0].GetComponent<Button>();
-        //Button lastButton = moveList[moveList.Count - 1].GetComponent<Button>(); ;
+    //    //Button firstButton = moveList[0].GetComponent<Button>();
+    //    //Button lastButton = moveList[moveList.Count - 1].GetComponent<Button>(); ;
 
-        //Navigation firstNav = firstButton.navigation;
-        //firstNav.mode = Navigation.Mode.Explicit;
-        //firstNav.selectOnUp = lastButton;
-        //firstNav.selectOnLeft = lastButton;
+    //    //Navigation firstNav = firstButton.navigation;
+    //    //firstNav.mode = Navigation.Mode.Explicit;
+    //    //firstNav.selectOnUp = lastButton;
+    //    //firstNav.selectOnLeft = lastButton;
 
-        //firstButton.navigation = firstNav;
+    //    //firstButton.navigation = firstNav;
 
-        //Navigation lastNav = lastButton.navigation;
-        //lastNav.mode = Navigation.Mode.Explicit;
-        //lastNav.selectOnRight = firstButton;
-        //lastNav.selectOnDown = firstButton;
+    //    //Navigation lastNav = lastButton.navigation;
+    //    //lastNav.mode = Navigation.Mode.Explicit;
+    //    //lastNav.selectOnRight = firstButton;
+    //    //lastNav.selectOnDown = firstButton;
 
-        //lastButton.navigation = lastNav;
+    //    //lastButton.navigation = lastNav;
 
-    }
+    //}
 
     private void Init()
     {

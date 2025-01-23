@@ -709,10 +709,13 @@ MonoBehaviour:
   emptySummon: {fileID: 6597310811573800255, guid: 8498ead863dccbd419d4cf7611652f4d, type: 3}
   playerPrefab: {fileID: 6597310811573800255, guid: 703b8cbd6405a7943837394c11a921d9, type: 3}
   enemyPrefab: {fileID: 7034162257670391839, guid: 868f45e971bf0e3409df2f2fe64e2b56, type: 3}
+  playerBattleUnit: {fileID: 0}
+  enemyUnit: {fileID: 0}
   battleInfo: {fileID: 0}
   battleHUD: {fileID: 359882723}
   currentUnitTurn: {fileID: 0}
   playerData: {fileID: 0}
+  enemyData: {fileID: 0}
   battleRate: 1
 --- !u!1 &287597895
 GameObject:
@@ -760,7 +763,7 @@ GameObject:
   - component: {fileID: 359882722}
   - component: {fileID: 359882723}
   m_Layer: 5
-  m_Name: Main
+  m_Name: Battle HUD
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -812,6 +815,7 @@ MonoBehaviour:
   summonHolder: {fileID: 608687140}
   fightButtonList: []
   otherButtonList: []
+  summonButtonList: []
   primaryFirstButton: {fileID: 854505921}
   secondaryFirstButton: {fileID: 0}
   tertiaryFirstButton: {fileID: 0}
@@ -867,6 +871,7 @@ GameObject:
   - component: {fileID: 394567357}
   - component: {fileID: 394567359}
   - component: {fileID: 394567358}
+  - component: {fileID: 394567360}
   m_Layer: 5
   m_Name: Player Info
   m_TagString: Untagged
@@ -932,6 +937,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 394567356}
   m_CullTransparentMesh: 1
+--- !u!114 &394567360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 394567356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8985741a3045cc4f96c2f4c81256d34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  level: 1
+  firstButton: {fileID: 0}
+  holder: {fileID: 0}
 --- !u!1 &399513782
 GameObject:
   m_ObjectHideFlags: 0
@@ -2013,6 +2033,7 @@ GameObject:
   m_Component:
   - component: {fileID: 763079072}
   - component: {fileID: 763079071}
+  - component: {fileID: 763079073}
   m_Layer: 7
   m_Name: Directional Light
   m_TagString: Untagged
@@ -2097,6 +2118,29 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &763079073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 763079070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_RenderingLayers: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_ShadowRenderingLayers: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
 --- !u!1 &772315471
 GameObject:
   m_ObjectHideFlags: 0
@@ -2108,13 +2152,14 @@ GameObject:
   - component: {fileID: 772315472}
   - component: {fileID: 772315474}
   - component: {fileID: 772315473}
+  - component: {fileID: 772315475}
   m_Layer: 5
   m_Name: Other List
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &772315472
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2173,6 +2218,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 772315471}
   m_CullTransparentMesh: 1
+--- !u!114 &772315475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 772315471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8985741a3045cc4f96c2f4c81256d34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  level: 1
+  firstButton: {fileID: 0}
+  holder: {fileID: 626213094}
 --- !u!1 &773676684
 GameObject:
   m_ObjectHideFlags: 0
@@ -2305,7 +2365,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 4
+    m_Mode: 2
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 854505921}
     m_SelectOnDown: {fileID: 1955746743}
@@ -2338,23 +2398,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 359882723}
         m_TargetAssemblyTypeName: BattleHUDController, Assembly-CSharp
-        m_MethodName: NextPanel
+        m_MethodName: ShowMenu
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 772315471}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 359882723}
-        m_TargetAssemblyTypeName: BattleHUDController, Assembly-CSharp
-        m_MethodName: GetFirstOtherButton
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 778768759}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_ObjectArgument: {fileID: 772315475}
+          m_ObjectArgumentAssemblyTypeName: Menu, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -2572,23 +2620,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 359882723}
         m_TargetAssemblyTypeName: BattleHUDController, Assembly-CSharp
-        m_MethodName: GetFirstFightButton
+        m_MethodName: ShowMenu
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 854505921}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 359882723}
-        m_TargetAssemblyTypeName: BattleHUDController, Assembly-CSharp
-        m_MethodName: NextPanel
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 2050699333}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 2050699338}
+          m_ObjectArgumentAssemblyTypeName: Menu, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -2647,7 +2683,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &865532605
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3234,7 +3270,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+  - {fileID: 2100000, guid: f773c9b3dfde1344eb5ac7faea748618, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3558,6 +3594,7 @@ GameObject:
   - component: {fileID: 1342172357}
   - component: {fileID: 1342172359}
   - component: {fileID: 1342172358}
+  - component: {fileID: 1342172360}
   m_Layer: 5
   m_Name: Summons List
   m_TagString: Untagged
@@ -3623,6 +3660,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1342172356}
   m_CullTransparentMesh: 1
+--- !u!114 &1342172360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1342172356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8985741a3045cc4f96c2f4c81256d34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  level: 1
+  firstButton: {fileID: 0}
+  holder: {fileID: 1631995301}
 --- !u!1 &1365858010
 GameObject:
   m_ObjectHideFlags: 0
@@ -3632,6 +3684,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1365858011}
+  - component: {fileID: 1365858012}
   m_Layer: 5
   m_Name: Summon Page
   m_TagString: Untagged
@@ -3659,6 +3712,21 @@ RectTransform:
   m_AnchoredPosition: {x: 100, y: 175.12787}
   m_SizeDelta: {x: -300, y: 272.8127}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1365858012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1365858010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8985741a3045cc4f96c2f4c81256d34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  level: 2
+  firstButton: {fileID: 0}
+  holder: {fileID: 0}
 --- !u!1 &1489884551
 GameObject:
   m_ObjectHideFlags: 0
@@ -4401,7 +4469,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 4
+    m_Mode: 2
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 778768759}
     m_SelectOnDown: {fileID: 990217460}
@@ -4563,6 +4631,7 @@ GameObject:
   - component: {fileID: 2050699334}
   - component: {fileID: 2050699337}
   - component: {fileID: 2050699336}
+  - component: {fileID: 2050699338}
   m_Layer: 5
   m_Name: Fight List
   m_TagString: Untagged
@@ -4628,6 +4697,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2050699333}
   m_CullTransparentMesh: 1
+--- !u!114 &2050699338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2050699333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8985741a3045cc4f96c2f4c81256d34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  level: 1
+  firstButton: {fileID: 0}
+  holder: {fileID: 33912528}
 --- !u!1 &2060879877
 GameObject:
   m_ObjectHideFlags: 0

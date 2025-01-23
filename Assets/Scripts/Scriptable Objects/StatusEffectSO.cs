@@ -9,6 +9,7 @@ public abstract class StatusEffectSO : ScriptableObject
     public int maxDuration;
     public BattleUnit sourceUnit;
     public BattleUnit unit;
+    public UnitActionSO sourceAction;
 
     public bool isStackable;
     public int stack = 0;

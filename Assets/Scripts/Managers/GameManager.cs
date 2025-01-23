@@ -66,6 +66,7 @@ public class GameManager : MonoBehaviour
     {
         state = GameState.OVERWORLD;
         StartCoroutine(PreloadBattleScene("Battle"));
+        hudController.SetupMenu(playerData);
     }
 
     public void ChangeState(GameState newState, PlayerData data = null)
@@ -100,62 +101,68 @@ public class GameManager : MonoBehaviour
             case GameState.MENU:
                 break;
             case GameState.DIALOGUE:
+                dialogueSystem.gameManager = this;
+                //dialogueSystem.dialogueUI.right.VNImage.sprite = actorSprite;
                 break;
             default:
                 break;
         }
     }
 
+    //public void StartDialogue(string dialogue)
+    //{
+    //    ChangeState(GameState.DIALOGUE);
+    //    //dialogueSystem.StartDialogue(dialogue);
+    //}
+
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            isPaused = !isPaused;
-            Time.timeScale = isPaused ? 0 : 1;
+        Inputs();
 
-            hudController.ShowPauseMenu(playerData, isPaused);
-        }
-
-        //if (inputManager.Interacted && dialogueSystem.inDialogue == false)
-
-        if(Input.GetKeyDown(KeyCode.E))
-        {
-            Debug.Log("E WAS PRESSED");
-            if (playerData.focusTarget != null)
-            {
-                playerData.focusTarget.Interact();
-                playerData.focusTarget = null;
-            }
-
-        }
         if (inputManager.Interacted && !isInteracting)
         {
+            Debug.Log("E WAS PRESSED");
+            if (playerData.focus != null)
+            {
+                playerData.focus.Focused();
+                playerData.focus = null;
+            }
         }
 
         //Cancelled Works for 1st to 2nd panel and vice versa but not 3rd to 2nd panel because getting the first button won't work if its off in the battle.
         if (inputManager.Cancelled)
         {
-            isInteracting = false;
-            if (isPaused)
-            {
-                hudController.HideAllPanels();
-            }
-            else
-            {
-                battleManager.battleHUD.ReturnPanel();
-            }
+            if (isInteracting)
+                isInteracting = false;
+
+            hudController.HideMenu();
+            battleManager.battleHUD.HideMenu();
         }
     }
 
-    private void ReturnToPreviousBattleMenu()
+    void Inputs()
     {
-
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            Pause();
+        }
     }
 
-    //private void ReturnToPreviousMenu()
-    //{
-    //    hudController.HideAllPanels();
-    //}
+    void Pause()
+    {
+        isPaused = !isPaused;
+        Time.timeScale = isPaused ? 0 : 1;
+
+        if (isPaused)
+        {
+            hudController.ShowMenu(hudController.main);
+            hudController.ShowPauseMenu(playerData, isPaused);
+        }
+        else
+        {
+            hudController.CloseMenu();
+        }
+    }
 
     public IEnumerator PreloadBattleScene(string sceneName)
     {

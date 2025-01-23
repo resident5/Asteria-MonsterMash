@@ -120,7 +120,7 @@ public class BattleUnit : MonoBehaviour
             default:
                 break;
         }
-        Debug.Log($"{data.unitName} has {data.stats.Health} left");
+        //Debug.Log($"{data.unitName} has {data.stats.Health} left");
 
     }
 
@@ -135,6 +135,7 @@ public class BattleUnit : MonoBehaviour
                 {
                     StatusEffectSO statusObj = Instantiate(status);
                     statusObj.activeDuration = statusObj.maxDuration;
+                    statusObj.sourceAction = action;
                     statusObj.sourceUnit = attackingUnit;
                     statusObj.unit = this;
                     if (GameManager.Instance.debugger.isDebugging)
@@ -166,7 +167,6 @@ public class BattleUnit : MonoBehaviour
         
         //totalDamage += AmplifiedDamage(damage);
         //OnAttackHit(damage);
-        
         if (action.elementType != UnitActionSO.ElementTypes.LUST)
         {
             data.stats.Health -= totalDamage;

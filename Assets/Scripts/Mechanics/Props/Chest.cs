@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Chest : MonoBehaviour, Interactable
+public class Chest : Interactable
 {
     public List<Item> possibleListOfItems;
     public bool isOpened = false;
@@ -11,7 +11,7 @@ public class Chest : MonoBehaviour, Interactable
     [Range(1, 50)]
     public int min, max;
 
-    public void Interact()
+    public override void Interact()
     {
         if (isOpened)
             return;

@@ -12,6 +12,9 @@ public class EncounterEvent : MonoBehaviour
     public float timer = 0;
     public float maxTime = 7f;
     public GameObject[] encounterList;
+    public Canvas worldCanvas;
+
+    public Transform unitHolder;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -53,6 +56,7 @@ public class EncounterEvent : MonoBehaviour
     public void SpawnMonster()
     {
         int rand = Random.Range(0, encounterList.Length);
-        Instantiate(encounterList[rand], player.transform.position, Quaternion.identity);
+        GameObject mon = Instantiate(encounterList[rand], player.transform.position, Quaternion.identity, unitHolder);
+        mon.GetComponent<EnemyData>().SetupEmote(worldCanvas);
     }
 }

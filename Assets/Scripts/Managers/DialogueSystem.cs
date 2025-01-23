@@ -49,14 +49,25 @@ public class DialogueSystem : MonoBehaviour
         }
     }
 
-    public IEnumerator StartDialogue(string chosenEvent)
+    private void Start()
+    {
+        gameManager = GameObject.FindObjectOfType<GameManager>();
+    }
+
+    public void StartConversation(string dialogue)
+    {
+        gameManager.ChangeState(GameManager.GameState.DIALOGUE);
+        StartCoroutine(StartDialogue(dialogue));
+    }
+
+    IEnumerator StartDialogue(string dialogueEvents)
     {
         dialogueQueue.Clear();
         inDialogue = true;
         dialogueUI.ActivateDialogueHolder(true);
         //Debug.Log(isNSFWon);
 
-        PopulateDialogueList(chosenEvent);
+        PopulateDialogueList(dialogueEvents);
 
         currentDialogueNode = dialogueQueue.First;
 

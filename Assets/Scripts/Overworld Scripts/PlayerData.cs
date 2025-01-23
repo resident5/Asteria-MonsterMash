@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Runtime.Serialization.Json;
 using UnityEngine;
 
 //TODO: Make a base Data script that both playerData and enemyData can inherit from
@@ -9,15 +10,20 @@ public class PlayerData : Singleton<PlayerData>
 
     public UnitCreatorSO playerCreator;
 
-    public Interactable focusTarget;
+    public Interactable focus;
     public float detectionRadius;
 
     [Header("Stats")]
     public Data data;
 
+    [Header("Emote")]
+    public Emote emote;
+    public Canvas worldCanvas;
+
     private void Start()
     {
         InitializeStats();
+        SetupEmote(worldCanvas);
     }
 
     public void InitializeStats()
@@ -36,58 +42,64 @@ public class PlayerData : Singleton<PlayerData>
 
     private void Update()
     {
-        CheckNPC();
+        CheckInteractables();
     }
 
-    public void CheckNPC()
+    public void CheckInteractables()
     {
         bool foundtarget = false;
 
-        if (focusTarget == null)
+        Collider[] colliders = Physics.OverlapSphere(transform.position, detectionRadius);
+        foreach (Collider collider in colliders)
         {
-            Collider[] colliders = Physics.OverlapSphere(transform.position, detectionRadius);
-
-            foreach (Collider collider in colliders)
+            Interactable interactable = collider.GetComponent<Interactable>();
+            if (interactable != null)
             {
-                Interactable nData = collider.GetComponent<Interactable>();
-                if (nData != null)
-                {
-                    if (focusTarget != nData)
-                    {
-                        focusTarget = nData;
-                        foundtarget = true;
-                    }
-                }
-            }
-
-        }
-        else
-        {
-            if (focusTarget != null)
-            {
-                Debug.Log("Current Target = " + focusTarget);
+                SetFocus(interactable);
+                foundtarget = true;
+                break;
             }
         }
 
-        if (!foundtarget && focusTarget != null)
+
+        if (!foundtarget)
         {
-            focusTarget = null;
+            focus = null;
         }
+    }
+
+    public void SetFocus(Interactable newFocus)
+    {
+        if (focus != newFocus)
+        {
+            if (focus != null)
+            {
+                focus.DeFocused();
+            }
+            focus = newFocus;
+        }
+
+    }
+
+    public void SetupEmote(Canvas canvas)
+    {
+        emote.transform.SetParent(canvas.transform);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        GameObject colObj = collision.gameObject;
+        //GameObject colObj = collision.gameObject;
 
-        if (colObj.tag == "Enemy")
-        {
-            EnemyData eData = colObj.GetComponent<EnemyData>();
+        //if (colObj.tag == "Enemy")
+        //{
+        //    EnemyData eData = colObj.GetComponent<EnemyData>();
 
-            if (eData.enemyState == EnemyData.EnemyState.CHASING)
-            {
-                gameManager.InitiateBattle(this, eData);
-            }
-        }
+        //    if (eData.enemyState == EnemyData.EnemyState.CHASING)
+        //    {
+        //        gameManager.InitiateBattle(this, eData);
+        //    }
+        //}
+        //Change enemy to idle
     }
 
     public void TakeDamage(int damage)
