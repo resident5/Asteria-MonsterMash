@@ -138,6 +138,7 @@ public class BattleUnit : MonoBehaviour
                     statusObj.sourceAction = action;
                     statusObj.sourceUnit = attackingUnit;
                     statusObj.unit = this;
+                    statusObj.OnHit();
                     if (GameManager.Instance.debugger.isDebugging)
                         Debug.Log("Status unit name " + statusObj.unit.name);
                     statusEffects.Add(statusObj);
@@ -241,11 +242,11 @@ public class BattleUnit : MonoBehaviour
         }
     }
 
-    public virtual void OnHit(int damage)
+    public virtual void OnHit()
     {
         foreach (var status in statusEffects)
         {
-            status.OnHit(damage); 
+            status.OnHit(); 
         }
     }
 

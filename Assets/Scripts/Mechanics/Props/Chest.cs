@@ -10,29 +10,34 @@ public class Chest : Interactable
     
     [Range(1, 50)]
     public int min, max;
+    private int totalAmount = 0;
 
     public override void Interact()
     {
         if (isOpened)
             return;
 
-        Item randomItem = GetRandomItem();
-        int randomItemAmount = Random.Range(min, max);
+        totalAmount = Random.Range(min, max);
 
-        InventoryManager.Instance.AddItem(randomItem, randomItemAmount);
+        Item randomItem = GetRandomItem();
+
+        InventoryManager.Instance.AddItem(randomItem, totalAmount);
         //Display Message System
-        string openChestInfo = $"Acquired {randomItemAmount} {randomItem.name}{(randomItemAmount > 1 ? "s" : "")}";
+        string openChestInfo = $"Acquired {totalAmount} {randomItem.name}{(totalAmount > 1 ? "s" : "")}";
         
         HUDController.Instance.DisplayPopupInfo(randomItem.spriteIcon, openChestInfo);
-        Debug.Log("OPENED CHEST");
-        
+
+        EventManager.Instance.miscEvents.ItemCollectedAmount(randomItem, totalAmount);
+
         isOpened = true;
     }
 
     private Item GetRandomItem()
     {
         int rand = Random.Range(0, possibleListOfItems.Count);
-        return possibleListOfItems[rand];
+        Item randomItem = possibleListOfItems[rand];
+
+        return randomItem;
     }
 
     private void GetItemAmount()

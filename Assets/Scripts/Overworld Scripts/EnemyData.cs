@@ -12,7 +12,8 @@ public class EnemyData : MonoBehaviour
     public EnemyChasingState ChasingState { get; set; }
     public EnemyAttackingState AttackingState { get; set; }
 
-    public float stateDelay = 1.5f;
+    [SerializeField]
+    private float stateDelay = 1.5f;
     float delay = 0;
 
     public enum EnemyState
@@ -31,6 +32,8 @@ public class EnemyData : MonoBehaviour
     public PlayerMovement player;
     public float awareness;
     public float awarenessRate = 0.5f;
+
+    public int availableExp = 50;
 
     public Emote emote;
 
@@ -56,13 +59,15 @@ public class EnemyData : MonoBehaviour
 
     private void Update()
     {
-        StateMachine.CurrentState.FrameUpdate();
+        if (GameManager.Instance.state == GameManager.GameState.OVERWORLD)
+            StateMachine.CurrentState.FrameUpdate();
         DetectPlayer();
     }
 
     private void FixedUpdate()
     {
-        StateMachine.CurrentState.PhysicsUpdate();
+        if (GameManager.Instance.state == GameManager.GameState.OVERWORLD)
+            StateMachine.CurrentState.PhysicsUpdate();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -100,7 +105,6 @@ public class EnemyData : MonoBehaviour
         }
     }
 
-
     public void CheckAwareness()
     {
         if (player != null)
@@ -117,6 +121,11 @@ public class EnemyData : MonoBehaviour
 
     }
 
+    public void EndBattle()
+    {
+        Destroy(emote.gameObject);
+        Destroy(gameObject);
+    }
     //IEnumerator AnimateAwareness()
     //{
 

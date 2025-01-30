@@ -165,10 +165,10 @@ public class BattleManager : MonoBehaviour
         playerBattleUnit = pGo.GetComponent<PlayerUnit>();
 
         playerBattleUnit.manager = this;
-        playerBattleUnit.unit.data.stats = playerData.playerCreator.data.stats;
+        playerBattleUnit.unit.data.stats = playerData.data.stats;
         playerBattleUnit.Summons = playerData.battleMons;
 
-        playerBattleUnit.Init(playerData.playerCreator, playerData.data.stats);
+        playerBattleUnit.Init(playerData);
 
         GameObject eGo = Instantiate(enemyPrefab, unitList.enemySpots.GetChild(0));
         enemyUnit = eGo.GetComponent<BattleUnit>();

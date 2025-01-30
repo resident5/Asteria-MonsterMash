@@ -25,7 +25,7 @@ public abstract class StatusEffectSO : ScriptableObject
 
     public UnitActionSO.ElementTypes elementType;
 
-    public abstract void OnHit(int damage);
+    public abstract void OnHit();
     public abstract void OnTurnStart();
     public abstract void OnTurnUpdate();
     public abstract void OnTurnEnd();

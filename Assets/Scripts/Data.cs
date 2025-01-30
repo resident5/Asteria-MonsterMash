@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//TODO: Remove this and put it back in the unit creator scriptable object instead. Seems redundant
 [Serializable]
 public class Data
 {
@@ -19,9 +20,4 @@ public class Data
 
     public RuntimeAnimatorController animatorController;
     public List<UnitActionSO> battleMoves;
-
-    public void ModifyHealth()
-    {
-
-    }
 }

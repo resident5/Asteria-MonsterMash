@@ -39,19 +39,19 @@ public class Consumable : Item
                 playerData.data.stats.Lust += flatValueModifier;
                 break;
             case EffectType.ModHealthPercent:
-                int maxHp = playerData.data.stats.MaxHealth;
-                int percentageValue = (percentageValueModifier / 100) * maxHp;
+                float maxHp = playerData.data.stats.MaxHealth;
+                float percentageValue = (percentageValueModifier / 100) * maxHp;
                 playerData.data.stats.Health += percentageValue;
                 break;
             case EffectType.ModManaPercent:
-                int maxMp = playerData.data.stats.MaxHealth;
-                int percentageMpValue = (percentageValueModifier / 100) * maxMp;
-                playerData.data.stats.Mana += percentageMpValue;
+                float maxMp = playerData.data.stats.MaxHealth;
+                float percentageMpValue = (percentageValueModifier / 100) * maxMp;
+                playerData.data.stats.Mana += (int)percentageMpValue;
                 break;
             case EffectType.ModLustPercent:
-                int maxLust = playerData.data.stats.MaxHealth;
-                int percentageLustValue = (percentageValueModifier / 100) * maxLust;
-                playerData.data.stats.Lust += percentageLustValue;
+                float maxLust = playerData.data.stats.MaxHealth;
+                float percentageLustValue = (percentageValueModifier / 100) * maxLust;
+                playerData.data.stats.Lust += (int)percentageLustValue;
                 break;
             default:
                 break;

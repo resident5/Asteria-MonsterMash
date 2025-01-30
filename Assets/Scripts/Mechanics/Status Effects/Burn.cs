@@ -8,7 +8,7 @@ public class Burn : StatusEffectSO
 {
     public int damage;
 
-    public override void OnHit(int burnDamage)
+    public override void OnHit()
     {
         stack += 1;
         stack = Mathf.Clamp(stack, 0, 4);

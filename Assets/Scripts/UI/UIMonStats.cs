@@ -2,58 +2,83 @@ using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.UI.CanvasScaler;
 
 public class UIMonStats : MonoBehaviour
 {
     //public BattleUnit battleMon;
 
-    public Slider healthSlider;
-    public Slider lustSlider;
+    public Image healthFill;
+    public Image manaFill;
+    public Image lustFill;
 
     public Image monImage;
     public TMP_Text monNameText;
 
     public Gradient gradient;
 
-    public Image fillImage;
+    public Data unitData;
 
-    public void SetStatsBars(UnitCreatorSO unit)
+    public void InitStats(Data data)
     {
-        monNameText.text = unit.data.unitName;
-
-        healthSlider.maxValue = unit.data.stats.MaxHealth;
-        healthSlider.value = unit.data.stats.Health;
-
-        lustSlider.maxValue = 100;
-        lustSlider.value = unit.data.stats.Lust;
-
-        fillImage.color = gradient.Evaluate(1f);
+        unitData = data;
     }
 
-    public void SetupPlayerStats(PlayerData unit)
+    private void Update()
     {
-        monNameText.text = unit.data.unitName;
+        if (unitData != null)
+        {
+            monNameText.text = unitData.unitName;
+            BattleStats stats = unitData.stats;
 
-        healthSlider.maxValue = unit.data.stats.MaxHealth;
-        healthSlider.value = unit.data.stats.Health;
+            Debug.Log($"Health Fill {healthFill.fillAmount}");
 
-        lustSlider.maxValue = 100;
-        lustSlider.value = unit.data.stats.Lust;
+            healthFill.fillAmount = stats.Health / stats.MaxHealth;
+            manaFill.fillAmount = stats.Mana / 100;
+            lustFill.fillAmount = stats.Lust / 100;
 
-        fillImage.color = gradient.Evaluate(1f);
+            healthFill.color = gradient.Evaluate(1f);
+        }
+
     }
 
-    public void SetHealth(int health)
-    {
-        healthSlider.value = health;
-        fillImage.color = gradient.Evaluate(healthSlider.normalizedValue);
-    }
 
-    public void SetLust(int lust)
-    {
-        lustSlider.value = lust;
-        fillImage.color = gradient.Evaluate(lustSlider.normalizedValue);
-    }
+    //public void SetStatsBars(UnitCreatorSO unit)
+    //{
+    //    monNameText.text = unit.data.unitName;
+    //    BattleStats stats = unit.data.stats;
+
+    //    healthFill.fillAmount = Mathf.Clamp01(stats.Health / stats.MaxHealth);
+    //    lustFill.fillAmount = Mathf.Clamp01(stats.Lust / 100);
+
+    //    fillImage.color = gradient.Evaluate(1f);
+    //}
+
+    //public void SetupPlayerStats(PlayerData pUnit)
+    //{
+    //    monNameText.text = pUnit.data.unitName;
+
+    //    BattleStats stats = pUnit.data.stats;
+
+    //    healthFill.fillAmount = Mathf.Clamp01(stats.Health / stats.MaxHealth);
+    //    lustFill.fillAmount = Mathf.Clamp01(stats.Lust / 100);
+
+    //    fillImage.color = gradient.Evaluate(1f);
+    //}
+
+    //public void SetHealth(int health)
+    //{
+    //    healthFill.fillAmount = health;
+    //    healthSlider.value = health;
+    //    fillImage.color = gradient.Evaluate(healthSlider.normalizedValue);
+    //}
+
+    //public void SetLust(int lust)
+    //{
+    //    lustSlider.value = lust;
+    //    fillImage.color = gradient.Evaluate(lustSlider.normalizedValue);
+    //}
 }

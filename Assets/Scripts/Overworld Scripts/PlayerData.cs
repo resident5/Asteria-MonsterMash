@@ -8,7 +8,7 @@ public class PlayerData : Singleton<PlayerData>
     public List<UnitCreatorSO> battleMons;
     public GameManager gameManager => GameManager.Instance;
 
-    public UnitCreatorSO playerCreator;
+    //public UnitCreatorSO playerCreator;
 
     public Interactable focus;
     public float detectionRadius;
@@ -16,28 +16,44 @@ public class PlayerData : Singleton<PlayerData>
     [Header("Stats")]
     public Data data;
 
+
+    [Header("Level System")]
+    public int currentXP;
+    public int requiredXP;
+
+    [Header("Experience System")]
+    [Range(1f, 100f)]
+    private float additonMultiplier = 300;
+
+    [Range(2f, 4f)]
+    private float powerMultiplier = 2f;
+
+    [Range(7f, 14f)]
+    private float divisionMultiplier = 7f;
+
     [Header("Emote")]
     public Emote emote;
     public Canvas worldCanvas;
 
     private void Start()
-    {
-        InitializeStats();
+    {        
+        //data = playerCreator.data;
+
+        EventManager.Instance.playerEvents.PlayerLevelChanged(data.level);
+        EventManager.Instance.playerEvents.PlayerExperienceChanged(currentXP);
+        requiredXP = CalculateRequiredXP();
+
         SetupEmote(worldCanvas);
     }
 
-    public void InitializeStats()
+    private void OnEnable()
     {
-        data = playerCreator.data;
-        //data.id = playerCreator.data.id;
-        //data.level = playerCreator.data.level;
-        //data.unitName = playerCreator.data.unitName;
-        //data.description = playerCreator.data.description;
-        //data.stats = playerCreator.data.stats;
-        //data.cannotBeCaptured = playerCreator.data.cannotBeCaptured;
-        //data.spriteImage = playerCreator.data.spriteImage;
-        //data.animator = playerCreator.data.animator;
-        //data.battleMoves = playerCreator.data.battleMoves;
+        EventManager.Instance.playerEvents.onPlayerExperienceGained += GainExperience;
+    }
+
+    private void OnDisable()
+    {
+        EventManager.Instance.playerEvents.onPlayerExperienceGained -= GainExperience;
     }
 
     private void Update()
@@ -105,6 +121,51 @@ public class PlayerData : Singleton<PlayerData>
     public void TakeDamage(int damage)
     {
         data.stats.Health -= damage;
+    }
+
+    public void GainFlatExperience(int exp)
+    {
+        currentXP += exp;
+    }
+
+    public void GainExperience(int experience)
+    {
+        currentXP += experience;
+
+        if (currentXP >= requiredXP)
+        {
+            LevelUp();
+            EventManager.Instance.playerEvents.PlayerLevelChanged(data.level);
+        }
+
+        EventManager.Instance.playerEvents.PlayerExperienceChanged(currentXP);
+    }
+
+    public void LevelUp()
+    {
+        data.level++;
+        data.stats.MaxHealth += (int)Mathf.Ceil((100 - data.level) * 0.05f);
+        data.stats.Health = data.stats.MaxHealth;
+        data.stats.Mana += (int)Mathf.Ceil((100 - data.level) * 0.05f);
+        data.stats.Strength += (int)Mathf.Ceil((100 - data.level) * 0.05f);
+        data.stats.Magic += (int)Mathf.Ceil((100 - data.level) * 0.05f);
+        data.stats.Speed += (int)Mathf.Ceil((100 - data.level) * 0.05f);
+
+        currentXP = Mathf.RoundToInt(currentXP - requiredXP);
+        requiredXP = CalculateRequiredXP();
+    }
+
+    private int CalculateRequiredXP()
+    {
+        int solverXp = 0;
+        int level = data.level;
+
+        for (int i = 0; i < level; i++)
+        {
+            solverXp += (int)Mathf.Floor(level + additonMultiplier * Mathf.Pow(powerMultiplier, level / divisionMultiplier));
+        }
+
+        return solverXp / 4;
     }
 
     private void OnDrawGizmos()

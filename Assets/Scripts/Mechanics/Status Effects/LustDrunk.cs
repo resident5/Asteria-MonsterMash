@@ -6,13 +6,14 @@ using UnityEngine;
 public class LustDrunk : StatusEffectSO
 {
     public int percentageIncrease;
+    public int lustDmg;
     //If the player is gettin hit for 10 damage
     //While they have LustDrunk which is a 30% increase to all lust attacks they should take
     //An extra 3 damage
 
-    public override void OnHit(int lustDamage)
+    public override void OnHit()
     {
-        int extraDamage = lustDamage * (percentageIncrease/100);
+        int extraDamage = lustDmg * (percentageIncrease/100);
         unit.TakeDamage(extraDamage, sourceAction);
         Debug.Log("Unit is Lust Drunk!!");
     }

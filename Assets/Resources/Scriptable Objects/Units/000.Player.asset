@@ -24,7 +24,7 @@ MonoBehaviour:
       magic: 5
       speed: 7
       mana: 100
-      lust: 5
+      lust: 10
     cannotBeCaptured: 1
     spriteImage: {fileID: 0}
     animatorController: {fileID: 9100000, guid: c16091e285ea76e42ade28a097d0b117, type: 2}

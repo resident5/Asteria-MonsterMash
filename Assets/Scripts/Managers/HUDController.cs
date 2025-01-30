@@ -96,6 +96,7 @@ public class HUDController : Singleton<HUDController>
         {
             menuStack.Pop().SetActive(false);
             menuStack.Clear();
+            return;
         }
         if (menuStack.Count > 0)
         {
@@ -106,7 +107,7 @@ public class HUDController : Singleton<HUDController>
                 menuStack.Peek().SetActive(true);
             }
         }
-
+        
         var newMenu = menuStack.Peek();
 
         if (newMenu.firstButton != null)
@@ -157,16 +158,16 @@ public class HUDController : Singleton<HUDController>
         UIMonStats pStats = pObj.GetComponent<UIMonStats>();
         //pBtn.onClick.AddListener(() => pBtn.GetComponent<ContextMenuButton>().ContextMenuSelector());
         //Setup player stats in menu
-        pStats.SetupPlayerStats(playerData);
+        pStats.InitStats(playerData.data);
 
-        foreach (var mon in playerData.battleMons)
+        foreach (var mons in playerData.battleMons)
         {
             //Setup mon stats in menu
             GameObject obj = Instantiate(UIMonDataPrefab, teamHolder);
             Button btn = obj.GetComponent<Button>();
             UIMonStats monStats = obj.GetComponent<UIMonStats>();
 
-            monStats.SetStatsBars(mon);
+            monStats.InitStats(mons.data);
         }
 
     }

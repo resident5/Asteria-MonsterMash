@@ -11,7 +11,6 @@ public class Interactable: MonoBehaviour
     {
         if (isFocus && !hasInteracted)
         {
-            Debug.Log("INTERACT");
             Interact();
             hasInteracted = true;
         }

@@ -338,26 +338,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleMons: []
-  playerCreator: {fileID: 11400000, guid: 0c4fcdbb6a4e611479f63974d05c88f5, type: 2}
   focus: {fileID: 0}
   detectionRadius: 3
   data:
     id: 0
-    level: 0
-    unitName: 
-    description: 
+    level: 1
+    unitName: Lythok
+    description: Lythok is an Orc Champion
     stats:
-      health: 0
-      maxHealth: 0
-      strength: 0
-      magic: 0
-      speed: 0
-      mana: 0
-      lust: 0
+      health: 100
+      maxHealth: 100
+      strength: 5
+      magic: 5
+      speed: 7
+      mana: 100
+      lust: 10
     cannotBeCaptured: 0
     spriteImage: {fileID: 0}
-    animatorController: {fileID: 0}
-    battleMoves: []
+    animatorController: {fileID: 9100000, guid: c16091e285ea76e42ade28a097d0b117, type: 2}
+    battleMoves:
+    - {fileID: 11400000, guid: 5eff99dea1f04c140b1e7658d758ea6c, type: 2}
+    - {fileID: 11400000, guid: 1be8f0ac882aec743b76f844e2d52a6f, type: 2}
+    - {fileID: 11400000, guid: 4fa4e0a8b12ee3f4caf80bc3f292a6d1, type: 2}
+  currentXP: 0
+  requiredXP: 0
+  additonMultiplier: 100
+  powerMultiplier: 2
+  divisionMultiplier: 7
+  emote: {fileID: 3450617971174205575}
+  worldCanvas: {fileID: 0}
 --- !u!1001 &5935922963469314473
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -452,7 +461,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7467630523246359473, guid: cb9a00adb5d01e94790119edbef42960, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8092305513625828035, guid: cb9a00adb5d01e94790119edbef42960, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 5771568960076546699}
+    - target: {fileID: 8092305513625828035, guid: cb9a00adb5d01e94790119edbef42960, type: 3}
+      propertyPath: offset.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8092305513625828035, guid: cb9a00adb5d01e94790119edbef42960, type: 3}
+      propertyPath: offset.y
+      value: 2.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -464,3 +485,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6755703716405303037, guid: cb9a00adb5d01e94790119edbef42960, type: 3}
   m_PrefabInstance: {fileID: 5935922963469314473}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3450617971174205575 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9044262415055110446, guid: cb9a00adb5d01e94790119edbef42960, type: 3}
+  m_PrefabInstance: {fileID: 5935922963469314473}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 095c3e60aa67ab6449ac4cdea24f3612, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

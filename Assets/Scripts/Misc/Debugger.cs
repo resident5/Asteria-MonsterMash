@@ -25,6 +25,11 @@ public class Debugger : MonoBehaviour
         {
             NumberExpression exp = GameManager.Instance.variableManager.parser.ParseNumber("npcTalk");
 
+            if(Input.GetKeyDown(KeyCode.Equals))
+            {
+                PlayerData.Instance.GainExperience(20);
+            }
+
             if (Input.GetKeyDown(KeyCode.F1))
             {
                 InventoryManager.Instance.AddItem(testItem);

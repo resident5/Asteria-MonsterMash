@@ -1,0 +1,17 @@
+Fix the player's emote when going to next map
+
+Change the scriptable object's handling the players and enemies stats to be static (non changing)
+Make it so that all SOs are in 1 resource's folder and load them all at run time.
+After loading all SOs call them by id (enemy 1, flying enemy 2, etc)
+Change scripts to pull an SO from a SO database > create an enemy based on their id (For both overworld and battle)
+
+Create new enemies by creating SOs to put in the resource folder
+
+Fix the healthbar position during battle
+Destroy enemy emote after battle along with the enemy
+If fleeing battle set the emote position to follow the enemy...
+
+Add animations to battle moves
+Add leveling system
+Add quest system
+Add story/VN/progression system

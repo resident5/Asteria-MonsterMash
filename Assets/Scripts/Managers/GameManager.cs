@@ -2,8 +2,6 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Cinemachine;
-using B83.LogicExpressionParser;
-using JetBrains.Annotations;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,6 +12,7 @@ public class GameManager : MonoBehaviour
     public BattleManager battleManager;
     public InputManager inputManager;
     public VariableManager variableManager;
+    public EventManager eventManager;
 
     public Debugger debugger;
 
@@ -45,6 +44,7 @@ public class GameManager : MonoBehaviour
         cameraManager = GetComponentInChildren<CameraManager>();
         dialogueSystem = GetComponentInChildren<DialogueSystem>();
         variableManager = GetComponentInChildren<VariableManager>();
+        eventManager = GetComponentInChildren<EventManager>();
         hudController = FindObjectOfType<HUDController>();
         teleportSpots = FindObjectsOfType<Teleporter>();
         playerData = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerData>();
@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviour
 
                 if (enemyData != null)
                 {
-                    Destroy(enemyData.gameObject);
+                    enemyData.EndBattle();
                     enemyData = null;
                 }
 
@@ -121,7 +121,6 @@ public class GameManager : MonoBehaviour
 
         if (inputManager.Interacted && !isInteracting)
         {
-            Debug.Log("E WAS PRESSED");
             if (playerData.focus != null)
             {
                 playerData.focus.Focused();
@@ -137,6 +136,7 @@ public class GameManager : MonoBehaviour
 
             hudController.HideMenu();
             battleManager.battleHUD.HideMenu();
+            //TODO: REMEMBER TO UNPAUSE WHEN CANCELLING
         }
     }
 

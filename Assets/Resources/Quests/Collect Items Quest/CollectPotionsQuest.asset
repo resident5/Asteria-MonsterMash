@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24af9db69ae77204bb92899cb65ea2e9, type: 3}
+  m_Name: CollectPotionsQuest
+  m_EditorClassIdentifier: 
+  <id>k__BackingField: CollectPotionsQuest
+  displayName: Collect potions!
+  levelRequirement: 1
+  questPrerequisities: []
+  questStepPrefabs:
+  - {fileID: 3553007307957833960, guid: 6d5b0ee16777f004abaff92c38ce854a, type: 3}
+  goldRewards: 50
+  experienceReward: 100

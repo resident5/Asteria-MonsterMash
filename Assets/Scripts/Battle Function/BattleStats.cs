@@ -13,14 +13,14 @@ public class BattleStats
     private const int MAX_MANA = 100;
     private const int MAX_LUST = 100;
 
-    [SerializeField] private int health;
-    [SerializeField] private int maxHealth;
+    [SerializeField] private float health;
+    [SerializeField] private float maxHealth;
     [SerializeField] private int strength;
     [SerializeField] private int magic;
     [SerializeField] private int speed;
 
-    [SerializeField] private int mana;
-    [SerializeField] private int lust;
+    [SerializeField] private float mana;
+    [SerializeField] private float lust;
 
     //public BattleStats (int health, int maxHealth, int strength, int magic, int speed, int mana, int lust )
     //{
@@ -33,7 +33,7 @@ public class BattleStats
     //    this.lust = lust;
     //}
 
-    public int Health
+    public float Health
     {
         get => health;
 
@@ -43,7 +43,7 @@ public class BattleStats
         }
     }
 
-    public int MaxHealth
+    public float MaxHealth
     {
         get => maxHealth;
 
@@ -63,7 +63,7 @@ public class BattleStats
         }
     }
 
-    public int Mana
+    public float Mana
     {
         get => mana;
 
@@ -73,7 +73,7 @@ public class BattleStats
         }
     }
 
-    public int Lust
+    public float Lust
     {
         get => lust;
 

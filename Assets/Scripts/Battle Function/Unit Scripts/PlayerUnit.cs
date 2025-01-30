@@ -30,10 +30,12 @@ public class PlayerUnit : BattleUnit
 
     public void Init(PlayerData pData)
     {
-        UnitCreatorSO unitInstance = Instantiate(pData.playerCreator);
-        data = unitInstance.data;
+        //UnitCreatorSO unitInstance = Instantiate(pData.playerCreator);
+        //data = unitInstance.data;
+        data = pData.data;
         statusEffects = new List<StatusEffectSO>();
         healthbar = GetComponentInChildren<HealthBar>();
+        animator.runtimeAnimatorController = data.animatorController;
 
         healthbar.unit = this;
         baseActionValue = Mathf.CeilToInt(Mathf.Clamp(MAX_ACTION_VALUE / data.stats.Speed, 0, MAX_ACTION_VALUE));
