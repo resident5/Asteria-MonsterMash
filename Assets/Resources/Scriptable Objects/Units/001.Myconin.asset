@@ -14,17 +14,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data:
     id: 1
-    level: 1
     unitName: Myconin
     description: Myconin is a ninja shroom. It deals lust over time effects.
     stats:
-      health: 50
-      maxHealth: 50
-      strength: 3
-      magic: 6
-      speed: 4
+      baseMaxHealth: 50
+      baseStrength: 2
+      baseMagic: 0
+      baseSpeed: 5
+      health: 0
+      maxHealth: 0
+      strength: 0
+      magic: 0
+      speed: 0
+      luck: 0
       mana: 100
-      lust: 20
+      lust: 0
+      level: 1
     cannotBeCaptured: 0
     spriteImage: {fileID: 21300000, guid: a549dcf47bdb6ad48969f023f201ecec, type: 3}
     animatorController: {fileID: 9100000, guid: a3555ab8f7b654e47afa32d3f767c5fa, type: 2}

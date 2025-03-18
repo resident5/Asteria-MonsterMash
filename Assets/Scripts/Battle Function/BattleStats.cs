@@ -9,95 +9,89 @@ public class BattleStats
     private const int MAX_STR = 100;
     private const int MAX_MAG = 100;
     private const int MAX_SPD = 100;
-
     private const int MAX_MANA = 100;
     private const int MAX_LUST = 100;
 
+    [Header("Base Stats")]
+    [SerializeField] private float baseMaxHealth;
+    [SerializeField] private int baseStrength;
+    [SerializeField] private int baseMagic;
+    [SerializeField] private int baseSpeed;
+
+    [Header("Current Stats")]
     [SerializeField] private float health;
-    [SerializeField] private float maxHealth;
+    [SerializeField] float maxHealth;
     [SerializeField] private int strength;
     [SerializeField] private int magic;
     [SerializeField] private int speed;
+    [SerializeField] private int luck;
 
     [SerializeField] private float mana;
     [SerializeField] private float lust;
 
-    //public BattleStats (int health, int maxHealth, int strength, int magic, int speed, int mana, int lust )
-    //{
-    //    this.health = health;
-    //    this.maxHealth = maxHealth;
-    //    this.strength = strength;
-    //    this.magic = magic;
-    //    this.speed = speed;
-    //    this.mana = mana;
-    //    this.lust = lust;
-    //}
-
-    public float Health
-    {
-        get => health;
-
-        set
-        {
-            health = Mathf.Clamp(value, 0, maxHealth);
-        }
-    }
-
+    //Properties
     public float MaxHealth
     {
         get => maxHealth;
+        set => maxHealth = Mathf.Clamp(value, 0, MAX_HP);
+        //set => maxHealth = Mathf.Clamp(Mathf.RoundToInt(baseMaxHealth * Mathf.Pow(1.2f, level - 1)), 0, MAX_HP);
 
-        set
-        {
-            maxHealth = Mathf.Clamp(value, 0, MAX_HP);
-        }
     }
-
     public int Strength
     {
         get => strength;
+        set => strength = Mathf.Clamp(value, 0, MAX_STR);
 
-        set
-        {
-            strength = Mathf.Clamp(value, 0, MAX_STR);
-        }
     }
-
+    public int Magic
+    {
+        get => magic;
+        set => magic = Mathf.Clamp(value, 0, MAX_MAG);
+    }
+    public int Speed
+    {
+        get => speed;
+        set => speed = Mathf.Clamp(value, 0, MAX_SPD);
+    }
+    public float Health
+    {
+        get => health;
+        set => health = Mathf.Clamp(value, 0, MaxHealth);
+    }
     public float Mana
     {
         get => mana;
 
-        set
-        {
-            mana = Mathf.Clamp(value, 0, MAX_MANA);
-        }
-    }
+        set => mana = Mathf.Clamp(value, 0, MAX_MANA);
 
+    }
     public float Lust
     {
         get => lust;
 
-        set
-        {
-            lust = Mathf.Clamp(value, 0, MAX_LUST);
-        }
+        set => lust = Mathf.Clamp(value, 0, MAX_LUST);
+
     }
 
-    public int Magic
+    public int level;
+    
+    public void InitStats()
     {
-        get => magic;
-        set
-        {
-            magic = Mathf.Clamp(value, 0, MAX_MAG);
-        }
+        MaxHealth = Mathf.Clamp(Mathf.RoundToInt(baseMaxHealth * Mathf.Pow(1.2f, level - 1)), 0, MAX_HP);
+
+        Strength = Mathf.Clamp(Mathf.RoundToInt(baseStrength * Mathf.Pow(1.2f, level - 1)), 0, MAX_STR);
+        Magic = Mathf.Clamp(Mathf.RoundToInt(baseMagic * Mathf.Pow(1.2f, level - 1)), 0, MAX_MAG);
+        Speed = Mathf.Clamp(Mathf.RoundToInt(baseSpeed * Mathf.Pow(1.2f, level - 1)), 0, MAX_SPD);
+
+        Health = MaxHealth;
+
     }
 
-    public int Speed
+    public void LevelUp()
     {
-        get => speed;
-        set
-        {
-            speed = Mathf.Clamp(value, 0, MAX_SPD);
-        }
+        level++;
+
+        InitStats();
+
     }
 }

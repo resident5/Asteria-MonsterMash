@@ -70,6 +70,8 @@ public class BattleUnit : MonoBehaviour
         UnitCreatorSO unitInstance = Instantiate(uCO);
         unit = unitInstance;
         data = unitInstance.data;
+        data.stats.InitStats();
+
         statusEffects = new List<StatusEffectSO>();
         healthbar = GetComponentInChildren<HealthBar>();
 

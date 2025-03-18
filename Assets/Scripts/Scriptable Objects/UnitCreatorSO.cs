@@ -6,4 +6,10 @@ using UnityEngine;
 public class UnitCreatorSO : ScriptableObject
 {
     public Data data;
+
+    public UnitCreatorSO Copy()
+    {
+        UnitCreatorSO unit = Instantiate(this);
+        return unit;
+    }
 }

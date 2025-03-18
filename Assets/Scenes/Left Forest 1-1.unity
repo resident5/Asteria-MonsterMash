@@ -1983,7 +1983,6 @@ MonoBehaviour:
   dialogueUI: {fileID: 1870710096}
   inventoryHolder: {fileID: 2088807959}
   inventorySlots: []
-  teamSelectScreen: {fileID: 0}
   selectedUnit: {fileID: 0}
   selectedItem: {fileID: 0}
   popup: {fileID: 0}
@@ -3241,7 +3240,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2789951635331506725, guid: ef9f8f1af98a59646bf54bd536bef6c1, type: 3}
       propertyPath: m_Name
-      value: Main Camera (1)
+      value: Main Camera
       objectReference: {fileID: 0}
     - target: {fileID: 7879317811089982384, guid: ef9f8f1af98a59646bf54bd536bef6c1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3283,7 +3282,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1615872247706425985, guid: ef9f8f1af98a59646bf54bd536bef6c1, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -14955,6 +14955,7 @@ MonoBehaviour:
   battleManager: {fileID: 0}
   inputManager: {fileID: 0}
   variableManager: {fileID: 0}
+  eventManager: {fileID: 0}
   debugger: {fileID: 0}
   state: 0
   overWorldScene:
@@ -14981,6 +14982,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isDebugging: 0
   debugGManager: {fileID: 0}
+  testEnemy: {fileID: 0}
 --- !u!1 &1888161604
 GameObject:
   m_ObjectHideFlags: 0

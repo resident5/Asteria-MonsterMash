@@ -21,7 +21,6 @@ public class EnemyChasingState : EnemyState
 
     public override void FrameUpdate()
     {
-        base.FrameUpdate();
         Move();
     }
 

@@ -5,7 +5,7 @@ using System.Xml.Linq;
 using UnityEditor.Rendering;
 using UnityEngine;
 
-public class EnemyData : MonoBehaviour
+public class EnemyData : UnitData
 {
     public EnemyStateMachine StateMachine { get; set; }
     public EnemyIdleState IdleState { get; set; }
@@ -35,8 +35,6 @@ public class EnemyData : MonoBehaviour
 
     public int availableExp = 50;
 
-    public Emote emote;
-
     private void Awake()
     {
         movement = GetComponent<EnemyMovement>();
@@ -51,7 +49,6 @@ public class EnemyData : MonoBehaviour
     void Start()
     {
         StateMachine.Initialize(IdleState);
-
         //enemyState = EnemyState.IDLE;
         //spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         //spriteRenderer.sprite = unitInfo.data.spriteImage;
@@ -61,7 +58,6 @@ public class EnemyData : MonoBehaviour
     {
         if (GameManager.Instance.state == GameManager.GameState.OVERWORLD)
             StateMachine.CurrentState.FrameUpdate();
-        DetectPlayer();
     }
 
     private void FixedUpdate()
@@ -75,70 +71,14 @@ public class EnemyData : MonoBehaviour
         StateMachine.CurrentState.OnCollision(collision);
     }
 
-    public void SetupEmote(Canvas canvas)
-    {
-        emote.transform.SetParent(canvas.transform);
-    }
-
-    public void DetectPlayer()
-    {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, movement.detectionRadius);
-
-        foreach (Collider item in colliders)
-        {
-            //if(item.TryGetComponent<PlayerMovement>(out PlayerMovement playerMove))
-            //{
-            //    playerMove = player;
-            //}
-            if (item.gameObject.tag == "Player")
-            {
-                player = item.GetComponent<PlayerMovement>();
-                emote.Activate();
-            }
-        }
-
-        CheckAwareness();
-
-        if (awareness <= 0)
-        {
-            emote.DeActivate();
-        }
-    }
-
-    public void CheckAwareness()
-    {
-        if (player != null)
-        {
-            awareness += 1 * awarenessRate * Time.deltaTime;
-        }
-        else
-        {
-            awareness -= 1 * awarenessRate * Time.deltaTime;
-        }
-
-        awareness = Mathf.Clamp(awareness, 0, 100);
-        emote.warningFill.fillAmount = awareness / 100f;
-
-    }
-
     public void EndBattle()
     {
         Destroy(emote.gameObject);
         Destroy(gameObject);
     }
-    //IEnumerator AnimateAwareness()
-    //{
-
-    //    yield return null;
-
-    //}
 
     public void ChangeState(EnemyState newState)
     {
-        //Turn into a interface
-        //Make a delay for changing states
-        //When changing to chasing/aggro state make a exclamation mark animation above the spirits
-
         delay += Time.deltaTime;
 
         if (delay >= stateDelay)
@@ -148,5 +88,23 @@ public class EnemyData : MonoBehaviour
         }
     }
 
+    public override void TakeDamage(int damage)
+    {
 
+    }
+
+    public override void GainFlatExperience(int exp)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void GainExperience(int exp)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void LevelUp()
+    {
+        throw new NotImplementedException();
+    }
 }

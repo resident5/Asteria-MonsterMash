@@ -44,11 +44,6 @@ public class HUDController : Singleton<HUDController>
         main.gameObject.SetActive(false);
     }
 
-    private void Update()
-    {
-
-    }
-
     public void ShowMenu(Menu newMenu)
     {
         var newMenuLevel = newMenu.level;
@@ -152,14 +147,19 @@ public class HUDController : Singleton<HUDController>
          *  Clicking on an item in the inventory screen should use the item on Lyon
          *  This should work for any spirit you have in your teams menu
          */
+        foreach (Transform child in teamHolder)
+        {
+            Destroy(child.gameObject);
+        }
 
+        //Add player info
         GameObject pObj = Instantiate(UIMonDataPrefab, teamHolder);
         Button pBtn = pObj.GetComponent<Button>();
         UIMonStats pStats = pObj.GetComponent<UIMonStats>();
-        //pBtn.onClick.AddListener(() => pBtn.GetComponent<ContextMenuButton>().ContextMenuSelector());
-        //Setup player stats in menu
+
         pStats.InitStats(playerData.data);
 
+        //Add mon info
         foreach (var mons in playerData.battleMons)
         {
             //Setup mon stats in menu
@@ -171,6 +171,33 @@ public class HUDController : Singleton<HUDController>
         }
 
     }
+
+    //public void UpdateMenu(PlayerData playerData)
+    //{
+    //    //Clear team menu
+    //    foreach (Transform child in teamHolder)
+    //    {
+    //        DestroyImmediate(child);
+    //    }
+
+    //    //Add player info
+    //    GameObject pObj = Instantiate(UIMonDataPrefab, teamHolder);
+    //    Button pBtn = pObj.GetComponent<Button>();
+    //    UIMonStats pStats = pObj.GetComponent<UIMonStats>();
+
+    //    pStats.InitStats(playerData.data);
+        
+    //    //Add mon info
+    //    foreach (var mons in playerData.battleMons)
+    //    {
+    //        //Setup mon stats in menu
+    //        GameObject obj = Instantiate(UIMonDataPrefab, teamHolder);
+    //        Button btn = obj.GetComponent<Button>();
+    //        UIMonStats monStats = obj.GetComponent<UIMonStats>();
+
+    //        monStats.InitStats(mons.data);
+    //    }
+    //}
 
     public void SelectMon(BattleUnit unit)
     {

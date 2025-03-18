@@ -18,7 +18,6 @@ public class CACapture : CustomBattleAction
         {
             UnitCreatorSO capturedUnit = Instantiate(unit.unit);
             BattleManager.Instance.playerData.battleMons.Add(capturedUnit);
-
             unit.isDead = true;
         }
         else

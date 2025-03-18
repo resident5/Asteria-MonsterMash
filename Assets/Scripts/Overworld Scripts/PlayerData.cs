@@ -3,12 +3,26 @@ using System.Runtime.Serialization.Json;
 using UnityEngine;
 
 //TODO: Make a base Data script that both playerData and enemyData can inherit from
-public class PlayerData : Singleton<PlayerData>
+public class PlayerData : UnitData
 {
+    private static PlayerData instance;
+    public static PlayerData Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = FindAnyObjectByType<PlayerData>();
+            }
+            return instance;
+        }
+    }
+
     public List<UnitCreatorSO> battleMons;
+    //public List<BattleUnit> battleMon;
     public GameManager gameManager => GameManager.Instance;
 
-    //public UnitCreatorSO playerCreator;
+    public UnitCreatorSO playerCreator;
 
     public Interactable focus;
     public float detectionRadius;
@@ -16,30 +30,25 @@ public class PlayerData : Singleton<PlayerData>
     [Header("Stats")]
     public Data data;
 
-
-    [Header("Level System")]
-    public int currentXP;
-    public int requiredXP;
-
-    [Header("Experience System")]
-    [Range(1f, 100f)]
-    private float additonMultiplier = 300;
-
-    [Range(2f, 4f)]
-    private float powerMultiplier = 2f;
-
-    [Range(7f, 14f)]
-    private float divisionMultiplier = 7f;
-
-    [Header("Emote")]
-    public Emote emote;
-    public Canvas worldCanvas;
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     private void Start()
-    {        
-        //data = playerCreator.data;
+    {
+        data = playerCreator.Copy().data;
+        data.stats.InitStats();
 
-        EventManager.Instance.playerEvents.PlayerLevelChanged(data.level);
+        EventManager.Instance.playerEvents.PlayerLevelChanged(data.stats.level);
         EventManager.Instance.playerEvents.PlayerExperienceChanged(currentXP);
         requiredXP = CalculateRequiredXP();
 
@@ -97,11 +106,6 @@ public class PlayerData : Singleton<PlayerData>
 
     }
 
-    public void SetupEmote(Canvas canvas)
-    {
-        emote.transform.SetParent(canvas.transform);
-    }
-
     private void OnCollisionEnter(Collision collision)
     {
         //GameObject colObj = collision.gameObject;
@@ -118,38 +122,39 @@ public class PlayerData : Singleton<PlayerData>
         //Change enemy to idle
     }
 
-    public void TakeDamage(int damage)
+    public override void TakeDamage(int damage)
     {
         data.stats.Health -= damage;
     }
 
-    public void GainFlatExperience(int exp)
+    public override void GainFlatExperience(int exp)
     {
         currentXP += exp;
     }
 
-    public void GainExperience(int experience)
+    public override void GainExperience(int experience)
     {
         currentXP += experience;
 
         if (currentXP >= requiredXP)
         {
             LevelUp();
-            EventManager.Instance.playerEvents.PlayerLevelChanged(data.level);
+            EventManager.Instance.playerEvents.PlayerLevelChanged(data.stats.level);
         }
 
         EventManager.Instance.playerEvents.PlayerExperienceChanged(currentXP);
     }
 
-    public void LevelUp()
+    public override void LevelUp()
     {
-        data.level++;
-        data.stats.MaxHealth += (int)Mathf.Ceil((100 - data.level) * 0.05f);
-        data.stats.Health = data.stats.MaxHealth;
-        data.stats.Mana += (int)Mathf.Ceil((100 - data.level) * 0.05f);
-        data.stats.Strength += (int)Mathf.Ceil((100 - data.level) * 0.05f);
-        data.stats.Magic += (int)Mathf.Ceil((100 - data.level) * 0.05f);
-        data.stats.Speed += (int)Mathf.Ceil((100 - data.level) * 0.05f);
+        data.stats.LevelUp();
+
+        //data.stats.MaxHealth += (int)Mathf.Ceil((100 - data.level) * 0.05f);
+        //data.stats.Health = data.stats.MaxHealth;
+        //data.stats.Mana += (int)Mathf.Ceil((100 - data.level) * 0.05f);
+        //data.stats.Strength += (int)Mathf.Ceil((100 - data.level) * 0.05f);
+        //data.stats.Magic += (int)Mathf.Ceil((100 - data.level) * 0.05f);
+        //data.stats.Speed += (int)Mathf.Ceil((100 - data.level) * 0.05f);
 
         currentXP = Mathf.RoundToInt(currentXP - requiredXP);
         requiredXP = CalculateRequiredXP();
@@ -158,7 +163,7 @@ public class PlayerData : Singleton<PlayerData>
     private int CalculateRequiredXP()
     {
         int solverXp = 0;
-        int level = data.level;
+        int level = data.stats.level;
 
         for (int i = 0; i < level; i++)
         {

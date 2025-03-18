@@ -33,6 +33,7 @@ public class UIMonStats : MonoBehaviour
         {
             monNameText.text = unitData.unitName;
             BattleStats stats = unitData.stats;
+            stats.InitStats();
 
             Debug.Log($"Health Fill {healthFill.fillAmount}");
 

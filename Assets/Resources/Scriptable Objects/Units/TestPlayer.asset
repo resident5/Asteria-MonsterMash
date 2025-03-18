@@ -14,19 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data:
     id: 0
-    level: 0
     unitName: 
     description: 
     stats:
-      health: 0
-      maxHealth: 0
+      baseMaxHealth: 0
+      baseStrength: 0
+      BaseMagic: 0
+      baseSpeed: 0
       strength: 0
       magic: 0
       speed: 0
       mana: 0
       lust: 0
-    isCapturable: 0
-    isEnemy: 0
+      level: 1
+    cannotBeCaptured: 0
     spriteImage: {fileID: 0}
-    animator: {fileID: 0}
+    animatorController: {fileID: 0}
     battleMoves: []

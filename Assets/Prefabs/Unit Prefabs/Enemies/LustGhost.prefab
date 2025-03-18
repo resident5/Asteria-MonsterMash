@@ -128,7 +128,7 @@ Transform:
   m_GameObject: {fileID: 4970383201014054089}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.1, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -257,7 +257,7 @@ Rigidbody:
   serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 1
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -327,6 +327,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7882c87195fb9d24cbd6b62d9e4a309d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  emote: {fileID: 2429553552318306012}
+  worldCanvas: {fileID: 0}
+  currentXP: 0
+  requiredXP: 0
   stateDelay: 2.5
   enemyState: 0
   enemyUnit: []
@@ -335,7 +339,7 @@ MonoBehaviour:
   player: {fileID: 0}
   awareness: 0
   awarenessRate: 30
-  emote: {fileID: 2429553552318306012}
+  availableExp: 50
 --- !u!1001 &6643986658368575474
 PrefabInstance:
   m_ObjectHideFlags: 0

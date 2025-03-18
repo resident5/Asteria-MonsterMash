@@ -155,6 +155,7 @@ public class GameManager : MonoBehaviour
 
         if (isPaused)
         {
+            hudController.SetupMenu(playerData);
             hudController.ShowMenu(hudController.main);
             hudController.ShowPauseMenu(playerData, isPaused);
         }

@@ -7,15 +7,19 @@ public class NPCData : Interactable
 {
     public Sprite dialogueImage;
     public string dialogue;
-    DialogueSystem dialogueSystem;
+    DialogueSystem dialogueSystem => DialogueSystem.Instance;
 
-    public Transform worldCanvas;
+    private Transform worldCanvas;
 
     public Emote emote;
 
+    private void Awake()
+    {
+        worldCanvas = GameObject.Find("World Canvas").transform;
+    }
+
     private void Start()
     {
-        dialogueSystem = DialogueSystem.Instance;
         SetupEmote();
     }
 

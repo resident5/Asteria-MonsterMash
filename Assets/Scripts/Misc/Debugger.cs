@@ -25,7 +25,7 @@ public class Debugger : MonoBehaviour
         {
             NumberExpression exp = GameManager.Instance.variableManager.parser.ParseNumber("npcTalk");
 
-            if(Input.GetKeyDown(KeyCode.Equals))
+            if (Input.GetKeyDown(KeyCode.Equals))
             {
                 PlayerData.Instance.GainExperience(20);
             }
@@ -61,9 +61,19 @@ public class Debugger : MonoBehaviour
 
                 Vector3 randomPointAroundPlayer = playerPos + Random.insideUnitSphere * 2;
                 Vector3 randomFlatPoint = new Vector3(randomPointAroundPlayer.x, playerPos.y, randomPointAroundPlayer.z);
-                
+
                 GameObject mon = Instantiate(testEnemy, randomPointAroundPlayer, Quaternion.identity);
                 mon.GetComponent<EnemyData>().SetupEmote(debugGManager.playerData.worldCanvas);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                debugGManager.playerData.GainExperience(debugGManager.playerData.requiredXP);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha5))
+            {
+                debugGManager.playerData.battleMons[0].data.stats.LevelUp();
             }
 
             if (Input.GetKeyDown(KeyCode.Q))

@@ -19,7 +19,6 @@ public class CameraManager : Singleton<CameraManager>
     protected override void Awake()
     {
         base.Awake();
-        Debug.Log("Setup cameras");
         GameObject cameraObj = GameObject.FindGameObjectWithTag("MainCamera");
         currentCamera = startCamera;
         if (currentCamera == null)

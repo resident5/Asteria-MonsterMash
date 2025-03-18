@@ -14,7 +14,6 @@ public class CollectItemQuestStep : QuestStep
     private void OnEnable()
     {
         EventManager.Instance.miscEvents.onItemCollectedAmount += Collected;
-        Debug.Log("Should be done");
     }
 
     private void OnDisable()
@@ -29,6 +28,7 @@ public class CollectItemQuestStep : QuestStep
             if (numOfItemsCollected < numOfItemsRequired)
             {
                 numOfItemsCollected += num;
+                UpdateState();
             }
         }
 
@@ -36,5 +36,17 @@ public class CollectItemQuestStep : QuestStep
         {
             FinishQuestStep();
         }
+    }
+
+    private void UpdateState()
+    {
+        string state = numOfItemsCollected.ToString();
+        ChangeState(state);
+    }
+
+    protected override void SetQuestStepState(string state)
+    {
+        this.numOfItemsCollected = System.Int32.Parse(state);
+        UpdateState();
     }
 }

@@ -44,4 +44,14 @@ public class PlayerEvents
         }
     }
 
+    public event Action onPlayerCaptureTarget;
+
+    public void PlayerCapturedTarget()
+    {
+        if (onPlayerCaptureTarget != null)
+        {
+            onPlayerCaptureTarget();
+        }
+    }
+
 }

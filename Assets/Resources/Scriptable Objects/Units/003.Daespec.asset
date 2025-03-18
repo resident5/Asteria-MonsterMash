@@ -14,17 +14,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data:
     id: 3
-    level: 1
     unitName: Daespec
     description: No name yet
     stats:
-      health: 50
-      maxHealth: 50
-      strength: 3
-      magic: 8
-      speed: 4
+      baseMaxHealth: 50
+      baseStrength: 6
+      baseMagic: 0
+      baseSpeed: 6
+      health: 0
+      maxHealth: 0
+      strength: 0
+      magic: 0
+      speed: 0
+      luck: 0
       mana: 100
       lust: 20
+      level: 1
     cannotBeCaptured: 0
     spriteImage: {fileID: 21300000, guid: c0dd17879df3bd840a3f798fa9b2074d, type: 3}
     animatorController: {fileID: 9100000, guid: f6c019fda993b064689f0ca51a6f4e59, type: 2}

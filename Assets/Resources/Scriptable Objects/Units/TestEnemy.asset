@@ -14,19 +14,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data:
     id: 99
-    level: 1
     unitName: Test Enemy
     description: This is a test Enemy
     stats:
-      health: 100
-      maxHealth: 100
+      baseMaxHealth: 0
+      baseStrength: 0
+      BaseMagic: 0
+      baseSpeed: 0
       strength: 5
       magic: 5
       speed: 5
       mana: 100
       lust: 0
+      level: 1
     cannotBeCaptured: 0
     spriteImage: {fileID: 21300000, guid: a549dcf47bdb6ad48969f023f201ecec, type: 3}
-    animator: {fileID: 0}
+    animatorController: {fileID: 0}
     battleMoves:
     - {fileID: 11400000, guid: 5eff99dea1f04c140b1e7658d758ea6c, type: 2}

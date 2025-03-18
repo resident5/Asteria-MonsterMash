@@ -6,15 +6,15 @@ using UnityEngine.InputSystem;
 
 public class EncounterEvent : MonoBehaviour
 {
-    int playerSteps;
-    public PlayerMovement player;
+    private int playerSteps;
+    private PlayerMovement player;
 
-    public float timer = 0;
-    public float maxTime = 7f;
+    [SerializeField] private float timer = 0;
+    [SerializeField] private float maxTime = 7f;
+    [SerializeField] private Canvas worldCanvas;
+
     public GameObject[] encounterList;
-    public Canvas worldCanvas;
-
-    public Transform unitHolder;
+    [SerializeField] private Transform unitHolder;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -32,7 +32,8 @@ public class EncounterEvent : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        //Check if the player is in the event area and not in battle
+        if (other.gameObject.tag == "Player" && GameManager.Instance.state != GameManager.GameState.BATTLE)
         {
             timer += Time.deltaTime;
             if (timer >= maxTime)
