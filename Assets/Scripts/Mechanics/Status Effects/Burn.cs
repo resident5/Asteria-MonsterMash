@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Battle/StatusEffects/Burn", fileName = "Burn Status")]
+[CreateAssetMenu(menuName = "Terre Tools/Unit Info/New Status Effect/Burn", order = 3)]
 public class Burn : StatusEffectSO
 {
     public int damage;

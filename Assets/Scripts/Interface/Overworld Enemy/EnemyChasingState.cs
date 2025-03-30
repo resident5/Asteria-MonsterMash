@@ -6,13 +6,11 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class EnemyChasingState : EnemyState
 {
-    EnemyData eData;
-    EnemyMovement eMovement;
+    EnemyController eController;
 
-    public EnemyChasingState(EnemyData e, EnemyStateMachine eState) : base(e, eState)
+    public EnemyChasingState(EnemyController e, EnemyStateMachine eState) : base(e, eState)
     {
-        eData = e;
-        eMovement = eData.movement;
+        eController = e;
     }
 
     public override void Enter()
@@ -29,23 +27,23 @@ public class EnemyChasingState : EnemyState
     }
     public override void Exit()
     {
-        eData.movement.rb.velocity = Vector3.zero;
+        eController.rb.velocity = Vector3.zero;
     }
 
     public override void ChangeState(EnemyState newEnemyState)
     {
-        eData.StateMachine.ChangeState(newEnemyState);
+        eController.StateMachine.ChangeState(newEnemyState);
     }
 
     public override void OnCollision(Collision other)
     {
         GameObject obj = other.gameObject;
 
-        if (obj == eData.player.gameObject)
+        if (obj.tag == "Player")
         {
-            PlayerData pData = obj.GetComponent<PlayerData>();
-            GameManager.Instance.InitiateBattle(pData, eData);
-            ChangeState(eData.IdleState);
+            PlayerController pController = obj.GetComponent<PlayerController>();
+            GameManager.Instance.InitiateBattle(pController, eController);
+            ChangeState(eController.IdleState);
         }
     }
     public override void OnTrigger(Collision other)
@@ -55,28 +53,28 @@ public class EnemyChasingState : EnemyState
 
     public void Move()
     {
-        if (eData.player != null)
+        if (eController.player != null)
         {
-            Vector3 dir = eData.player.transform.position - eMovement.transform.position;
+            Vector3 dir = eController.player.transform.position - eController.transform.position;
             dir.Normalize();
 
-            eMovement.rb.velocity = dir * eMovement.moveSpeedX;
+            eController.rb.velocity = dir * eController.moveSpeedX;
             Flip(dir.x);
         }
     }
 
     void Flip(float xDirection)
     {
-        if (xDirection > 0 && !eMovement.facingRight || xDirection < 0 && eMovement.facingRight)
+        if (xDirection > 0 && !eController.facingRight || xDirection < 0 && eController.facingRight)
         {
-            eMovement.facingRight = !eMovement.facingRight;
+            eController.facingRight = !eController.facingRight;
             Vector3 rot = Vector3.zero;
-            if (!eMovement.facingRight)
+            if (!eController.facingRight)
             {
                 rot.y = 180;
             }
 
-            eMovement.transform.localEulerAngles = rot;
+            eController.transform.localEulerAngles = rot;
         }
     }
 

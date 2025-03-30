@@ -86,6 +86,9 @@ public class HUDController : Singleton<HUDController>
 
     public void HideMenu()
     {
+        if (menuStack.Count <= 0)
+            return;
+
         //If only the main menu is at the top
         if (menuStack.Count == 1)
         {
@@ -154,10 +157,9 @@ public class HUDController : Singleton<HUDController>
 
         //Add player info
         GameObject pObj = Instantiate(UIMonDataPrefab, teamHolder);
-        Button pBtn = pObj.GetComponent<Button>();
-        UIMonStats pStats = pObj.GetComponent<UIMonStats>();
+        TeamButtonConfig configStats = pObj.GetComponent<TeamButtonConfig>();
 
-        pStats.InitStats(playerData.data);
+        configStats.InitStats(playerData.playerStats);
 
         //Add mon info
         foreach (var mons in playerData.battleMons)
@@ -165,9 +167,9 @@ public class HUDController : Singleton<HUDController>
             //Setup mon stats in menu
             GameObject obj = Instantiate(UIMonDataPrefab, teamHolder);
             Button btn = obj.GetComponent<Button>();
-            UIMonStats monStats = obj.GetComponent<UIMonStats>();
+            TeamButtonConfig monbuttonConfig = obj.GetComponent<TeamButtonConfig>();
 
-            monStats.InitStats(mons.data);
+            monbuttonConfig.InitStats(mons.monsterStats);
         }
 
     }
@@ -228,7 +230,6 @@ public class HUDController : Singleton<HUDController>
 
     public void FadeOut()
     {
-        Debug.Log("Fade Out");
         LeanTween.alphaCanvas(fadeCanvas, 0, 1.2f);
     }
 }

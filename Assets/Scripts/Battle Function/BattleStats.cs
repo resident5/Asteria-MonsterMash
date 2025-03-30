@@ -73,8 +73,25 @@ public class BattleStats
 
     }
 
-    public int level;
-    
+    public int level = 1;
+
+    public BattleStats()
+    {
+        baseMaxHealth = 0;
+        baseStrength = 0;
+        baseMagic = 0;
+        baseSpeed = 0;
+        health = 0;
+        maxHealth = 0;
+        strength = 0;
+        magic = 0;
+        speed = 0;
+        luck = 0;
+        mana = 0;
+        lust = 0;
+        level = 1;
+    }
+
     public void InitStats()
     {
         MaxHealth = Mathf.Clamp(Mathf.RoundToInt(baseMaxHealth * Mathf.Pow(1.2f, level - 1)), 0, MAX_HP);

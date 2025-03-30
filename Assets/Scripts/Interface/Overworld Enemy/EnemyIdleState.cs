@@ -7,15 +7,13 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class EnemyIdleState : EnemyState
 {
-    private EnemyData eData;
-    private EnemyMovement eMovement;
+    private EnemyController eController;
     private bool FoundPlayer => DetectedPlayer();
-    private float Awareness { get => eData.awareness; set => eData.awareness = value; }
+    private float Awareness { get => eController.enemyData.awareness; set => eController.enemyData.awareness = value; }
 
-    public EnemyIdleState(EnemyData e, EnemyStateMachine eState) : base(e, eState)
+    public EnemyIdleState(EnemyController e, EnemyStateMachine eState) : base(e, eState)
     {
-        eData = e;
-        eMovement = e.movement;
+        eController = e;
     }
 
     public override void Enter()
@@ -30,7 +28,7 @@ public class EnemyIdleState : EnemyState
         
         if (Awareness >= 100)
         {
-            ChangeState(eData.ChasingState);
+            ChangeState(eController.ChasingState);
         }
     }
     public override void PhysicsUpdate()
@@ -39,11 +37,11 @@ public class EnemyIdleState : EnemyState
     public override void Exit()
     {
         Awareness = 0;
-        eData.emote.DeActivate();
+        eController.enemyData.emote.DeActivate();
     }
     public override void ChangeState(EnemyState newEnemyState)
     {
-        eData.StateMachine.ChangeState(newEnemyState);
+        eController.StateMachine.ChangeState(newEnemyState);
     }
 
     public override void OnCollision(Collision other)
@@ -56,15 +54,15 @@ public class EnemyIdleState : EnemyState
 
     private bool DetectedPlayer()
     {
-        Collider[] colliders = Physics.OverlapSphere(eData.transform.position, eMovement.detectionRadius);
+        Collider[] colliders = Physics.OverlapSphere(eController.transform.position, eController.detectionRadius);
 
         foreach (Collider item in colliders)
         {
             if (item.gameObject.tag == "Player")
             {
-                eData.emote.Activate();
+                eController.enemyData.emote.Activate();
 
-                eData.player = item.GetComponent<PlayerMovement>();
+                eController.player = item.GetComponent<PlayerController>();
 
                 return true;
             }
@@ -77,15 +75,15 @@ public class EnemyIdleState : EnemyState
     {
         if (isIncreasing)
         {
-            Awareness += 1 * eData.awarenessRate * Time.deltaTime;
+            Awareness += 1 * eController.enemyData.awarenessRate * Time.deltaTime;
         }
         else
         {
-            Awareness -= 1 * eData.awarenessRate * Time.deltaTime;
+            Awareness -= 1 * eController.enemyData.awarenessRate * Time.deltaTime;
         }
 
-        eData.awareness = Mathf.Clamp(eData.awareness, 0, 100);
-        eData.emote.warningFill.fillAmount = eData.awareness / 100f;
+        eController.enemyData.awareness = Mathf.Clamp(eController.enemyData.awareness, 0, 100);
+        eController.enemyData.emote.warningFill.fillAmount = eController.enemyData.awareness / 100f;
 
     }
 

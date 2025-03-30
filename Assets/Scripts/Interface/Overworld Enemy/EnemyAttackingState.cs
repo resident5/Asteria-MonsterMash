@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyAttackingState : EnemyState
 {
-    public EnemyAttackingState(EnemyData e, EnemyStateMachine eState) : base(e, eState)
+    public EnemyAttackingState(EnemyController e, EnemyStateMachine eState) : base(e, eState)
     {
     }
 

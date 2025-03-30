@@ -1,0 +1,15 @@
+@printer Wide
+I think I'm lost
+L: Show Image
+@cgmode !reset
+@back sm01_cg1
+L: Ok..
+L: Thats a nice image
+Now Try again
+@back sm01_cg1 !visible
+@cgmode !reset !cgReset
+L: Show Image
+L: Show Image
+
+@adventure reset!
+@stop

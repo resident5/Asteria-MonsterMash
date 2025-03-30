@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class MonSummon : MonoBehaviour
 {
-    public UnitCreatorSO monUnit;
+    public MonsterData monData;
     public Slider healthSlider;
     public Slider lustSlider;
 
@@ -22,7 +22,7 @@ public class MonSummon : MonoBehaviour
     {
         btn.onClick.AddListener(() =>
         {
-            bool success = BattleManager.Instance.SummonNewUnit(monUnit, true);
+            bool success = BattleManager.Instance.SummonNewUnit(monData, true);
 
             if (!success)
             {
@@ -40,15 +40,15 @@ public class MonSummon : MonoBehaviour
         
     }
 
-    public void SetStatsBars(UnitCreatorSO unit)
+    public void SetStatsBars(MonsterData unit)
     {
-        monNameText.text = unit.data.unitName;
+        monNameText.text = unit.monsterStats.unitName;
 
-        healthSlider.maxValue = unit.data.stats.MaxHealth;
-        healthSlider.value = unit.data.stats.Health;
+        healthSlider.maxValue = unit.monsterStats.battleStats.MaxHealth;
+        healthSlider.value = unit.monsterStats.battleStats.Health;
 
         lustSlider.maxValue = 100;
-        lustSlider.value = unit.data.stats.Lust;
+        lustSlider.value = unit.monsterStats.battleStats.Lust;
 
         fillImage.color = gradient.Evaluate(1f);
     }

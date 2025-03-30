@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-[CreateAssetMenu(fileName = "Quest Info SO", menuName = "Terre Tools/QuestInfoSO", order = 1)]
+[CreateAssetMenu(fileName = "Quest Info SO", menuName = "Terre Tools/Quest/QuestInfoSO", order = 50)]
 public class QuestInfoSO : ScriptableObject
 {
     [field: SerializeField] 

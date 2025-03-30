@@ -200,7 +200,6 @@ GameObject:
   - component: {fileID: 5771568960076546702}
   - component: {fileID: 5771568960076546696}
   - component: {fileID: 5771568960076546697}
-  - component: {fileID: 291426630454278969}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -307,66 +306,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7e868a86afd1324085cd08e6ff7e27c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerData: {fileID: 0}
+  playerData:
+    emote: {fileID: 0}
+    worldCanvas: {fileID: 0}
+    currentXP: 0
+    requiredXP: 0
+    playerCreator: {fileID: 0}
+    playerStats:
+      unitName: 
+      description: 
+      cannotBeCaptured: 0
+      spriteImage: {fileID: 0}
+      animatorController: {fileID: 0}
+      battleStats:
+        baseMaxHealth: 0
+        baseStrength: 0
+        baseMagic: 0
+        baseSpeed: 0
+        health: 0
+        maxHealth: 0
+        strength: 0
+        magic: 0
+        speed: 0
+        luck: 0
+        mana: 0
+        lust: 0
+        level: 1
+      battleMoves: []
   rb: {fileID: 5771568960076546702}
   animator: {fileID: 0}
   moveSpeedX: 5
   moveSpeedZ: 5
   steps: 0
   facingRight: 1
-  graphix: {fileID: 5771568959303862350}
+  canMove: 1
   startPosition: {x: 0, y: 0, z: 0}
   previousPosition: {x: 0, y: 0, z: 0}
-  canMove: 1
+  graphix: {fileID: 5771568959303862350}
   walkable:
     serializedVersion: 2
     m_Bits: 256
+  focus: {fileID: 0}
+  detectionRadius: 0
   radius: 0.1
   debugTargetPosition: {x: 0, y: 0, z: 0}
   debugOffSet: -1
   colliders: []
---- !u!114 &291426630454278969
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5771568960076546807}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bdef3cfe7f6611b4ba19863219b8fd89, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  battleMons: []
-  focus: {fileID: 0}
-  detectionRadius: 3
-  data:
-    id: 0
-    level: 1
-    unitName: Lythok
-    description: Lythok is an Orc Champion
-    stats:
-      health: 100
-      maxHealth: 100
-      strength: 5
-      magic: 5
-      speed: 7
-      mana: 100
-      lust: 10
-    cannotBeCaptured: 0
-    spriteImage: {fileID: 0}
-    animatorController: {fileID: 9100000, guid: c16091e285ea76e42ade28a097d0b117, type: 2}
-    battleMoves:
-    - {fileID: 11400000, guid: 5eff99dea1f04c140b1e7658d758ea6c, type: 2}
-    - {fileID: 11400000, guid: 1be8f0ac882aec743b76f844e2d52a6f, type: 2}
-    - {fileID: 11400000, guid: 4fa4e0a8b12ee3f4caf80bc3f292a6d1, type: 2}
-  currentXP: 0
-  requiredXP: 0
-  additonMultiplier: 100
-  powerMultiplier: 2
-  divisionMultiplier: 7
-  emote: {fileID: 3450617971174205575}
-  worldCanvas: {fileID: 0}
 --- !u!1001 &5935922963469314473
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -485,14 +470,3 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6755703716405303037, guid: cb9a00adb5d01e94790119edbef42960, type: 3}
   m_PrefabInstance: {fileID: 5935922963469314473}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3450617971174205575 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 9044262415055110446, guid: cb9a00adb5d01e94790119edbef42960, type: 3}
-  m_PrefabInstance: {fileID: 5935922963469314473}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 095c3e60aa67ab6449ac4cdea24f3612, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

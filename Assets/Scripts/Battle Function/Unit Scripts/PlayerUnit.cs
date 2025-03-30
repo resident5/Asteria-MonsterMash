@@ -7,7 +7,7 @@ public class PlayerUnit : BattleUnit
     public List<BattleUnit> Allies => manager.battleInfo.ListOfAllies;
     public List<BattleUnit> Enemies => manager.battleInfo.ListOfEnemies;
 
-    public List<UnitCreatorSO> Summons;
+    public List<MonsterData> Summons;
 
     public override void OnTurnStart()
     {
@@ -28,17 +28,17 @@ public class PlayerUnit : BattleUnit
         BattleManager.Instance.battleHUD.DisableHUD();
     }
 
-    public void Init(PlayerData pData)
+    public void Init(PlayerStats pStats)
     {
         //UnitCreatorSO unitInstance = Instantiate(pData.playerCreator);
         //data = unitInstance.data;
-        data = pData.data;
+        myDataStats = pStats;
         statusEffects = new List<StatusEffectSO>();
         healthbar = GetComponentInChildren<HealthBar>();
-        animator.runtimeAnimatorController = data.animatorController;
+        animator.runtimeAnimatorController = myDataStats.animatorController;
 
         healthbar.unit = this;
-        baseActionValue = Mathf.CeilToInt(Mathf.Clamp(MAX_ACTION_VALUE / data.stats.Speed, 0, MAX_ACTION_VALUE));
+        baseActionValue = Mathf.CeilToInt(Mathf.Clamp(MAX_ACTION_VALUE / myDataStats.battleStats.Speed, 0, MAX_ACTION_VALUE));
         currentActionValue = baseActionValue;
     }
 

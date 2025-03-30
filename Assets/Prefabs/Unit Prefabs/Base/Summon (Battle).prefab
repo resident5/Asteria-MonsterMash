@@ -1,5 +1,37 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4560100972019506704
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7648524475548081195}
+  m_Layer: 7
+  m_Name: Root
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7648524475548081195
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4560100972019506704}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6597310812388427654}
+  m_Father: {fileID: 6597310811573800259}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6597310811573800255
 GameObject:
   m_ObjectHideFlags: 0
@@ -33,7 +65,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6597310812388427654}
+  - {fileID: 7648524475548081195}
   - {fileID: 8733594317272209570}
   - {fileID: 5582710370024796810}
   m_Father: {fileID: 0}
@@ -142,25 +174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29cf06e89b928654f839cfacfa1b916b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unit: {fileID: 0}
   manager: {fileID: 0}
-  data:
-    id: 0
-    level: 0
-    unitName: 
-    description: 
-    stats:
-      health: 0
-      maxHealth: 0
-      strength: 0
-      magic: 0
-      speed: 0
-      mana: 0
-      lust: 0
-    cannotBeCaptured: 0
-    spriteImage: {fileID: 0}
-    animatorController: {fileID: 0}
-    battleMoves: []
   animator: {fileID: 0}
   statusEffects: []
   isTurn: 0
@@ -170,7 +184,6 @@ MonoBehaviour:
   isLusty: 0
   audioClip: {fileID: 0}
   healthbar: {fileID: 0}
-  Summons: []
 --- !u!1 &6597310812388427649
 GameObject:
   m_ObjectHideFlags: 0
@@ -196,12 +209,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6597310812388427649}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -1, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6597310811573800259}
+  m_Father: {fileID: 7648524475548081195}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6597310812388427655
 SpriteRenderer:

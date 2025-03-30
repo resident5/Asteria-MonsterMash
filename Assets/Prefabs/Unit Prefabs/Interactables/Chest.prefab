@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4274765513911319793}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.000030517578, y: 0.80999756, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -49,12 +49,12 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1.7658966, z: 1}
-  m_Center: {x: 0, y: 0.8245648, z: 0}
+  m_Size: {x: 2, y: 2, z: 2}
+  m_Center: {x: 0, y: 0.7578274, z: 0}
 --- !u!114 &4067414086460149378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70,9 +70,7 @@ MonoBehaviour:
   isFocus: 0
   hasInteracted: 0
   possibleListOfItems:
-  - {fileID: 11400000, guid: 5246e679600d5464389bea3288eb0b3c, type: 2}
-  - {fileID: 11400000, guid: 49d60e1738f001d4b9183e06836cbe21, type: 2}
-  - {fileID: 11400000, guid: e2242be9adcf5634494ccdd1ad3f4eae, type: 2}
+  - {fileID: 11400000, guid: b01345e5459c9ab478cfabdbc2a2c3d8, type: 2}
   isOpened: 0
   min: 1
   max: 3
@@ -146,8 +144,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1120232429
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: a8a77ae7ed0588f4fb38308a070670b8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

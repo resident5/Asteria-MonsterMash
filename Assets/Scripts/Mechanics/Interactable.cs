@@ -2,7 +2,8 @@
 using System.Collections;
 using UnityEngine;
 
-public class Interactable : MonoBehaviour
+[RequireComponent(typeof(SphereCollider))]
+public class Interactable: MonoBehaviour
 {
     public bool isFocus = false;
     public bool hasInteracted = false;
@@ -28,6 +29,15 @@ public class Interactable : MonoBehaviour
     {
         isFocus = true;
         hasInteracted = false;
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            PlayerController playerController = other.GetComponent<PlayerController>();
+            playerController.SetFocus(this);
+        }
     }
 
 

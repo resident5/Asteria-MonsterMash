@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class EnemyState
 {
-    protected EnemyData enemyData;
+    protected EnemyController enemyData;
     protected EnemyStateMachine enemyStateMachine;
 
-    public EnemyState(EnemyData e, EnemyStateMachine eState)
+    public EnemyState(EnemyController e, EnemyStateMachine eState)
     {
         enemyData = e;
         enemyStateMachine = eState;

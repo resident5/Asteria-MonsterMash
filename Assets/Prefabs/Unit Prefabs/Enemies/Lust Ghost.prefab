@@ -20,6 +20,18 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 369e4d5854ef28a40904be637009c267, type: 2}
+    - target: {fileID: 3669106913199220559, guid: 6eea0700de202cd4abfc2c0c3519512f, type: 3}
+      propertyPath: enemyData.unitInfo
+      value: 
+      objectReference: {fileID: 11400000, guid: 898119b11d26eae4490a325302e54039, type: 2}
+    - target: {fileID: 3669106913199220559, guid: 6eea0700de202cd4abfc2c0c3519512f, type: 3}
+      propertyPath: enemyData.requiredXP
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 3669106913199220559, guid: 6eea0700de202cd4abfc2c0c3519512f, type: 3}
+      propertyPath: enemyData.awarenessRate
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 6509596292696657867, guid: 6eea0700de202cd4abfc2c0c3519512f, type: 3}
       propertyPath: unitInfo
       value: 

@@ -20,6 +20,18 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3393779376946112647, guid: 6eea0700de202cd4abfc2c0c3519512f, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: f6c019fda993b064689f0ca51a6f4e59, type: 2}
+    - target: {fileID: 3669106913199220559, guid: 6eea0700de202cd4abfc2c0c3519512f, type: 3}
+      propertyPath: enemyData.requiredXP
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 3669106913199220559, guid: 6eea0700de202cd4abfc2c0c3519512f, type: 3}
+      propertyPath: enemyData.awarenessRate
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 6090358514271538317, guid: 6eea0700de202cd4abfc2c0c3519512f, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -76,7 +88,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6509596292696657867, guid: 6eea0700de202cd4abfc2c0c3519512f, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

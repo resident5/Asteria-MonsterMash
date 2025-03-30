@@ -4,4 +4,8 @@ using UnityEngine;
 
 public class TWalkable : MonoBehaviour
 {
+    private void Start()
+    {
+        gameObject.layer = LayerMask.NameToLayer("Walkable");
+    }
 }

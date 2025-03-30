@@ -1,0 +1,16 @@
+@goto Snake_Merchant_0.greetings2 if:talkedToSM01==true
+# greetings
+@printer Wide
+I think I'm lost
+L: Can you help me?
+SMO1: No
+L: Are you sure?
+@set talkedToSM01=true
+@adventure !reset
+
+# greetings2
+SMO1: I'm not helping you. Go away
+SM01: Actually since you are so insistent are being annoying
+The snake merchant quickly stamps a nipple piercing to your chest.
+@adventure !reset
+@stop

@@ -7,12 +7,14 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+    [Header("Managers")]
     public CameraManager cameraManager;
     public DialogueSystem dialogueSystem;
     public BattleManager battleManager;
     public InputManager inputManager;
     public VariableManager variableManager;
     public EventManager eventManager;
+    public DialogueManager dialogueManager;
 
     public Debugger debugger;
 
@@ -28,14 +30,16 @@ public class GameManager : MonoBehaviour
     public Scene overWorldScene;
     public Scene battleScene;
 
-    public EnemyData enemyData;
-    public PlayerData playerData;
+    public EnemyController enemyController;
+    public PlayerController playerController;
 
     public HUDController hudController;
     public bool isPaused = false;
     public bool isInteracting = false;
 
+    [Header("World Info")]
     public Teleporter[] teleportSpots;
+    public Transform worldCanvas;
 
     private void Awake()
     {
@@ -47,9 +51,10 @@ public class GameManager : MonoBehaviour
         eventManager = GetComponentInChildren<EventManager>();
         hudController = FindObjectOfType<HUDController>();
         teleportSpots = FindObjectsOfType<Teleporter>();
-        playerData = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerData>();
+        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         inputManager = GetComponentInChildren<InputManager>();
         debugger = GetComponent<Debugger>();
+        worldCanvas = GameObject.Find("World Canvas").transform;
 
         if (Instance == null)
         {
@@ -66,7 +71,7 @@ public class GameManager : MonoBehaviour
     {
         state = GameState.OVERWORLD;
         StartCoroutine(PreloadBattleScene("Battle"));
-        hudController.SetupMenu(playerData);
+        hudController.SetupMenu(playerController.playerData);
     }
 
     public void ChangeState(GameState newState, PlayerData data = null)
@@ -81,10 +86,10 @@ public class GameManager : MonoBehaviour
                 cameraManager.DeactivateBattleCamera();
                 cameraManager.SwapToOverWorldCam();
 
-                if (enemyData != null)
+                if (enemyController != null)
                 {
-                    enemyData.EndBattle();
-                    enemyData = null;
+                    enemyController.EndBattle();
+                    enemyController = null;
                 }
 
                 if (hasWon == true)
@@ -94,7 +99,7 @@ public class GameManager : MonoBehaviour
 
                 break;
             case GameState.BATTLE:
-                battleManager.InitializeBattle(playerData, enemyData);
+                battleManager.InitializeBattle(playerController, enemyController);
                 cameraManager.ActivateBattleCamera();
                 cameraManager.SwapToBattleCam();
                 break;
@@ -121,10 +126,11 @@ public class GameManager : MonoBehaviour
 
         if (inputManager.Interacted && !isInteracting)
         {
-            if (playerData.focus != null)
+            Debug.Log("INTERACT");
+            if (playerController.focus != null)
             {
-                playerData.focus.Focused();
-                playerData.focus = null;
+                playerController.focus.Focused();
+                playerController.focus = null;
             }
         }
 
@@ -155,9 +161,9 @@ public class GameManager : MonoBehaviour
 
         if (isPaused)
         {
-            hudController.SetupMenu(playerData);
+            hudController.SetupMenu(playerController.playerData);
             hudController.ShowMenu(hudController.main);
-            hudController.ShowPauseMenu(playerData, isPaused);
+            hudController.ShowPauseMenu(playerController.playerData, isPaused);
         }
         else
         {
@@ -208,13 +214,13 @@ public class GameManager : MonoBehaviour
 
     public void MovePlayer(Transform newLocation)
     {
-        playerData.transform.position = newLocation.position;
+        playerController.transform.position = newLocation.position;
     }
 
-    public void InitiateBattle(PlayerData pData, EnemyData eData)
+    public void InitiateBattle(PlayerController pController, EnemyController eController)
     {
-        enemyData = eData;
-        playerData = pData;
+        enemyController = eController;
+        playerController = pController;
         ChangeState(GameState.BATTLE);
     }
 

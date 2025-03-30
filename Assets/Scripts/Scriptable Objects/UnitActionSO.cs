@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[CreateAssetMenu(fileName = "BattleMove", menuName = "Battle/Create new battle move")]
+[CreateAssetMenu(menuName = "Terre Tools/Unit Info/New Battle Action", order = 2)]
 public class UnitActionSO : ScriptableObject
 {
-    public string name;
+    public new string name;
     public string description;
     public string id;
     public EffectTypes effectType;

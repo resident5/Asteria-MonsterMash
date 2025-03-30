@@ -95,13 +95,13 @@ public class BattleHUDController : Singleton<BattleHUDController>
     {
         primaryFirstButton.Select();
         //Populate battle moves section
-        foreach (var action in currentPlayerTurn.data.battleMoves)
+        foreach (var action in currentPlayerTurn.myDataStats.battleMoves)
         {
             SetupMoves(action);
         }
 
         //Populate summons list
-        foreach (var summon in currentPlayerTurn.Summons)
+        foreach (MonsterData summon in currentPlayerTurn.Summons)
         {
             SetupSummons(summon);
         }
@@ -138,12 +138,12 @@ public class BattleHUDController : Singleton<BattleHUDController>
 
     }
     
-    void SetupSummons(UnitCreatorSO summon)
+    void SetupSummons(MonsterData summon)
     {
         GameObject obj = Instantiate(monButtonPrefab, summonHolder);
         MonSummon mSummon = obj.GetComponent<MonSummon>();
-        mSummon.monUnit = summon;
-        obj.GetComponentInChildren<TMP_Text>().text = mSummon.monUnit.data.unitName;
+        mSummon.monData = summon;
+        obj.GetComponentInChildren<TMP_Text>().text = mSummon.monData.monsterStats.unitName;
         summonButtonList.Add(obj);
     }
 

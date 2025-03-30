@@ -10,6 +10,8 @@ public class Item : ScriptableObject
     public string description;
 
     public bool canBeThrown = true;
+
+    //TODO: Change this to accept any target (player, enemy, monster, npc?)
     public PlayerData playerData;
 
     public virtual void Use()

@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1abf79dbdb40744db7a79f01ce17b4a, type: 3}
+  m_Name: 005.Samurai B
+  m_EditorClassIdentifier: 
+  data:
+    id: 1
+    unitName: Myconin
+    description: Myconin is a ninja shroom. It deals lust over time effects.
+    stats:
+      baseMaxHealth: 50
+      baseStrength: 2
+      baseMagic: 0
+      baseSpeed: 5
+      health: 0
+      maxHealth: 0
+      strength: 0
+      magic: 0
+      speed: 0
+      luck: 0
+      mana: 100
+      lust: 0
+      level: 1
+    cannotBeCaptured: 0
+    spriteImage: {fileID: 21300000, guid: a549dcf47bdb6ad48969f023f201ecec, type: 3}
+    animatorController: {fileID: 9100000, guid: a3555ab8f7b654e47afa32d3f767c5fa, type: 2}
+    battleMoves:
+    - {fileID: 11400000, guid: 5eff99dea1f04c140b1e7658d758ea6c, type: 2}

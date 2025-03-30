@@ -19,6 +19,7 @@ public class Consumable : Item
     public override void Use()
     {
         base.Use();
+        //Assign target 
         ApplyEffect();
         RemoveFromInventory();
     }
@@ -30,28 +31,28 @@ public class Consumable : Item
         switch (effectType)
         {
             case EffectType.ModHealth:
-                playerData.data.stats.Health += flatValueModifier;
+                playerData.playerStats.battleStats.Health += flatValueModifier;
                 break;
             case EffectType.ModMana:
-                playerData.data.stats.Mana += flatValueModifier;
+                playerData.playerStats.battleStats.Mana += flatValueModifier;
                 break;
             case EffectType.ModLust:
-                playerData.data.stats.Lust += flatValueModifier;
+                playerData.playerStats.battleStats.Lust += flatValueModifier;
                 break;
             case EffectType.ModHealthPercent:
-                float maxHp = playerData.data.stats.MaxHealth;
+                float maxHp = playerData.playerStats.battleStats.MaxHealth;
                 float percentageValue = (percentageValueModifier / 100) * maxHp;
-                playerData.data.stats.Health += percentageValue;
+                playerData.playerStats.battleStats.Health += percentageValue;
                 break;
             case EffectType.ModManaPercent:
-                float maxMp = playerData.data.stats.MaxHealth;
+                float maxMp = playerData.playerStats.battleStats.MaxHealth;
                 float percentageMpValue = (percentageValueModifier / 100) * maxMp;
-                playerData.data.stats.Mana += (int)percentageMpValue;
+                playerData.playerStats.battleStats.Mana += (int)percentageMpValue;
                 break;
             case EffectType.ModLustPercent:
-                float maxLust = playerData.data.stats.MaxHealth;
+                float maxLust = playerData.playerStats.battleStats.MaxHealth;
                 float percentageLustValue = (percentageValueModifier / 100) * maxLust;
-                playerData.data.stats.Lust += (int)percentageLustValue;
+                playerData.playerStats.battleStats.Lust += (int)percentageLustValue;
                 break;
             default:
                 break;

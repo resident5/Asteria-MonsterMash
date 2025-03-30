@@ -73,16 +73,16 @@ public class InputManager : Singleton<InputManager>
         cancelAction.Enable();
     }
 
-    //private void OnDisable()
-    //{
-    //    moveAction.Disable();
-    //    jumpAction.Disable();
-    //    attackAction.Disable();
-    //    pauseAction.Disable();
-    //    interaction.Disable();
+    private void OnDisable()
+    {
+        moveAction.Disable();
+        jumpAction.Disable();
+        attackAction.Disable();
+        pauseAction.Disable();
+        interaction.Disable();
 
-    //    cancelAction.Disable();
-    //}
+        cancelAction.Disable();
+    }
 
     void RegisterInputActions()
     {

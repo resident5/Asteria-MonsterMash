@@ -17,7 +17,7 @@ public class InventorySlot : MonoBehaviour
     private void Start()
     {
         Button btn = GetComponent<Button>();
-        item.playerData = GameManager.Instance.playerData;
+        item.playerData = GameManager.Instance.playerController.playerData;
         btn.onClick.AddListener(() => 
         {
             item.Use(); 

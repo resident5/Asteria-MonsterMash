@@ -97,7 +97,6 @@ GameObject:
   - component: {fileID: 5874784089364310553}
   - component: {fileID: 5874784089364310552}
   - component: {fileID: 5874784089364310532}
-  - component: {fileID: 4772987378712908762}
   m_Layer: 6
   m_Name: Base Enemy
   m_TagString: Enemy
@@ -204,31 +203,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0a4ec133cb22284a83e5f740f74cb88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyState: 0
+  stateDelay: 1.5
   rb: {fileID: 5874784089364310553}
   animator: {fileID: 5874784089364310552}
   moveSpeedX: 3
   moveSpeedZ: 3
-  target: {fileID: 0}
-  myData: {fileID: 4772987378712908762}
+  enemyData:
+    emote: {fileID: 0}
+    worldCanvas: {fileID: 0}
+    currentXP: 0
+    requiredXP: 0
+    enemyUnit: []
+    unitInfo: {fileID: 0}
+    awareness: 0
+    awarenessRate: 0.5
+    availableExp: 50
   detectionRadius: 3
   facingRight: 0
-  playerMask:
-    serializedVersion: 2
-    m_Bits: 0
---- !u!114 &4772987378712908762
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5874784089364310558}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7882c87195fb9d24cbd6b62d9e4a309d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stateDelay: 2.5
-  enemyState: 0
-  enemyUnit: []
-  unitInfo: {fileID: 0}
-  spriteRenderer: {fileID: 0}
+  player: {fileID: 0}

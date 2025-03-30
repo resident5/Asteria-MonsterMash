@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Local Group
+  m_Data:
+    m_SerializedData: []
+  m_GUID: e8bcc8369a409964285e3c250a3fcf40
+  m_SerializeEntries:
+  - m_GUID: 76ccf09299f5ed14eb3de2e27f20d988
+    m_Address: Assets/Scenario/NPC Dialogues/Snake_Merchant_0.nani
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 762565ba8eb7a3c4bb8eacafbcd9d1e7, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: d15cf5e7d9fcfb34dabac24768de27a8, type: 2}
+    - {fileID: 11400000, guid: c5b6b3226c0e74f44942c1dccbbe6680, type: 2}

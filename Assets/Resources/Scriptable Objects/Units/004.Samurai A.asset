@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1abf79dbdb40744db7a79f01ce17b4a, type: 3}
+  m_Name: 004.Samurai A
+  m_EditorClassIdentifier: 
+  data:
+    id: 1
+    unitName: Samurai A
+    description: Samurai is the alpha evolved form of a Myconin. It inflicts enemies
+      with pheromone debuffs then deals increased damaged based on stacks
+    stats:
+      baseMaxHealth: 65
+      baseStrength: 7
+      baseMagic: 2
+      baseSpeed: 5
+      health: 0
+      maxHealth: 0
+      strength: 0
+      magic: 0
+      speed: 0
+      luck: 0
+      mana: 100
+      lust: 0
+      level: 10
+    cannotBeCaptured: 0
+    spriteImage: {fileID: 21300000, guid: 8f369a09777896045a3a19afdac8dd71, type: 3}
+    animatorController: {fileID: 9100000, guid: e7d2bc9d468b10c40a061d7159c3435d, type: 2}
+    battleMoves:
+    - {fileID: 11400000, guid: d8d600f4845fa9243824a2622782bca1, type: 2}
+    - {fileID: 11400000, guid: 1be8f0ac882aec743b76f844e2d52a6f, type: 2}
+    dataType: 1
+    evolutions: []

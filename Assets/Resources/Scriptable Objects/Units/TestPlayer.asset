@@ -19,11 +19,14 @@ MonoBehaviour:
     stats:
       baseMaxHealth: 0
       baseStrength: 0
-      BaseMagic: 0
+      baseMagic: 0
       baseSpeed: 0
+      health: 0
+      maxHealth: 0
       strength: 0
       magic: 0
       speed: 0
+      luck: 0
       mana: 0
       lust: 0
       level: 1
@@ -31,3 +34,6 @@ MonoBehaviour:
     spriteImage: {fileID: 0}
     animatorController: {fileID: 0}
     battleMoves: []
+    dataType: 0
+    evolution1: {fileID: 0}
+    evolution2: {fileID: 0}

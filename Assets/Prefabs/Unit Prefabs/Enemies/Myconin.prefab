@@ -16,10 +16,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: Myconin
       objectReference: {fileID: 0}
+    - target: {fileID: 2431480225552487818, guid: 6eea0700de202cd4abfc2c0c3519512f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 3393779376946112647, guid: 6eea0700de202cd4abfc2c0c3519512f, type: 3}
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: a3555ab8f7b654e47afa32d3f767c5fa, type: 2}
+    - target: {fileID: 3669106913199220559, guid: 6eea0700de202cd4abfc2c0c3519512f, type: 3}
+      propertyPath: enemyData.unitInfo
+      value: 
+      objectReference: {fileID: 11400000, guid: 263f63b111956254b8d032f2c9d14b01, type: 2}
+    - target: {fileID: 3669106913199220559, guid: 6eea0700de202cd4abfc2c0c3519512f, type: 3}
+      propertyPath: enemyData.currentXP
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3669106913199220559, guid: 6eea0700de202cd4abfc2c0c3519512f, type: 3}
+      propertyPath: enemyData.requiredXP
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 3669106913199220559, guid: 6eea0700de202cd4abfc2c0c3519512f, type: 3}
+      propertyPath: enemyData.awarenessRate
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 6509596292696657867, guid: 6eea0700de202cd4abfc2c0c3519512f, type: 3}
       propertyPath: unitInfo
       value: 

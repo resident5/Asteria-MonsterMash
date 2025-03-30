@@ -16,7 +16,13 @@ public class CACapture : CustomBattleAction
 
         if (success)
         {
-            UnitCreatorSO capturedUnit = Instantiate(unit.unit);
+            MonsterData capturedUnit = null;
+            if (unit.myData is EnemyData enemyData)
+            {
+                capturedUnit = new MonsterData();
+                capturedUnit.TurnEnemyIntoMonster(enemyData);
+            }
+            
             BattleManager.Instance.playerData.battleMons.Add(capturedUnit);
             unit.isDead = true;
         }

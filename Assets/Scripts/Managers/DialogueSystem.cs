@@ -39,14 +39,7 @@ public class DialogueSystem : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance != this)
-        {
-            Destroy(this.gameObject);
-        }
-        else
-        {
-            DontDestroyOnLoad(this.gameObject);
-        }
+
     }
 
     private void Start()

@@ -35,3 +35,13 @@ MonoBehaviour:
     animatorController: {fileID: 9100000, guid: a3555ab8f7b654e47afa32d3f767c5fa, type: 2}
     battleMoves:
     - {fileID: 11400000, guid: 5eff99dea1f04c140b1e7658d758ea6c, type: 2}
+    dataType: 1
+    evolutions:
+    - name: Samurai A
+      evolvedForm: {fileID: 11400000, guid: aea67d032395b0b4b9aaca118bad67e3, type: 2}
+      conditions:
+      - {fileID: 11400000, guid: 1909b1a7f8a0f524b8f3fcdce3d02be0, type: 2}
+    - name: Samurai B
+      evolvedForm: {fileID: 11400000, guid: 2944a229cc3849745a8c60f1c58b17f5, type: 2}
+      conditions:
+      - {fileID: 11400000, guid: d9be4b56ae11b004b97d9605d281d1a2, type: 2}

@@ -1,4 +1,5 @@
 using Cinemachine;
+using Naninovel;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,8 +26,18 @@ public class SwapCullingExtension : CinemachineExtension
         }
     }
 
-    void Start()
+    private void Init()
     {
-        mainCamera = Camera.main;
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+    }
+
+    private new void OnEnable()
+    {
+        Engine.OnInitializationFinished += Init;
+    }
+
+    private void OnDisable()
+    {
+        Engine.OnInitializationFinished -= Init;
     }
 }

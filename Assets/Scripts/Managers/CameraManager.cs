@@ -16,6 +16,8 @@ public class CameraManager : Singleton<CameraManager>
 
     CinemachineBrain brain;
 
+    [SerializeField] private GameObject virtualCameraDefaultPrefab;
+
     protected override void Awake()
     {
         base.Awake();
@@ -29,7 +31,7 @@ public class CameraManager : Singleton<CameraManager>
 
     private void Start()
     {
-        currentCamera.Follow = GameManager.Instance.playerData.transform;
+        currentCamera.Follow = GameManager.Instance.playerController.transform;
         CameraRefresh();
     }
 
@@ -67,8 +69,16 @@ public class CameraManager : Singleton<CameraManager>
     public void FindNewCameras(CinemachineVirtualCamera newCamera)
     {
         if (newCamera != null)
+        {
             currentCamera = newCamera;
-        currentCamera.Follow = GameManager.Instance.playerData.transform;
+        }
+        else
+        {
+            var camObj = Instantiate(virtualCameraDefaultPrefab);
+            var tenpCamera = camObj.GetComponent<CinemachineVirtualCamera>();
+            currentCamera = tenpCamera;
+        }
+            currentCamera.Follow = GameManager.Instance.playerController.transform;
     }
 
     public void ActivateBattleCamera()

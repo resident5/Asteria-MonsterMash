@@ -4,9 +4,6 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Linq;
 
-//TODO: Set Enemies' idle animation to include graphix local position*
-//TODO: Setup Daespec's animations
-//TODO: Set up merchant
 public class BattleManager : MonoBehaviour
 {
     private static BattleManager instance;
@@ -25,7 +22,7 @@ public class BattleManager : MonoBehaviour
     public GameObject enemyPrefab;
 
     public PlayerUnit playerBattleUnit;
-    public BattleUnit enemyUnit;
+    public BattleUnit enemyBattleUnit;
 
     public BattleInfo battleInfo;
 
@@ -57,11 +54,11 @@ public class BattleManager : MonoBehaviour
         battleHUD.transform.parent.gameObject.SetActive(false);
     }
 
-    public void InitializeBattle(PlayerData playData, EnemyData eData)
+    public void InitializeBattle(PlayerController pController, EnemyController eController)
     {
         state = BattleState.START;
-        playerData = playData;
-        enemyData = eData;
+        playerData = pController.playerData;
+        enemyData = eController.enemyData;
         battleInfo = new BattleInfo();
         battleHUD.transform.parent.gameObject.SetActive(true);
 
@@ -75,9 +72,9 @@ public class BattleManager : MonoBehaviour
         battleHUD.transform.parent.gameObject.SetActive(false);
         Debug.Log("Disable HUD");
         battleHUD.DisableHUD();
-        playerData.data.stats = playerBattleUnit.data.stats;
+        playerData.playerStats.battleStats = playerBattleUnit.myDataStats.battleStats;
         Destroy(playerBattleUnit.gameObject);
-        Destroy(enemyUnit.gameObject);
+        Destroy(enemyBattleUnit.gameObject);
         battleHUD.turnOrderSlider.DeInit();
 
         StopAllCoroutines();
@@ -162,23 +159,25 @@ public class BattleManager : MonoBehaviour
     IEnumerator BattleSceneSetup()
     {
         GameObject pGo = Instantiate(playerPrefab, unitList.playerSpots.GetChild(0));
+        GameObject eGo = Instantiate(enemyPrefab, unitList.enemySpots.GetChild(0));
+
         playerBattleUnit = pGo.GetComponent<PlayerUnit>();
+        enemyBattleUnit = eGo.GetComponent<BattleUnit>();
+
+        playerBattleUnit.SetupUnit(playerData);
+        enemyBattleUnit.SetupUnit(enemyData);
 
         playerBattleUnit.manager = this;
-        playerBattleUnit.unit.data.stats = playerData.data.stats;
+        enemyBattleUnit.manager = this;
+
+        playerBattleUnit.myDataStats.battleStats = playerData.playerStats.battleStats;
         playerBattleUnit.Summons = playerData.battleMons;
 
-        playerBattleUnit.Init(playerData);
+        enemyBattleUnit.animator.runtimeAnimatorController = enemyData.unitInfo.data.animatorController;
 
-        GameObject eGo = Instantiate(enemyPrefab, unitList.enemySpots.GetChild(0));
-        enemyUnit = eGo.GetComponent<BattleUnit>();
-        enemyUnit.animator.runtimeAnimatorController = enemyData.unitInfo.data.animatorController;
-
-        enemyUnit.manager = this;
-        enemyUnit.Init(enemyData.unitInfo);
 
         battleInfo.ListOfAllies.Add(playerBattleUnit);
-        battleInfo.ListOfEnemies.Add(enemyUnit);
+        battleInfo.ListOfEnemies.Add(enemyBattleUnit);
 
         battleHUD.turnOrderSlider.Init(battleInfo.ListOfAllUnits);
 
@@ -210,36 +209,6 @@ public class BattleManager : MonoBehaviour
 
     }
 
-    //Dictionary<BattleUnit, int> GetTurnOrder(List<BattleUnit> turnUnits)
-    //{
-    //    List<BattleUnit> tempList = turnUnits;
-    //    turnOrders = new Dictionary<BattleUnit, int>();
-
-    //    int listCounter = 0;
-    //    int actionVal = 0;
-
-    //    while (listCounter < 10)
-    //    {
-    //        BattleUnit fastestUnit = GetFastestUnit(turnUnits);
-
-    //        Debug.Log($"{fastestUnit.name} has a base of {fastestUnit.baseActionValue} action points and is currently at {fastestUnit.currentActionValue}");
-    //        //Create a list to hold the turn order based on the CURRENTaction value
-
-
-    //        //turnOrders.Add(fastestUnit, fastestUnit.currentActionValue);
-    //        fastestUnit.currentActionValue += fastestUnit.baseActionValue;
-
-    //        listCounter++;
-    //    }
-
-    //    //Get unit's action values
-    //    //If Unit A's value is higher than B put unit B in list
-    //    //Add Unit B's value to itself then check if that value is higher than A if not add B again
-    //    //Repeat until 10 times 
-
-    //    return turnOrders;
-    //}
-
     public BattleUnit GetFastestUnit(List<BattleUnit> units)
     {
         return units.OrderBy(x => x.currentActionValue).First();
@@ -256,7 +225,7 @@ public class BattleManager : MonoBehaviour
 
     public IEnumerator PlayerAttack(UnitActionSO battleMove)
     {
-        enemyUnit.ApplyAction(currentUnitTurn, battleMove);
+        enemyBattleUnit.ApplyAction(currentUnitTurn, battleMove);
 
         currentUnitTurn.OnTurnEnd();
 
@@ -269,7 +238,7 @@ public class BattleManager : MonoBehaviour
     }
 
     //TODO: After summoning, you should insert the current unit's turn into the list.
-    public bool SummonNewUnit(UnitCreatorSO unit, bool isSummon)
+    public bool SummonNewUnit(MonsterData monData, bool isSummon)
     {
         GameObject sGo;
         Transform spot = null;
@@ -287,7 +256,7 @@ public class BattleManager : MonoBehaviour
         if (spot == null)
             return false;
 
-        sGo.GetComponent<BattleUnit>().Init(unit);
+        sGo.GetComponent<BattleUnit>().SetupUnit(monData);
 
         currentUnitTurn.OnTurnEnd();
 

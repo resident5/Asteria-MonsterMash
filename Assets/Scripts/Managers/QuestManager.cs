@@ -142,6 +142,8 @@ public class QuestManager : MonoBehaviour
         //TODO: Add events to handle gold rewards and item rewards
 
         EventManager.Instance.playerEvents.PlayerExperienceGained(quest.info.experienceReward);
+        EventManager.Instance.monsterEvents.MonsterExperienceGained(quest.info.experienceReward);
+
         //EventManager.Instance.playerEvents.PlayerGoldGained(quest.info.goldRewards);
         //EventManager.Instance.playerEvents.ItemGained(quest.info.itemRewards);
     }

@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 public class EncounterEvent : MonoBehaviour
 {
     private int playerSteps;
-    private PlayerMovement player;
+    private PlayerController player;
 
     [SerializeField] private float timer = 0;
     [SerializeField] private float maxTime = 7f;
@@ -20,14 +20,14 @@ public class EncounterEvent : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            player = other.GetComponent<PlayerMovement>();
+            player = other.GetComponent<PlayerController>();
             playerSteps = player.steps;
         }
     }
 
     public void CalculateEncounter()
     {
-        player.Step();
+        //player.Step();
     }
 
     private void OnTriggerStay(Collider other)
@@ -58,6 +58,7 @@ public class EncounterEvent : MonoBehaviour
     {
         int rand = Random.Range(0, encounterList.Length);
         GameObject mon = Instantiate(encounterList[rand], player.transform.position, Quaternion.identity, unitHolder);
-        mon.GetComponent<EnemyData>().SetupEmote(worldCanvas);
+        EnemyController eController = mon.GetComponent<EnemyController>();
+        eController.enemyData.SetupEmote(GameManager.Instance.worldCanvas);
     }
 }

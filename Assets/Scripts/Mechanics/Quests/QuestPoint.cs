@@ -5,7 +5,7 @@ using System.Collections;
 //It will also be given during quests
 
 [RequireComponent(typeof(CapsuleCollider))]
-public class QuestPoint : MonoBehaviour
+public class QuestPoint : Interactable
 {
     [Header("Quest")]
     
@@ -49,12 +49,9 @@ public class QuestPoint : MonoBehaviour
         }
     }
 
-    private void Update()
+    public override void Interact()
     {
-        if(Input.GetKeyDown(KeyCode.LeftAlt))
-        {
-            SubmitPressed();
-        }
+        SubmitPressed();
     }
 
     private void SubmitPressed()

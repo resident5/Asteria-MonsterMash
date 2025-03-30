@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 2587919546962355896}
   - component: {fileID: 3393779376946112647}
   - component: {fileID: 3669106913199220559}
-  - component: {fileID: 6509596292696657867}
   m_Layer: 6
   m_Name: Base Enemy Object
   m_TagString: Enemy
@@ -97,7 +96,7 @@ Animator:
   m_GameObject: {fileID: 1548470316034758583}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f6c019fda993b064689f0ca51a6f4e59, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -120,39 +119,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0a4ec133cb22284a83e5f740f74cb88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyState: 0
+  stateDelay: 1.5
   rb: {fileID: 2587919546962355896}
   animator: {fileID: 3393779376946112647}
   moveSpeedX: 3
   moveSpeedZ: 3
-  eData: {fileID: 0}
+  enemyData:
+    emote: {fileID: 5666858838127427090}
+    currentXP: 0
+    requiredXP: 0
+    enemyUnit: []
+    unitInfo: {fileID: 11400000, guid: 4a1eda26404f12b41b4bc68e6c6f9dce, type: 2}
+    awareness: 0
+    awarenessRate: 0.5
+    availableExp: 50
+    enemyStats:
+      unitName: 
+      description: 
+      cannotBeCaptured: 0
+      spriteImage: {fileID: 0}
+      animatorController: {fileID: 0}
+      battleStats:
+        baseMaxHealth: 0
+        baseStrength: 0
+        baseMagic: 0
+        baseSpeed: 0
+        health: 0
+        maxHealth: 0
+        strength: 0
+        magic: 0
+        speed: 0
+        luck: 0
+        mana: 0
+        lust: 0
+        level: 1
+      battleMoves: []
+      evolutions: []
   detectionRadius: 3
   facingRight: 0
   player: {fileID: 0}
---- !u!114 &6509596292696657867
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1548470316034758583}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7882c87195fb9d24cbd6b62d9e4a309d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  emote: {fileID: 5666858838127427090}
-  worldCanvas: {fileID: 0}
-  currentXP: 0
-  requiredXP: 0
-  stateDelay: 2.5
-  enemyState: 0
-  enemyUnit: []
-  unitInfo: {fileID: 0}
-  movement: {fileID: 0}
-  player: {fileID: 0}
-  awareness: 0
-  awarenessRate: 0
-  availableExp: 0
 --- !u!1 &3002739329481950439
 GameObject:
   m_ObjectHideFlags: 0
