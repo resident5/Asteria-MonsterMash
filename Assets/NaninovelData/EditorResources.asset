@@ -149,6 +149,15 @@ MonoBehaviour:
     - name: Snake_Merchant_Test
       pathPrefix: Scripts
       guid: 815f8a8c8cea77540bdae8ddc3a71ac0
+    - name: Daespec
+      pathPrefix: Scripts
+      guid: 48059f7ddb0ffed48b1190eb31b145b2
+    - name: Myconin
+      pathPrefix: Scripts
+      guid: 91f4eb243d5b7c545b92c2e9704c4655
+    - name: Lust Ghost
+      pathPrefix: Scripts
+      guid: 88b0765ef8e441b44ace8e0d45739280
   - Id: Characters/a91a5fe1-3c9a-429e-a4ce-d18ef207bf85
     Resources: []
   - Id: Unlockables
@@ -158,6 +167,27 @@ MonoBehaviour:
     - name: sm01_cg1
       pathPrefix: Backgrounds/MainBackground
       guid: 8c98dc5f3956119429709016b1295085
+    - name: myconin_loss_1
+      pathPrefix: Backgrounds/MainBackground
+      guid: 975566b076c5a9f49be917c7e8ca9bb9
+    - name: daespec_loss_1
+      pathPrefix: Backgrounds/MainBackground
+      guid: 019af62f089cd854d9123e3b706d2c67
+    - name: daespec_loss_2
+      pathPrefix: Backgrounds/MainBackground
+      guid: 0fdf7f9ac30aa594886c1e9cf9d9c02a
+    - name: daespec_loss_3
+      pathPrefix: Backgrounds/MainBackground
+      guid: f448e597b2e7f3240a47e74294f2c4e3
+    - name: lustghost_loss_1
+      pathPrefix: Backgrounds/MainBackground
+      guid: 6c9b3d228ead36948b64a6f11427de79
+    - name: lustghost_loss_2
+      pathPrefix: Backgrounds/MainBackground
+      guid: 36b743f952ba025429941b9ad2a1c73b
+    - name: lustghost_loss_3
+      pathPrefix: Backgrounds/MainBackground
+      guid: d8106c86fe9c48241a4997e19133fa7e
   - Id: Backgrounds/653b38b0-f35d-452f-9365-a5e0afaff8af
     Resources:
     - name: GenBackground

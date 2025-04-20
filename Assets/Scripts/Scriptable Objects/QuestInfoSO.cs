@@ -20,7 +20,7 @@ public class QuestInfoSO : ScriptableObject
 
     [Header("Steps")]
     public GameObject[] questStepPrefabs;
-    
+
     [Header("Rewards")]
 
     public int goldRewards;

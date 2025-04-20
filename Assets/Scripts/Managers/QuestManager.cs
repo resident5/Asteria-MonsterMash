@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class QuestManager : MonoBehaviour
@@ -43,6 +44,10 @@ public class QuestManager : MonoBehaviour
 
     public void Start()
     {
+        foreach (Quest quest in questMap.Values)
+        {
+            Debug.Log($"All Quests {quest.info.name}"); 
+        }
         //State the initial state of all quests on the map
         foreach (Quest quest in questMap.Values)
         {

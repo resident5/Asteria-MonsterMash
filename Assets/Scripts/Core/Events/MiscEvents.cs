@@ -24,4 +24,5 @@ public class MiscEvents
             onItemCollectedAmount(item, num);
         }
     }
+
 }

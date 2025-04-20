@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Cinemachine;
+using static BattleManager;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,12 +10,13 @@ public class GameManager : MonoBehaviour
 
     [Header("Managers")]
     public CameraManager cameraManager;
-    public DialogueSystem dialogueSystem;
     public BattleManager battleManager;
     public InputManager inputManager;
     public VariableManager variableManager;
     public EventManager eventManager;
+    public SceneController sceneManager;
     public DialogueManager dialogueManager;
+    public QuestManager questManager;
 
     public Debugger debugger;
 
@@ -43,19 +45,6 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        LeanTween.reset();
-        overWorldScene = SceneManager.GetActiveScene();
-        cameraManager = GetComponentInChildren<CameraManager>();
-        dialogueSystem = GetComponentInChildren<DialogueSystem>();
-        variableManager = GetComponentInChildren<VariableManager>();
-        eventManager = GetComponentInChildren<EventManager>();
-        hudController = FindObjectOfType<HUDController>();
-        teleportSpots = FindObjectsOfType<Teleporter>();
-        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-        inputManager = GetComponentInChildren<InputManager>();
-        debugger = GetComponent<Debugger>();
-        worldCanvas = GameObject.Find("World Canvas").transform;
-
         if (Instance == null)
         {
             Instance = this;
@@ -64,7 +53,23 @@ public class GameManager : MonoBehaviour
         else
         {
             Destroy(this.gameObject);
+            return;
         }
+
+        LeanTween.reset();
+        overWorldScene = SceneManager.GetActiveScene();
+        cameraManager = GetComponentInChildren<CameraManager>();
+        variableManager = GetComponentInChildren<VariableManager>();
+        eventManager = GetComponentInChildren<EventManager>();
+        sceneManager = GetComponentInChildren<SceneController>();
+        dialogueManager = GetComponentInChildren<DialogueManager>();
+        questManager = GetComponentInChildren<QuestManager>();
+        hudController = FindObjectOfType<HUDController>();
+        teleportSpots = FindObjectsOfType<Teleporter>();
+        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        inputManager = GetComponentInChildren<InputManager>();
+        debugger = GetComponent<Debugger>();
+        worldCanvas = GameObject.Find("World Canvas").transform;
     }
 
     private void Start()
@@ -82,20 +87,23 @@ public class GameManager : MonoBehaviour
         switch (state)
         {
             case GameState.OVERWORLD:
-                bool hasWon = battleManager.DeInitializeBattle();
-                cameraManager.DeactivateBattleCamera();
-                cameraManager.SwapToOverWorldCam();
-
-                if (enemyController != null)
+                if (battleManager.state != BattleState.IDLE)
                 {
-                    enemyController.EndBattle();
-                    enemyController = null;
-                }
+                    bool hasWon = battleManager.DeInitializeBattle();
+                    cameraManager.DeactivateBattleCamera();
+                    cameraManager.SwapToOverWorldCam();
 
-                if (hasWon == true)
-                    Debug.Log("Won the fight");
-                else if (hasWon == false)
-                    Debug.Log("Lost the fight :(");
+                    if (enemyController != null)
+                    {
+                        enemyController.EndBattle();
+                        enemyController = null;
+                    }
+
+                    if (hasWon == true)
+                        Debug.Log("Won the fight");
+                    else if (hasWon == false)
+                        Debug.Log("Lost the fight :(");
+                }
 
                 break;
             case GameState.BATTLE:
@@ -106,8 +114,6 @@ public class GameManager : MonoBehaviour
             case GameState.MENU:
                 break;
             case GameState.DIALOGUE:
-                dialogueSystem.gameManager = this;
-                //dialogueSystem.dialogueUI.right.VNImage.sprite = actorSprite;
                 break;
             default:
                 break;

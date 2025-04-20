@@ -7,7 +7,7 @@ public class Chest : Interactable
 {
     public List<Item> possibleListOfItems;
     public bool isOpened = false;
-    
+
     [Range(1, 50)]
     public int min, max;
     private int totalAmount = 0;
@@ -22,10 +22,8 @@ public class Chest : Interactable
         Item randomItem = GetRandomItem();
 
         InventoryManager.Instance.AddItem(randomItem, totalAmount);
-        //Display Message System
+
         string openChestInfo = $"Acquired {totalAmount} {randomItem.name}{(totalAmount > 1 ? "s" : "")}";
-        
-        HUDController.Instance.DisplayPopupInfo(randomItem.spriteIcon, openChestInfo);
 
         EventManager.Instance.miscEvents.ItemCollectedAmount(randomItem, totalAmount);
 

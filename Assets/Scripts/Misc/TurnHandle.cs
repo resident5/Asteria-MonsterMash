@@ -5,7 +5,9 @@ using UnityEngine.UI;
 public class TurnHandle : MonoBehaviour
 {
     public RectTransform rect;
-    public float value;
+    public RectTransform imageTransform;
+
+    [SerializeField] private float value;
     public BattleUnit battleUnit;
 
     public Image icon;
@@ -13,39 +15,37 @@ public class TurnHandle : MonoBehaviour
     public const float MINVALUE = 0;
     public const float MAXVALUE = 100;
 
-    public RectTransform imageTransform;
+    private float ImageWidth => imageTransform.rect.width;
 
-    private Vector3 startPos;
-    private Vector3 endPos;
-
-    public void Start()
+    private void Start()
     {
         rect = GetComponent<RectTransform>();
 
-        float halfWidth = imageTransform.rect.width / 2;
-        startPos = imageTransform.position + new Vector3(halfWidth, 0, 0);
-        endPos = imageTransform.position - new Vector3(halfWidth, 0, 0);
+        //float halfWidth = imageTransform.rect.width / 2;
+        //startPos = imageTransform.position + new Vector3(halfWidth, 0, 0);
+        //endPos = imageTransform.position - new Vector3(halfWidth, 0, 0);
 
-        value = MAXVALUE;
+        //value = MAXVALUE;
+
+
+        //Get the battle unit's AP which is between 0 and 100
+        //Calculate between the newPosition the handle should be at based on the AP
+        //IE if the the width if 500 and the ap is 50 then the position should be at 250
+
     }
 
-    public void UpdateHUD()
+    private void Update()
     {
-        value = battleUnit.currentActionValue;
-        value = Math.Clamp(value, MINVALUE, MAXVALUE);
+        value = Mathf.Clamp(battleUnit.currentActionValue, MINVALUE, MAXVALUE);
+        float inverseNormalizeValue = 1 - (value / MAXVALUE);
+
+        float newPosX = CalculateXPosition(inverseNormalizeValue);
+        Vector2 newPosition = new Vector3(newPosX, rect.anchoredPosition.y);
+        rect.anchoredPosition = newPosition;
     }
 
-    public void Update()
+    private float CalculateXPosition(float normalizedValue)
     {
-        UpdateHUD();
-        //Convert the current action value into a percentage
-        float normalizedPos = value / 100;
-        
-        //
-        if(normalizedPos < 0)
-        {
-            normalizedPos = 0;
-        }
-        transform.position = Vector3.Lerp(startPos, endPos, normalizedPos);
+        return ImageWidth * normalizedValue;
     }
 }

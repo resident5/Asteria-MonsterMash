@@ -30,7 +30,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3669106913199220559, guid: 6eea0700de202cd4abfc2c0c3519512f, type: 3}
       propertyPath: enemyData.awarenessRate
-      value: 20
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 3669106913199220559, guid: 6eea0700de202cd4abfc2c0c3519512f, type: 3}
+      propertyPath: enemyData.dialogueScript
+      value: Lust Ghost
       objectReference: {fileID: 0}
     - target: {fileID: 6509596292696657867, guid: 6eea0700de202cd4abfc2c0c3519512f, type: 3}
       propertyPath: unitInfo

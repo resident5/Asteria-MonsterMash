@@ -15,3 +15,5 @@ MonoBehaviour:
   PredefinedVariables:
   - name: talkedToSM01
     value: false
+  - name: SM01_MissingMapDone
+    value: false

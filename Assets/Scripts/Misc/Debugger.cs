@@ -26,7 +26,7 @@ public class Debugger : MonoBehaviour
     {
         if (isDebugging)
         {
-            NumberExpression exp = GameManager.Instance.variableManager.parser.ParseNumber("npcTalk");
+            //NumberExpression exp = GameManager.Instance.variableManager.parser.ParseNumber("npcTalk");
 
             if (Input.GetKeyDown(KeyCode.Equals))
             {
@@ -36,11 +36,6 @@ public class Debugger : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.F1))
             {
                 InventoryManager.Instance.AddItem(testItem);
-            }
-
-            if (Input.GetKeyDown(KeyCode.O))
-            {
-                exp["npcTalk"].Set(exp.GetNumber() + 1);
             }
 
             if (Input.GetKeyDown(KeyCode.F2))

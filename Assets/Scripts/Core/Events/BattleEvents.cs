@@ -11,4 +11,24 @@ public class BattleEvents
             onEnemyDefeated(enemy);
         }
     }
+
+    public event Action<EnemyData> onPlayerSubmitted;
+
+    public void PlayerSubmitted(EnemyData enemy)
+    {
+        if (onPlayerSubmitted != null)
+        {
+            onPlayerSubmitted(enemy);
+        }
+    }
+
+    public event Action<EnemyData> onPlayerDefeated;
+
+    public void PlayerDefeated(EnemyData enemy)
+    {
+        if (onPlayerDefeated != null)
+        {
+            onPlayerDefeated(enemy);
+        }
+    }
 }

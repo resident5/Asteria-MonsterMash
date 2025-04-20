@@ -54,4 +54,24 @@ public class QuestEvents
             onQuestStepStateChanged(id, questStepIndex, questStepState);
         }
     }
+
+    public event Action inQuestArea;
+
+    public void InQuestArea()
+    {
+        if (inQuestArea != null)
+        {
+            inQuestArea();
+        }
+    }
+
+    public event Action<NPCData> onInteractWithNPC;
+
+    public void InteractWithNPC(NPCData npc)
+    {
+        if (onInteractWithNPC != null)
+        {
+            onInteractWithNPC(npc);
+        }
+    }
 }

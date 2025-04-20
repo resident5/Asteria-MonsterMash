@@ -15,11 +15,15 @@ public class EventManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance != null)
+        if (Instance == null)
         {
-            Debug.LogError("More than one Event Manager in scene");
+            Instance = this;
         }
-        Instance = this;
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
 
         playerEvents = new PlayerEvents();
         miscEvents = new MiscEvents();

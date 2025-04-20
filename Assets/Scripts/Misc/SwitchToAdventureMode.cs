@@ -45,6 +45,7 @@ public class SwitchToAdventureMode : Command
         // 6. Return player control
         var controller = Object.FindObjectOfType<PlayerController>();
         controller.canMove = true;
+        GameManager.Instance.ChangeState(GameManager.GameState.OVERWORLD);
 
     }
 }

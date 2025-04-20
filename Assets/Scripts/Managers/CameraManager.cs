@@ -4,7 +4,7 @@ using UnityEngine;
 using Cinemachine;
 using JetBrains.Annotations;
 
-public class CameraManager : Singleton<CameraManager>
+public class CameraManager : MonoBehaviour
 {
     public List<CinemachineVirtualCamera> cameras;
 
@@ -18,9 +18,8 @@ public class CameraManager : Singleton<CameraManager>
 
     [SerializeField] private GameObject virtualCameraDefaultPrefab;
 
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
         GameObject cameraObj = GameObject.FindGameObjectWithTag("MainCamera");
         currentCamera = startCamera;
         if (currentCamera == null)

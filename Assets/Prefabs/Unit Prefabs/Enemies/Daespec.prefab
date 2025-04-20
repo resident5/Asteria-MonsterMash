@@ -30,7 +30,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3669106913199220559, guid: 6eea0700de202cd4abfc2c0c3519512f, type: 3}
       propertyPath: enemyData.awarenessRate
-      value: 20
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 3669106913199220559, guid: 6eea0700de202cd4abfc2c0c3519512f, type: 3}
+      propertyPath: enemyData.dialogueScript
+      value: Daespec
+      objectReference: {fileID: 0}
+    - target: {fileID: 3669106913199220559, guid: 6eea0700de202cd4abfc2c0c3519512f, type: 3}
+      propertyPath: enemyData.playerLostScript
+      value: DaesoecLost
       objectReference: {fileID: 0}
     - target: {fileID: 6090358514271538317, guid: 6eea0700de202cd4abfc2c0c3519512f, type: 3}
       propertyPath: m_IsActive

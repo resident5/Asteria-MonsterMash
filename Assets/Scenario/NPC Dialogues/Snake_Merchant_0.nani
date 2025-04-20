@@ -1,16 +1,82 @@
 @goto Snake_Merchant_0.greetings2 if:talkedToSM01==true
+@goto Snake_Merchant_Test.FoundMap if:SM01_MissingMapDone==true
+
 # greetings
 @printer Wide
-I think I'm lost
-L: Can you help me?
-SMO1: No
-L: Are you sure?
+Wanting to get your bearings on your situation you approach the distraught-looking snake man while he's mid thought.
+SM01: Blasted luck this day. Not a single sale and my map has mysteriously disappeared.  
+SM01: But most curious of it all is this strange sense of being stalked
+SM01: This is most unprecedented. And definitely not cause of oh so oblivious stalker 
+With barely a warning he turns to your direction although you weren't attempting to hide your presence at all.
+L: Hey I'm not stalking you I just didn't want to interrupt.
+SM01: Oh? An Orc capable of speaking before attacking? I must rescind my early comment on my luck.
+SM01: A pleasure to meet you my dear stalker. I am Snake Merchant X233 to what do I owe the pleasure of your... visit?
+L: I-I am not stalking you! My name is Lythok I was just looking for directions to the nearest city.
+SM01: Directions?
+L: But clearly you don't have a map either.
+SM01: Why would an Orc need directions? Are you not-
+SM01: Oh!
+SM01: I didn't even realize but are you a Champion!?
+L: That's what they kept calling me back at-
+SM01: Oh thank the gods. I have a quest for you.
+L: Hold on! I didn't-
+SM01: I need you to find my map. It was missing
+L: You sure its not in any of your other bags
+SM01: I assure you I do not need to check.
+SM01: Each bag on me is assigned to hold something. However, the bag with my maps is entirely empty.
+L: Maybe you made a mistak-
+SM01: I DO NOT MAKE MISTAKES REGARDING THE ORDER OF MY ITEMS.
+L: Ok jeez
+SM01: Find the map and I will reward you.
+L: Wait you said the entire bag was emptied wouldn't you want me to find all of the maps?
+SM01: Finding all the maps would be impossible theres over 1000 of them
+L: A THOUSAND!?
+SM01: Yes, which is how I know this is not normal. I would have most assuredly seen at least 1 or 2 flying away.
+SM01: But all of them!? Impossible.
+L: (Or you could just be blind)
+L: But how am I supposed to find 1 map out of the one thousand you lost?
+SM01: Ah you really are freshly new Champion straight out of the sky.
+SM01: Let me teach you about quests.
+SM01: Firstly, the reason why I was lucky is because you cannot give a quest to yourself
+SM01: Would be terribly broken of a system if that was allowed
+SM01: Secondly, when you have a quest the item associated with the quest is much more likely to appear.
+SM01: I'm sure you're aware of Asteria's exploration system
+L: I heard from people that exploring Asteria is difficult but the main road is a straight line
+SM01: Yes Asteria's main road is a straight line however Asteria itself reorganizes the path constantly for Champions and Half Champions like me.
+L: Half Champion?
+As if anticipating your question the Merchant's massive tail flops dismissively against the ground its on.
+He certainly did not like the term Half-Champion
+SM01: Champions require maps to navigate Asteria's complex reordering of itself.
+SM01: Otherwise you're at its mercy. It may be hours or days before you find the next city so packing is important
+L: So if I find this map for you can you take me to the next city?
+SM01: Unfortunately, no the map is for this area to navigate in and out of the forest.
+SM01: The area I will go to next is most defintely not for Champions as fertile looking as you.
+L: Fertile!?
+SM01: Anyway hurry up I would like to continue my tasks and that map is the only way for both of us to get what we want.
+L: What about the reward?
+SM01: I'll think of something
+L: What!?
+@quest name:CollectPotionsQuest
 @set talkedToSM01=true
 @adventure !reset
 
-# greetings2
-SMO1: I'm not helping you. Go away
-SM01: Actually since you are so insistent are being annoying
-The snake merchant quickly stamps a nipple piercing to your chest.
+#greetings2
+SM01: Have you found my map yet?
+L: No, what does it look like?
+SM01: (Sigh) I told you it doesn't matter what it looks like.
+SM01: Because I gave you the quest, no matter what happens you will find the one I asked for.
+L: How does that work?
+SM01: Think of it as if you are rigging the probability of something happening or, in this case, showing up.
+SM01: If I gave you a quest to reach into a bag of marbles you would pull out one with a random color
+SM01: However, if the quest asked for three blue marbles... The next time you reach into a bag theres a higher unnatural chance of getting the three.
+L: That seems a little...
+SM01: Powerful? Yes it is but not at all that much.
+SM01: Find my map and I'll tell you more.
+
+#FoundMap
+SM01: Holy shit you actually found that map
+SM01: I am thankful for you're gratitude
+L: Will you help me now
+SM01: No
 @adventure !reset
 @stop

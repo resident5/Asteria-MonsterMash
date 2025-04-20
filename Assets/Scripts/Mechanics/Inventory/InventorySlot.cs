@@ -12,16 +12,30 @@ public class InventorySlot : MonoBehaviour
     public TMP_Text descText;
     public Image icon;
 
-    public int amount;
-
-    private void Start()
+    private int amount;
+    public int Amount
     {
-        Button btn = GetComponent<Button>();
-        item.playerData = GameManager.Instance.playerController.playerData;
-        btn.onClick.AddListener(() => 
-        {
-            item.Use(); 
-        });
+        get => amount;
+        set => amount = Mathf.Clamp(value, 0, item.maxAmount);
+    }
+
+    //private void Start()
+    //{
+    //    Button btn = GetComponent<Button>();
+    //    if (item is ConsumableItem useableItem)
+    //    {
+    //        btn.onClick.AddListener(() =>
+    //        {
+    //            item.Use(HUDController.Instance.itemTargetStats);
+    //        });
+    //    }
+    //}
+
+    public void UseItem()
+    {
+        Debug.Log($"Use item {item.name}");
+        //item.Use(HUDController.Instance.itemTargetStats);
+
     }
 
     public void Remove()

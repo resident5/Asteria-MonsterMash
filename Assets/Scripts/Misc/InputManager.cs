@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class InputManager : Singleton<InputManager>
+public class InputManager : MonoBehaviour
 {
     [Header("Input Action")]
     [SerializeField] private InputActionAsset playerControls;
@@ -35,21 +35,30 @@ public class InputManager : Singleton<InputManager>
     public bool Cancelled { get; private set; }
     public bool Interacted { get; private set; }
 
-    //public static InputManager Instance { get; private set; }
-
-    protected override void Awake()
+    private static InputManager instance;
+    public static InputManager Instance
     {
-        base.Awake();
-        //Put this on another gameobject besides the Game Manager
-        //if(Instance == null)
-        //{
-        //    Instance = this;
-        //    DontDestroyOnLoad(gameObject);
-        //}
-        //else
-        //{
-        //    Destroy(gameObject);
-        //}
+        get
+        {
+            if (instance == null)
+            {
+                instance = FindAnyObjectByType<InputManager>();
+            }
+            return instance;
+        }
+    }
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
 
         moveAction = playerControls.FindActionMap(actionMapName).FindAction(move);
         jumpAction = playerControls.FindActionMap(actionMapName).FindAction(jump);
@@ -75,6 +84,9 @@ public class InputManager : Singleton<InputManager>
 
     private void OnDisable()
     {
+        if (moveAction == null)
+            return;
+
         moveAction.Disable();
         jumpAction.Disable();
         attackAction.Disable();
@@ -82,6 +94,10 @@ public class InputManager : Singleton<InputManager>
         interaction.Disable();
 
         cancelAction.Disable();
+    }
+
+    private void OnDestroy()
+    {
     }
 
     void RegisterInputActions()

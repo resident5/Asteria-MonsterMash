@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Linq;
+using Naninovel.Commands;
+using System.Data;
 
 public class BattleManager : MonoBehaviour
 {
@@ -34,9 +36,9 @@ public class BattleManager : MonoBehaviour
     public EnemyData enemyData;
 
     public float battleRate = 1f;
-    bool IsAllPlayersDead;
-    bool IsAllEnemiesDead;
-    bool IsPlayerSubmitting;
+    private bool IsAllPlayersDead;
+    private bool IsAllEnemiesDead;
+    private bool IsPlayerSubmitting;
 
     private void Awake()
     {
@@ -73,6 +75,7 @@ public class BattleManager : MonoBehaviour
         Debug.Log("Disable HUD");
         battleHUD.DisableHUD();
         playerData.playerStats.battleStats = playerBattleUnit.myDataStats.battleStats;
+        //Destroy summons too
         Destroy(playerBattleUnit.gameObject);
         Destroy(enemyBattleUnit.gameObject);
         battleHUD.turnOrderSlider.DeInit();
@@ -81,9 +84,19 @@ public class BattleManager : MonoBehaviour
 
         if (state == BattleState.LOST)
             return false;
-           
+
         return true;
 
+    }
+
+    private void OnEnable()
+    {
+        EventManager.Instance.battleEvents.onPlayerDefeated += LoseCutscene;
+    }
+
+    private void OnDisable()
+    {
+        EventManager.Instance.battleEvents.onPlayerDefeated -= LoseCutscene;
     }
 
     private void Update()
@@ -102,23 +115,23 @@ public class BattleManager : MonoBehaviour
             if (IsPlayerSubmitting)
             {
                 state = BattleState.LOST;
-                //Play submit dialogue
                 GameManager.Instance.ChangeState(GameManager.GameState.OVERWORLD);
+                EventManager.Instance.battleEvents.PlayerSubmitted(enemyData);
             }
 
             if (IsAllPlayersDead)
             {
                 state = BattleState.LOST;
-                //Play Dialogue for lost scene
                 GameManager.Instance.ChangeState(GameManager.GameState.OVERWORLD);
+                EventManager.Instance.battleEvents.PlayerDefeated(enemyData);
             }
             if (IsAllEnemiesDead)
             {
                 state = BattleState.WON;
-                //Play dislogue for win scene
                 GameManager.Instance.ChangeState(GameManager.GameState.OVERWORLD);
+                EventManager.Instance.battleEvents.EnemyDefeated(enemyData);
             }
-            
+
         }
 
         if (state == BattleState.BATTLESTART && currentUnitTurn == null)
@@ -128,7 +141,7 @@ public class BattleManager : MonoBehaviour
 
     }
 
-    bool AllUnitsDead(List<BattleUnit> listOfUnits)
+    private bool AllUnitsDead(List<BattleUnit> listOfUnits)
     {
         if (listOfUnits != null)
         {
@@ -139,7 +152,7 @@ public class BattleManager : MonoBehaviour
                     return true;
                 }
 
-                if(unit.isLusty)
+                if (unit.isLusty)
                 {
                     return true;
                 }
@@ -149,14 +162,14 @@ public class BattleManager : MonoBehaviour
         return false;
     }
 
-    public bool PlayerSubmitted(PlayerUnit player)
+    private bool PlayerSubmitted(PlayerUnit player)
     {
         return player.isLusty;
     }
 
     //TODO: Change Battle Scene setup to instantiate the player and the enemies then set their stats from the Overworld Player/Enemy DATA script
     //TODO: Remove the unit scriptableobject reference and have it be fed from the playerinfo/enemyinfo scripts
-    IEnumerator BattleSceneSetup()
+    private IEnumerator BattleSceneSetup()
     {
         GameObject pGo = Instantiate(playerPrefab, unitList.playerSpots.GetChild(0));
         GameObject eGo = Instantiate(enemyPrefab, unitList.enemySpots.GetChild(0));
@@ -189,7 +202,7 @@ public class BattleManager : MonoBehaviour
         //HUDcontroller.SetHUD(enemyUnit);
     }
 
-    void CalculateTurnOrder()
+    private void CalculateTurnOrder()
     {
         if (currentUnitTurn != null)
             return;
@@ -216,10 +229,6 @@ public class BattleManager : MonoBehaviour
 
     public void OnPlayerTurn(UnitActionSO battleMove)
     {
-        //Change this to any player unit or check if the unit has a player tag
-        if (currentUnitTurn != playerBattleUnit)
-            return;
-
         StartCoroutine(PlayerAttack(battleMove));
     }
 
@@ -237,34 +246,50 @@ public class BattleManager : MonoBehaviour
         currentUnitTurn = null;
     }
 
-    //TODO: After summoning, you should insert the current unit's turn into the list.
-    public bool SummonNewUnit(MonsterData monData, bool isSummon)
+    public bool SummonNewUnit(UnitData data)
     {
         GameObject sGo;
         Transform spot = null;
-        if (isSummon)
+
+        if (data is MonsterData monData)
         {
             spot = GetAvailableSpots(unitList.playerSpots);
-            sGo = Instantiate(emptySummon, spot);
+        }
+        else if (data is EnemyData enemyData)
+        {
+            spot = GetAvailableSpots(unitList.enemySpots);
         }
         else
         {
-            spot = GetAvailableSpots(unitList.playerSpots);
-            sGo = Instantiate(emptySummon, spot);
+            Debug.LogError("Invalid UnitData type for summoning.");
+            return false;
         }
 
         if (spot == null)
             return false;
+        else
+        {
+            sGo = Instantiate(emptySummon, spot);
+            BattleUnit bUnit = sGo.GetComponent<BattleUnit>();
+            bUnit.SetupUnit(data);
+            battleHUD.turnOrderSlider.AddNewUnit(bUnit);
 
-        sGo.GetComponent<BattleUnit>().SetupUnit(monData);
-
+            if(bUnit is PlayerUnit)
+            {
+                battleInfo.ListOfAllies.Add(bUnit);
+            }
+            else
+            {
+                battleInfo.ListOfEnemies.Add(bUnit);
+            }
+        }
         currentUnitTurn.OnTurnEnd();
 
         currentUnitTurn = null;
         return true;
     }
 
-    public Transform GetAvailableSpots(Transform spots)
+    private Transform GetAvailableSpots(Transform spots)
     {
         Transform availableSpot = null;
         foreach (Transform spot in spots)
@@ -278,87 +303,8 @@ public class BattleManager : MonoBehaviour
         return availableSpot;
     }
 
-    //public void OnEnemyTurn()
-    //{
-    //    if (currentUnitTurn != enemyUnit)
-    //        return;
-
-    //    StartCoroutine(EnemyAttack());
-    //}
-
-    //public IEnumerator EnemyAttack()
-    //{
-    //    yield return new WaitForSeconds(battleRate);
-
-    //    UnitActionSO chosenMove = GetEnemyUnitAction();
-    //    BattleUnit[] targetList = GetEnemyTargets(chosenMove);
-
-    //    foreach (var target in targetList)
-    //    {
-    //        target.ApplyAction(currentUnitTurn, chosenMove);
-    //    }
-
-    //    currentUnitTurn.OnTurnEnd();
-
-    //    Debug.Log("Enemy Turn has ended");
-
-    //    currentUnitTurn = null;
-    //}
-
-    //public void ChangeBattleState(BattleState newState)
-    //{
-    //    state = newState;
-    //}
-
-    //private UnitActionSO GetEnemyUnitAction()
-    //{
-    //    List<UnitActionSO> enemyActionsList = enemyUnit.myBattleMoves;
-    //    int rand = Random.Range(0, enemyActionsList.Count);
-
-    //    return enemyActionsList[rand];
-    //}
-
-    //public BattleUnit[] GetEnemyTargets(UnitActionSO selectedAction)
-    //{
-    //    int randTarget = 0;
-    //    List<BattleUnit> targets = new List<BattleUnit>();
-
-    //    switch (selectedAction.targetTypes)
-    //    {
-    //        case UnitActionSO.TargetTypes.RANDOMALLY:
-    //            randTarget = Random.Range(0, battleInfo.ListOfEnemies.Count);
-    //            targets.Add(battleInfo.ListOfEnemies[randTarget]);
-    //            break;
-    //        case UnitActionSO.TargetTypes.RANDOMOPPONENT:
-    //            randTarget = Random.Range(0, battleInfo.ListOfAllies.Count);
-    //            targets.Add(battleInfo.ListOfAllies[randTarget]);
-    //            break;
-    //        case UnitActionSO.TargetTypes.ALLALLIES:
-    //            targets.AddRange(battleInfo.ListOfEnemies);
-    //            //Allow enemy to select multiple allies
-    //            break;
-    //        case UnitActionSO.TargetTypes.ALLENEMIES:
-    //            targets.AddRange(battleInfo.ListOfAllies);
-    //            //Allow multiple enemies but not all
-    //            break;
-    //        case UnitActionSO.TargetTypes.ALL:
-    //            targets.AddRange(battleInfo.ListOfAllies);
-    //            targets.AddRange(battleInfo.ListOfEnemies);
-    //            break;
-    //    }
-
-    //    return targets.ToArray();
-
-    //}
-
-    //Make an IEnumerator to handle the turns
-    //Make it so the player can only proceed unless they target an enemy or cancel
-
-
-    //public void SelectUnit(BattleUnit unit)
-    //{
-    //    selectedUnit = unit;
-    //}
-
-
+    private void LoseCutscene(EnemyData eData)
+    {
+        DialogueManager.Instance.StartConversation(eData.dialogueScript, "Lost");
+    }
 }

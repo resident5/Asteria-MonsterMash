@@ -1,15 +1,25 @@
 @printer Wide
+@goto Snake_Merchant_Test.FoundMap if:SM01_MissingMapDone==true
 I think I'm lost
 L: Show Image
-@cgmode !reset
+SM01: Do this please
+@cgmode
 @back sm01_cg1
 L: Ok..
 L: Thats a nice image
 Now Try again
 @back sm01_cg1 !visible
-@cgmode !reset !cgReset
+@cgmode !showCG
 L: Show Image
 L: Show Image
+@adventure reset!
+@stop
+
+#FoundMap
+SM01: Holy shit you actually found that map
+SM01: I am thankful for you're gratitude
+L: Will you help me now
+SM01: No
 
 @adventure reset!
 @stop

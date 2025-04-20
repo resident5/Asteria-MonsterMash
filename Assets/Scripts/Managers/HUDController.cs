@@ -25,23 +25,30 @@ public class HUDController : Singleton<HUDController>
     public Transform contextMenuHolder;
     public GameObject contextMenuPrefab;
 
-    [Header("Dialogue")]
-    public DialogueUI dialogueUI;
-
     [Header("Inventory")]
     public Transform inventoryHolder;
-    public List<InventorySlot> inventorySlots;
 
     public BattleUnit selectedUnit;
     public Item selectedItem;
 
+    public UnitStats itemTargetStats;
+
     [Header("Misc")]
     public Popup popup;
-
 
     private void Start()
     {
         main.gameObject.SetActive(false);
+    }
+
+    private void OnEnable()
+    {
+        EventManager.Instance.overworldEvents.onReceivedItem += DisplayPopupInfo;
+    }
+
+    private void OnDisable()
+    {
+        EventManager.Instance.overworldEvents.onReceivedItem -= DisplayPopupInfo;
     }
 
     public void ShowMenu(Menu newMenu)
@@ -59,7 +66,7 @@ public class HUDController : Singleton<HUDController>
             //If the new menu's level is equal to the top menu's level
             //New menu ON
             //Top menu pop out and off
-            if(newMenuLevel == topMenu.level)
+            if (newMenuLevel == topMenu.level)
             {
                 menuStack.Pop().SetActive(false);
             }
@@ -105,7 +112,7 @@ public class HUDController : Singleton<HUDController>
                 menuStack.Peek().SetActive(true);
             }
         }
-        
+
         var newMenu = menuStack.Peek();
 
         if (newMenu.firstButton != null)
@@ -188,7 +195,7 @@ public class HUDController : Singleton<HUDController>
     //    UIMonStats pStats = pObj.GetComponent<UIMonStats>();
 
     //    pStats.InitStats(playerData.data);
-        
+
     //    //Add mon info
     //    foreach (var mons in playerData.battleMons)
     //    {
@@ -211,7 +218,7 @@ public class HUDController : Singleton<HUDController>
         selectedItem = item;
     }
 
-    public void DisplayPopupInfo(Sprite sprite, string info)
+    private void DisplayPopupInfo(string info, Sprite sprite)
     {
         if (sprite != null)
         {

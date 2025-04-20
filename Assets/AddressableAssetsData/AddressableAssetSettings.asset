@@ -44,6 +44,7 @@ MonoBehaviour:
   m_BuildAddressablesWithPlayerBuild: 0
   m_overridePlayerVersion: '[UnityEditor.PlayerSettings.bundleVersion]'
   m_GroupAssets:
+  - {fileID: 11400000, guid: 225f06494c7bbfd49a1118addb9dbd8b, type: 2}
   - {fileID: 11400000, guid: 90daba0ea8227834a835eb7cd69b97bf, type: 2}
   - {fileID: 11400000, guid: 1dd50506550ef6b49acda2bd56c97d1a, type: 2}
   m_BuildSettings:
@@ -87,6 +88,7 @@ MonoBehaviour:
   m_LabelTable:
     m_LabelNames:
     - default
+    - Naninovel
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 9c58d18a278376a46ab4ed99cf975492, type: 2}

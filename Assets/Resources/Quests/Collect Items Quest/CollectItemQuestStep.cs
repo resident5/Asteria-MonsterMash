@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CollectItemQuestStep : QuestStep
 {
+    //Quest step for collecting items (From Ground or Chests)
+
     private int numOfItemsCollected = 0;
 
     private int numOfItemsRequired = 5;

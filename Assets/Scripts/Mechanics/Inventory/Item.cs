@@ -11,10 +11,11 @@ public class Item : ScriptableObject
 
     public bool canBeThrown = true;
 
-    //TODO: Change this to accept any target (player, enemy, monster, npc?)
-    public PlayerData playerData;
+    public int maxAmount = 5;
 
-    public virtual void Use()
+    //TODO: Change this to accept any target (player, enemy, monster, npc?)
+
+    public virtual void Use(UnitStats stats)
     {
     }
 

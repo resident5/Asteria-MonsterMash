@@ -8,7 +8,7 @@ using System.Collections;
 public class QuestPoint : Interactable
 {
     [Header("Quest")]
-    
+
     [SerializeField] private QuestInfoSO questInfoForPoint;
 
     [SerializeField] private bool startPoint = true;
@@ -41,7 +41,7 @@ public class QuestPoint : Interactable
 
     private void QuestStateChange(Quest quest)
     {
-        if(quest.info.id.Equals(questId))
+        if (quest.info.id.Equals(questId))
         {
             currentQuestState = quest.state;
             questIcon.SetState(currentQuestState, startPoint, finishPoint);
@@ -59,10 +59,11 @@ public class QuestPoint : Interactable
         if (!playerisNear)
             return;
 
-        EventManager.Instance.questEvents.StartQuest(questId);
-        //EventManager.Instance.questEvents.AdvanceQuest(questId);
-        //EventManager.Instance.questEvents.FinishQuest(questId);
 
+        if (currentQuestState.Equals(QuestState.CAN_START) && startPoint)
+            EventManager.Instance.questEvents.StartQuest(questId);
+        else if (currentQuestState.Equals(QuestState.CAN_FINISH) && finishPoint)
+            EventManager.Instance.questEvents.FinishQuest(questId);
     }
 
     private void OnTriggerEnter(Collider other)

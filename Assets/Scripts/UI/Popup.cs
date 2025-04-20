@@ -49,23 +49,11 @@ public class Popup : MonoBehaviour
     {
         PlayAnimation("PopupOpen");
 
-        yield return new WaitForSeconds(1.3f);
+        yield return null;
+
+        yield return new WaitUntil(() => InputManager.Instance.Interacted);
 
         PlayAnimation("PopupClose");
-
-        //LeanTween.moveLocalX(gameObject, 0, 0.7f).setEaseInQuart();
-
-        //yield return new WaitForSeconds(1.2f);
-
-        //LeanTween.moveLocalX(gameObject, -810, 0.7f).setEaseInQuart();
-
-        //yield return new WaitForSeconds(.3f);
-
-        //transform.localPosition = new Vector3(startPositionX, transform.localPosition.y);
-
-        //    LeanTween.move(gameObject, transform.localPosition +
-        //new Vector3(50, transform.localPosition.y, transform.localPosition.z), 0.02f).setEase(LeanTweenType.easeInBounce);
-
     }
 
     //public void ClosePopup()

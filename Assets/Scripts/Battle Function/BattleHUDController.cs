@@ -86,7 +86,6 @@ public class BattleHUDController : Singleton<BattleHUDController>
         }
     }
 
-
     /// <summary>
     /// Setup the HUD for the player's actions
     /// </summary>
@@ -108,7 +107,7 @@ public class BattleHUDController : Singleton<BattleHUDController>
         Init();
     }
 
-    void SetupMoves(UnitActionSO unitActions)
+    private void SetupMoves(UnitActionSO unitActions)
     {
         GameObject obj = null;
         switch (unitActions.menuType)
@@ -138,7 +137,7 @@ public class BattleHUDController : Singleton<BattleHUDController>
 
     }
     
-    void SetupSummons(MonsterData summon)
+    private void SetupSummons(MonsterData summon)
     {
         GameObject obj = Instantiate(monButtonPrefab, summonHolder);
         MonSummon mSummon = obj.GetComponent<MonSummon>();

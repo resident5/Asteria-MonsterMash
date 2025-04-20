@@ -47,6 +47,7 @@ public class DialogueManager : MonoBehaviour
 
     public void StartConversation(string script, string labels)
     {
+        GameManager.Instance.ChangeState(GameManager.GameState.DIALOGUE);
         playerController.canMove = false;
 
         ActivateAdventureCameraMode();
@@ -57,6 +58,8 @@ public class DialogueManager : MonoBehaviour
 
     public void StartConversation(string script)
     {
+        GameManager.Instance.ChangeState(GameManager.GameState.DIALOGUE);
+
         playerController.canMove = false;
 
         ActivateAdventureCameraMode();
@@ -82,74 +85,3 @@ public class DialogueManager : MonoBehaviour
         inputManager.ProcessInput = true;
     }
 }
-
-//[CommandAlias("adventure")]
-//public class SwitchToAdventureMode : Command
-//{
-//    [ParameterAlias("reset")]
-//    public BooleanParameter ResetState = true;
-
-//    public override async UniTask Execute(AsyncToken token = default)
-//    {
-//        // 1. Disable Naninovel input.
-//        var inputManager = Engine.GetServiceOrErr<IInputManager>();
-//        inputManager.ProcessInput = false;
-
-//        // 2. Stop script player.
-//        var scriptPlayer = Engine.GetServiceOrErr<IScriptPlayer>();
-//        scriptPlayer.Stop();
-
-//        // 3. Hide text printer.
-//        var hidePrinter = new HidePrinter();
-//        hidePrinter.Execute(token).Forget();
-
-//        // 4. Reset state (if required).
-//        if (ResetState)
-//        {
-//            var stateManager = Engine.GetServiceOrErr<IStateManager>();
-//            await stateManager.ResetState();
-//        }
-
-//        // 5. Switch cameras.
-//        var advCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-//        advCamera.enabled = true;
-
-//        var naniCamera = Engine.GetServiceOrErr<ICameraManager>().Camera;
-//        naniCamera.enabled = false;
-
-//        // 6. Enable character control.
-//        var controller = Object.FindObjectOfType<PlayerController>();
-//        controller.canMove = true;
-//    }
-//}
-
-//[CommandAlias("novel")]
-//public class SwitchToNovelMode : Command
-//{
-//    public StringParameter ScriptName;
-//    public StringParameter Label;
-
-//    public override async UniTask Execute(AsyncToken token = default)
-//    {
-//        // 1. Disable character control.
-//        var controller = Object.FindObjectOfType<PlayerController>();
-//        controller.canMove = false;
-
-//        // 2. Switch cameras.
-//        var advCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-//        advCamera.enabled = false;
-//        var naniCamera = Engine.GetServiceOrErr<ICameraManager>().Camera;
-//        naniCamera.enabled = true;
-
-//        // 3. Load and play specified script (is required).
-//        if (Assigned(ScriptName))
-//        {
-//            var scriptPlayer = Engine.GetServiceOrErr<IScriptPlayer>();
-//            await scriptPlayer.LoadAndPlayAtLabel(ScriptName, Label);
-//        }
-
-//        // 4. Enable Naninovel input.
-//        var inputManager = Engine.GetServiceOrErr<IInputManager>();
-//        inputManager.ProcessInput = true;
-//    }
-//}

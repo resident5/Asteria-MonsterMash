@@ -114,6 +114,7 @@ GameObject:
   - component: {fileID: 6544526679908057056}
   - component: {fileID: 387956923957460604}
   - component: {fileID: 7073122163286744522}
+  - component: {fileID: 7426221332340368038}
   m_Layer: 6
   m_Name: NPC
   m_TagString: NPC
@@ -201,10 +202,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFocus: 0
   hasInteracted: 0
-  dialogueImage: {fileID: 21300000, guid: 12ce672ffb87f1c44b32906f8f6b735d, type: 3}
-  dialogue: Merchant_Intro0
-  worldCanvas: {fileID: 0}
   emote: {fileID: 7692423529029866301}
+  dialogueScript: Snake_Merchant_Test
+--- !u!135 &7426221332340368038
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1762480442453858019}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 4
+  m_Center: {x: 0, y: -0.5, z: 0}
 --- !u!1 &2496728473100329895
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,9 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Start Menu.unity
     guid: e6b4b56cf18f5d54a85c2f9aa0ce9b57
   - enabled: 1
-    path: Assets/Scenes/Battle.unity
-    guid: 4d78ae308c9ec5f488ea0e5dc7ad184d
-  - enabled: 1
     path: Assets/Scenes/Start Forest 0 - 2.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
@@ -20,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Forest 0 - 3.unity
     guid: 4e41cc4ccecf4224fafa0d98a412ab79
+  - enabled: 1
+    path: Assets/Scenes/Battle.unity
+    guid: 4d78ae308c9ec5f488ea0e5dc7ad184d
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: e3dd3fd28a926c64b946005aab563640, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 5efa423cade58f24486e57b63f9242f3, type: 3}

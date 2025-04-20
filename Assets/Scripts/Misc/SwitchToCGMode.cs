@@ -6,56 +6,42 @@ using UnityEngine.Rendering.Universal;
 [CommandAlias("cgmode")]
 public class SwitchToCGMode : Command
 {
-    [ParameterAlias("reset")]
-    public BooleanParameter ResetState = false;
+    [ParameterAlias("showCG")]
+    public BooleanParameter showCG = true;
 
-    [ParameterAlias("cgReset")]
-    public BooleanParameter cgReset = true;
-
-    public override async UniTask Execute(AsyncToken token = default)
+    public override UniTask Execute(AsyncToken token = default)
     {
-        if (ResetState)
-        {
-            var stateManager = Engine.GetServiceOrErr<IStateManager>();
-            await stateManager.ResetState();
-        }
-
-        // 5. Switch cameras.
         var mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
         var naniCamera = Engine.GetServiceOrErr<ICameraManager>().Camera;
         var uiCamera = Engine.GetServiceOrErr<ICameraManager>().UICamera;
 
-        naniCamera.enabled = cgReset;
+        naniCamera.enabled = showCG;
 
         var mainCameraData = mainCamera.GetUniversalAdditionalCameraData();
         var naniCameraData = naniCamera.GetUniversalAdditionalCameraData();
 
-        if(mainCameraData.cameraStack.Contains(uiCamera) == cgReset)
+        //To show CG the nani camera needs to be on and the main camera needs to be off to avoid issues
+        //To show the text printer the ui camera needs to be on the highest most camera (ie the CG Camera/Main Camera)
+
+        if (showCG)
         {
-            mainCameraData.cameraStack.Remove(uiCamera);
+            if (mainCameraData.cameraStack.Contains(uiCamera))
+                mainCameraData.cameraStack.Remove(uiCamera);
+
+            if (!naniCameraData.cameraStack.Contains(uiCamera))
+                mainCameraData.cameraStack.Add(uiCamera);
         }
         else
         {
-            mainCameraData.cameraStack.Add(uiCamera);
+            if (!mainCameraData.cameraStack.Contains(uiCamera))
+                mainCameraData.cameraStack.Add(uiCamera);
+
+            if (naniCameraData.cameraStack.Contains(uiCamera))
+                naniCameraData.cameraStack.Remove(uiCamera);
         }
 
-        if(!naniCameraData.cameraStack.Contains(uiCamera) == cgReset)
-        {
-            naniCameraData.cameraStack.Add(uiCamera);
-        }
-        else
-        {
-            naniCameraData.cameraStack.Remove(uiCamera);
-        }
+        mainCamera.enabled = !showCG;
 
-        //if (mainCameraData.cameraStack.Contains(uiCamera))
-        //    mainCameraData.cameraStack.Remove(uiCamera);
-
-        //if (!naniCameraData.cameraStack.Contains(uiCamera))
-        //    naniCameraData.cameraStack.Add(uiCamera);
-
-        mainCamera.enabled = !cgReset;
-
-
+        return UniTask.CompletedTask;
     }
 }

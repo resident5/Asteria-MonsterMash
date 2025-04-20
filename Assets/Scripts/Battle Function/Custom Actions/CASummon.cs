@@ -17,7 +17,7 @@ public class CASummon : CustomBattleAction
 
     }
 
-    public Transform GetUnitList(Transform availablePositions)
+    private Transform GetUnitList(Transform availablePositions)
     {
         Transform spot = null;
         foreach (Transform t in availablePositions)

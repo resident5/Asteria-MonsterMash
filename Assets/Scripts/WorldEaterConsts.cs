@@ -4,29 +4,30 @@ using UnityEngine;
 
 namespace WorldEater
 {
-    public class WorldEaterManagers
+    public static class WorldEaterManagers
     {
-        public readonly string GameManager = "GAME MANAGERS";
-        public readonly string CameraManager = "Camera Manager";
-        public readonly string InputManager = "Input Manager";
-        public readonly string DialogueManager = "Dialogue Manager";
-        public readonly string VariableManager = "Variable Manager";
-        public readonly string InventoryManager = "Inventory Manager";
-        public readonly string SceneManager = "Scene Manager";
-        public readonly string HUDManager = "UI Canvas";
-        public readonly string BattleManager = "Battle Manager";
-        public readonly string BattleHUDManager = "Battle HUD";
+        public readonly static string GameManager = "GAME MANAGERS";
+        public readonly static string CameraManager = "Camera Manager";
+        public readonly static string InputManager = "Input Manager";
+        public readonly static string DialogueManager = "Dialogue Manager";
+        public readonly static string VariableManager = "Variable Manager";
+        public readonly static string InventoryManager = "Inventory Manager";
+        public readonly static string SceneManager = "Scene Manager";
+        public readonly static string HUDManager = "UI Canvas";
+        public readonly static string BattleManager = "Battle Manager";
+        public readonly static string BattleHUDManager = "Battle HUD";
     }
 
-    public class WorldEaterCameras
+    public static class WorldEaterCameras
     {
-        public readonly string MainCamera = "Main Camera";
-        public readonly string VirtualCamera = "Virtual Camera";
+        public readonly static string WorldCameraHolder = "===== CAMERAS =====";
+        public readonly static string MainCamera = "Main Camera";
+        public readonly static string VirtualCamera = "Virtual Camera";
     }
 
-    public class WorldEaterObjects
+    public static class WorldEaterObjects
     {
-        public readonly string PlayerTag = "Player";
+        public readonly static string PlayerTag = "Player";
     }
 
 }

@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(SphereCollider))]
-public class Interactable: MonoBehaviour
+public class Interactable : MonoBehaviour
 {
     public bool isFocus = false;
     public bool hasInteracted = false;
@@ -17,7 +17,9 @@ public class Interactable: MonoBehaviour
         }
     }
 
-    public virtual void Interact() { }
+    public virtual void Interact() 
+    {
+    }
 
     public void DeFocused()
     {

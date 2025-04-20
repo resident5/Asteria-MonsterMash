@@ -22,7 +22,7 @@ public class MonSummon : MonoBehaviour
     {
         btn.onClick.AddListener(() =>
         {
-            bool success = BattleManager.Instance.SummonNewUnit(monData, true);
+            bool success = BattleManager.Instance.SummonNewUnit(monData);
 
             if (!success)
             {
