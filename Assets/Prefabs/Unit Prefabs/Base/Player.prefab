@@ -129,7 +129,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: -1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1793109301261742892}
@@ -181,7 +181,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.28, y: 1.28}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -307,11 +307,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerData:
-    emote: {fileID: 0}
-    worldCanvas: {fileID: 0}
+    emote: {fileID: 3450617971174205575}
     currentXP: 0
     requiredXP: 0
-    playerCreator: {fileID: 0}
+    battleMons: []
+    playerCreator: {fileID: 11400000, guid: 0c4fcdbb6a4e611479f63974d05c88f5, type: 2}
     playerStats:
       unitName: 
       description: 
@@ -333,10 +333,11 @@ MonoBehaviour:
         lust: 0
         level: 1
       battleMoves: []
+      evolutions: []
   rb: {fileID: 5771568960076546702}
   animator: {fileID: 0}
-  moveSpeedX: 5
-  moveSpeedZ: 5
+  moveSpeedX: 9
+  moveSpeedZ: 9
   steps: 0
   facingRight: 1
   canMove: 1
@@ -470,3 +471,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6755703716405303037, guid: cb9a00adb5d01e94790119edbef42960, type: 3}
   m_PrefabInstance: {fileID: 5935922963469314473}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3450617971174205575 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9044262415055110446, guid: cb9a00adb5d01e94790119edbef42960, type: 3}
+  m_PrefabInstance: {fileID: 5935922963469314473}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 095c3e60aa67ab6449ac4cdea24f3612, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

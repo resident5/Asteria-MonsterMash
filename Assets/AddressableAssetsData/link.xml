@@ -105,8 +105,10 @@
     <type fullname="Naninovel.CommandScriptLine" preserve="nothing" serialized="true" />
     <type fullname="Naninovel.Commands.Goto" preserve="nothing" serialized="true" />
     <type fullname="Naninovel.Commands.ModifyBackground" preserve="nothing" serialized="true" />
+    <type fullname="Naninovel.Commands.ModifyCharacter" preserve="nothing" serialized="true" />
     <type fullname="Naninovel.Commands.ModifyTextPrinter" preserve="nothing" serialized="true" />
     <type fullname="Naninovel.Commands.PrintText" preserve="nothing" serialized="true" />
+    <type fullname="Naninovel.Commands.SetCustomVariable" preserve="nothing" serialized="true" />
     <type fullname="Naninovel.Commands.Stop" preserve="nothing" serialized="true" />
     <type fullname="Naninovel.EmptyScriptLine" preserve="nothing" serialized="true" />
     <type fullname="Naninovel.FloatUnityEvent" preserve="nothing" serialized="true" />
@@ -136,7 +138,6 @@
     <type fullname="Naninovel.UI.NavigatorPlayButton/OnLabelChangedEvent" preserve="nothing" serialized="true" />
     <type fullname="Naninovel.UI.RevealableTextPrinterPanel/AuthorChangedEvent" preserve="nothing" serialized="true" />
     <type fullname="Naninovel.UI.ToastAppearance/TextChangedEvent" preserve="nothing" serialized="true" />
-    <type fullname="Naninovel.Commands.SetCustomVariable" preserve="nothing" serialized="true" />
   </assembly>
   <assembly fullname="Unity.Addressables, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" preserve="all">
     <type fullname="UnityEngine.AddressableAssets.Addressables" preserve="all" />
@@ -229,6 +230,11 @@
     <type fullname="UnityEngine.Canvas" preserve="all" />
     <type fullname="UnityEngine.CanvasGroup" preserve="all" />
     <type fullname="UnityEngine.CanvasRenderer" preserve="all" />
+  </assembly>
+  <assembly fullname="Assembly-CSharp">
+    <type fullname="AssignQuest" preserve="nothing" serialized="true" />
+    <type fullname="SwitchToAdventureMode" preserve="nothing" serialized="true" />
+    <type fullname="SwitchToCGMode" preserve="nothing" serialized="true" />
   </assembly>
   <assembly fullname="UnityEngine.TextCoreFontEngineModule">
     <type fullname="UnityEngine.TextCore.FaceInfo" preserve="nothing" serialized="true" />

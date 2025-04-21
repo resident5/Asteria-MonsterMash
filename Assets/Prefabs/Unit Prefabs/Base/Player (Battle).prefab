@@ -142,45 +142,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29cf06e89b928654f839cfacfa1b916b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unit: {fileID: 11400000, guid: 0c4fcdbb6a4e611479f63974d05c88f5, type: 2}
   manager: {fileID: 0}
-  data:
-    id: 0
-    level: 0
-    unitName: 
-    description: 
-    stats:
-      health: 0
-      maxHealth: 0
-      strength: 0
-      magic: 0
-      speed: 0
-      mana: 0
-      lust: 0
-    cannotBeCaptured: 0
-    spriteImage: {fileID: 0}
-    animator: {fileID: 0}
-    battleMoves: []
-  myStats:
-    health: 0
-    maxHealth: 0
-    strength: 0
-    magic: 0
-    speed: 0
-    mana: 0
-    lust: 0
-  anim: {fileID: 0}
-  unitName: 
-  description: 
-  id: 0
-  isDead: 0
-  isLusty: 0
-  myBattleMoves: []
+  animator: {fileID: 0}
+  statusEffects: []
   isTurn: 0
   baseActionValue: 100
   currentActionValue: 100
+  isDead: 0
+  isLusty: 0
   audioClip: {fileID: 0}
-  animator: {fileID: 0}
+  healthbar: {fileID: 0}
   Summons: []
 --- !u!1 &6597310812388427649
 GameObject:
@@ -209,7 +180,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: -1, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6597310811573800259}

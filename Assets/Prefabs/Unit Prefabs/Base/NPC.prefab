@@ -28,7 +28,7 @@ RectTransform:
   m_GameObject: {fileID: 1259457360860689110}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5368926764740871406}
@@ -36,7 +36,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 2.5}
+  m_AnchoredPosition: {x: 0, y: 6.25}
   m_SizeDelta: {x: 4.9966, y: 4.9966}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &4757246325163291719
@@ -203,6 +203,7 @@ MonoBehaviour:
   isFocus: 0
   hasInteracted: 0
   emote: {fileID: 7692423529029866301}
+  npcId: 
   dialogueScript: Snake_Merchant_Test
 --- !u!135 &7426221332340368038
 SphereCollider:
@@ -252,7 +253,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7250035150066779047}

@@ -1,5 +1,5 @@
 @goto Snake_Merchant_0.greetings2 if:talkedToSM01==true
-@goto Snake_Merchant_Test.FoundMap if:SM01_MissingMapDone==true
+@goto Snake_Merchant_0.FoundMap if:SM01_MissingMapDone==true
 
 # greetings
 @printer Wide

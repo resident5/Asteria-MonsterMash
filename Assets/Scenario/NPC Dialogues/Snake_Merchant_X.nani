@@ -1,0 +1,41 @@
+@goto Snake_Merchant_X.greetings2 if:talkedToSM01==true
+@goto Snake_Merchant_X.FoundMap if:SM01_MissingMapDone==true
+
+# greetings
+@printer Wide
+
+@cgmode
+@char SM01.idle
+SM01: Champion I need you to go retreive my map.
+L: Sure thing.
+SM01: I'll be waiting here. I have a feeling it will be on the area to the left
+L: Alright I'll be right back.
+@quest name:CollectPotionsQuest
+@set talkedToSM01=true
+@adventure !reset
+@stop
+
+#greetings2
+SM01: Have you found my map yet?
+L: No, what does it look like?
+SM01: (Sigh) I told you it doesn't matter what it looks like.
+SM01: Because I gave you the quest, no matter what happens you will find the one I asked for.
+L: How does that work?
+SM01: Think of it as if you are rigging the probability of something happening or, in this case, showing up.
+SM01: If I gave you a quest to reach into a bag of marbles you would pull out one with a random color
+SM01: However, if the quest asked for three blue marbles... The next time you reach into a bag theres a higher unnatural chance of getting the three.
+L: That seems a little...
+SM01: Powerful? Yes it is but not at all that much.
+SM01: Find my map and I'll tell you more.
+@adventure !reset
+@stop
+
+#FoundMap
+SM01: Holy shit you actually found that map
+SM01: I am thankful for you're gratitude
+L: Will you help me now
+SM01: No
+SM01: Go explore or something
+L: ...
+@adventure !reset
+@stop

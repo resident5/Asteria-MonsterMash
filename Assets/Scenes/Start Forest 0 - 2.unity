@@ -804,17 +804,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 681757439541373947, guid: 942a5832a00994f4f8c5777ca7a73608, type: 3}
   m_PrefabInstance: {fileID: 4985231335620326048}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &357403921 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3450617971174205575, guid: cd0414dbac046d44e82a65a7182e7fad, type: 3}
-  m_PrefabInstance: {fileID: 5771568960534589514}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 095c3e60aa67ab6449ac4cdea24f3612, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &422062410
 GameObject:
   m_ObjectHideFlags: 0
@@ -5246,7 +5235,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1796458239
 Transform:
   m_ObjectHideFlags: 0
@@ -5593,7 +5582,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c0fdc453c2606b429553ad633292734, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDebugging: 1
+  isDebugging: 0
   debugGManager: {fileID: 0}
   testEnemy: {fileID: 5224426336646277650, guid: d04b0660511248a40b604112cd73698c, type: 3}
   sprite: {fileID: 21300000, guid: 8c98dc5f3956119429709016b1295085, type: 3}
@@ -11061,6 +11050,10 @@ PrefabInstance:
       propertyPath: npcId
       value: SM01
       objectReference: {fileID: 0}
+    - target: {fileID: 7073122163286744522, guid: 97782e35c28016e49be175a46d3cc226, type: 3}
+      propertyPath: dialogueScript
+      value: Snake_Merchant_X
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -11743,46 +11736,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 291426630454278969, guid: cd0414dbac046d44e82a65a7182e7fad, type: 3}
-      propertyPath: worldCanvas
-      value: 
-      objectReference: {fileID: 1471837957}
-    - target: {fileID: 291426630454278969, guid: cd0414dbac046d44e82a65a7182e7fad, type: 3}
-      propertyPath: playerCreator
-      value: 
-      objectReference: {fileID: 11400000, guid: 0c4fcdbb6a4e611479f63974d05c88f5, type: 2}
-    - target: {fileID: 291426630454278969, guid: cd0414dbac046d44e82a65a7182e7fad, type: 3}
-      propertyPath: data.stats.level
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 291426630454278969, guid: cd0414dbac046d44e82a65a7182e7fad, type: 3}
-      propertyPath: data.stats.magic
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 291426630454278969, guid: cd0414dbac046d44e82a65a7182e7fad, type: 3}
-      propertyPath: data.stats.speed
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 291426630454278969, guid: cd0414dbac046d44e82a65a7182e7fad, type: 3}
-      propertyPath: data.stats.strength
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5771568960076546697, guid: cd0414dbac046d44e82a65a7182e7fad, type: 3}
-      propertyPath: moveSpeedX
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 5771568960076546697, guid: cd0414dbac046d44e82a65a7182e7fad, type: 3}
-      propertyPath: moveSpeedZ
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 5771568960076546697, guid: cd0414dbac046d44e82a65a7182e7fad, type: 3}
-      propertyPath: playerData.emote
-      value: 
-      objectReference: {fileID: 357403921}
-    - target: {fileID: 5771568960076546697, guid: cd0414dbac046d44e82a65a7182e7fad, type: 3}
-      propertyPath: playerData.playerCreator
-      value: 
-      objectReference: {fileID: 11400000, guid: 0c4fcdbb6a4e611479f63974d05c88f5, type: 2}
     - target: {fileID: 5771568960076546699, guid: cd0414dbac046d44e82a65a7182e7fad, type: 3}
       propertyPath: m_LocalPosition.x
       value: -12.87
@@ -11827,8 +11780,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 291426630454278969, guid: cd0414dbac046d44e82a65a7182e7fad, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

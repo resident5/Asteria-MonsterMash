@@ -158,6 +158,9 @@ MonoBehaviour:
     - name: Lust Ghost
       pathPrefix: Scripts
       guid: 88b0765ef8e441b44ace8e0d45739280
+    - name: Snake_Merchant_X
+      pathPrefix: Scripts
+      guid: 8c7f39cc25f79a8438b3f0e2aaff06d0
   - Id: Characters/a91a5fe1-3c9a-429e-a4ce-d18ef207bf85
     Resources: []
   - Id: Unlockables
@@ -193,3 +196,8 @@ MonoBehaviour:
     - name: GenBackground
       pathPrefix: Backgrounds
       guid: 5801c591d93014e40bdaa4749a65b1b5
+  - Id: Characters/0b09d324-3e3c-47a3-aa74-d96b0d3d6775
+    Resources:
+    - name: idle
+      pathPrefix: Characters/SM01
+      guid: 4df3a7e244479454d9ab07d747b2247b

@@ -47,6 +47,9 @@ public class DialogueManager : MonoBehaviour
 
     public void StartConversation(string script, string labels)
     {
+        if (GameManager.Instance.state != GameManager.GameState.OVERWORLD)
+            return;
+
         GameManager.Instance.ChangeState(GameManager.GameState.DIALOGUE);
         playerController.canMove = false;
 
@@ -58,6 +61,9 @@ public class DialogueManager : MonoBehaviour
 
     public void StartConversation(string script)
     {
+        if (GameManager.Instance.state != GameManager.GameState.OVERWORLD)
+            return;
+
         GameManager.Instance.ChangeState(GameManager.GameState.DIALOGUE);
 
         playerController.canMove = false;

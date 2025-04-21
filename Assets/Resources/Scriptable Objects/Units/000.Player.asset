@@ -17,7 +17,7 @@ MonoBehaviour:
     unitName: Lythok
     description: Lythok is a Orc Champion
     stats:
-      baseMaxHealth: 200
+      baseMaxHealth: 50
       baseStrength: 5
       baseMagic: 5
       baseSpeed: 15
@@ -38,5 +38,4 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 1be8f0ac882aec743b76f844e2d52a6f, type: 2}
     - {fileID: 11400000, guid: 4fa4e0a8b12ee3f4caf80bc3f292a6d1, type: 2}
     dataType: 0
-    evolution1: {fileID: 0}
-    evolution2: {fileID: 0}
+    evolutions: []
